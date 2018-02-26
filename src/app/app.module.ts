@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { HomePage, LoginPage, LoginAsPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage } from "../pages/index.paginas";
+import { HomePage, LoginPage, LoginAsPage, CreateuserPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage, GeneralinfoPage, RegisterdirectoryPage, RegistersheetPage, RegisterreportPage, CustomizePage, ConfigPage, RegisterPage } from "../pages/index.paginas";
 
 import { MyApp } from './app.component';
 
@@ -15,9 +15,17 @@ import { MyApp } from './app.component';
     HomePage,
     LoginPage,
     LoginAsPage,
+    CreateuserPage,
     IniRegisterPage,
     IniVisualizerPage,
-    IniSuperuserPage
+    IniSuperuserPage,
+    GeneralinfoPage,
+    RegisterdirectoryPage,
+    RegistersheetPage,
+    RegisterreportPage,
+    CustomizePage,
+    ConfigPage,
+    RegisterPage
   ],
   imports: [
     BrowserModule,
@@ -29,9 +37,17 @@ import { MyApp } from './app.component';
     HomePage,
     LoginPage,
     LoginAsPage,
+    CreateuserPage,
     IniRegisterPage,
     IniVisualizerPage,
-    IniSuperuserPage
+    IniSuperuserPage,
+    GeneralinfoPage,
+    RegisterdirectoryPage,
+    RegistersheetPage,
+    RegisterreportPage,
+    CustomizePage,
+    ConfigPage,
+    RegisterPage
   ],
   providers: [
     StatusBar,

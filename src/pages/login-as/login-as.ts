@@ -16,6 +16,9 @@ export class LoginAsPage {
     console.log('ionViewDidLoad LoginAsPage');
   }
 
+
+
+  //Según el o los roles que lleguen del ws, se mostrarán 1, 2 ó los 3 botones.
   nav_visualizer(){
     this.navCtrl.push ( IniVisualizerPage );
   }

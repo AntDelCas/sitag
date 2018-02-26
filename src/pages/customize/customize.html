@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>customize</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+
+
+  <p>Si-Tag</p>
+  <p>Solución integral para la trazabilidad de elementos de principio a fin</p>
+  <p>user: nombreUser</p>
+
+  <p>Log in as ...</p>
+
+
+  <p>Scanned item</p>
+  <p>CM10005_0517_0080_10_MC_EC_RF_520003</p>
+
+  <ion-item>
+    <ion-label>Seleccione un categoría</ion-label>
+    <ion-select [(ngModel)]="categoria">
+      <ion-option value="1">Categoría 1</ion-option>
+      <ion-option value="2">Categoría 2</ion-option>
+    </ion-select>
+  </ion-item>
+
+  <ion-item>
+    <ion-label>Seleccione un subcategoría</ion-label>
+    <ion-select [(ngModel)]="subcategoria">
+      <ion-option value="1">Subcategoría 1</ion-option>
+      <ion-option value="2">Subcategoría 2</ion-option>
+    </ion-select>
+  </ion-item>
+
+
+  <button ion-button block color="primary">Save</button>
+
+</ion-content>

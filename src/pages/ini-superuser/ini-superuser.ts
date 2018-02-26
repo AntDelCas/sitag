@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage } from "../index.paginas";
+
 @Component({
   selector: 'page-ini-superuser',
   templateUrl: 'ini-superuser.html',
@@ -14,28 +16,29 @@ export class IniSuperuserPage {
     console.log('ionViewDidLoad IniSuperuserPage');
   }
 
-  download_schemas(){
+  download_schemas() {
 
   }
 
-  customize(){
+  customize() {
+    this.navCtrl.push(CustomizePage);
+  }
+
+  start_register() {
+    this.navCtrl.push(RegisterPage);
 
   }
 
-  start_registering(){
-
+  start_sacanning() {
+    this.navCtrl.push(GeneralinfoPage);
   }
 
-  start_sacanning(){
-
+  config() {
+    this.navCtrl.push(ConfigPage);
   }
 
-  config(){
-
-  }
-
-  register_directory(){
-
+  register_directory() {
+    this.navCtrl.push(RegisterdirectoryPage);
   }
 
 

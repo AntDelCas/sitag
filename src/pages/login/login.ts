@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { LoginAsPage } from "../index.paginas";
+import { LoginAsPage, CreateuserPage } from "../index.paginas";
 
 @Component({
   selector: 'page-login',
@@ -13,12 +13,12 @@ export class LoginPage {
   }
 
 
-  nav_login(){
+  login(){
     this.navCtrl.push ( LoginAsPage );
   }
 
-  nav_home(){
-    this.navCtrl.pop();
+  createaccount(){
+    this.navCtrl.push ( CreateuserPage );
   }
 
 

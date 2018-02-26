@@ -1,13 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the IniVisualizerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
+import { GeneralinfoPage } from "../index.paginas";
 
 @Component({
   selector: 'page-ini-visualizer',
@@ -23,8 +17,8 @@ export class IniVisualizerPage {
   }
 
 
-  start_sacanning(){
-
+  start_scanning() {
+    this.navCtrl.push( GeneralinfoPage );
   }
 
 }

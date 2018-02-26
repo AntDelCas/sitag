@@ -1,8 +1,9 @@
 <ion-content padding>
+
   <p>Si-Tag</p>
   <p>Solución integral para la trazabilidad de elementos de principio a fin</p>
 
-  <p>Sign in</p>
+  <p>Create user</p>
 
   <form>
 
@@ -14,16 +15,13 @@
       <ion-label color="primary" floating>Password</ion-label>
       <ion-input type="password" name="password"></ion-input>
     </ion-item>
+    <ion-item>
+      <ion-label color="primary" floating>Email</ion-label>
+      <ion-input name="email"></ion-input>
+    </ion-item>
 
-    <button ion-button block (click)="login()">Sign In</button>
-    <button ion-button block (click)="createaccount()" color="secondary">Create account</button>
+    <button ion-button block (click)="register()" color="primary">Register</button>
+    <button ion-button block (click)="cancel_register()" color="secondary">Cancel</button>
   </form>
-
-  <p>Synchro users</p>
-  <p>last synchro 20180226 12:08:23</p>
-
-
-  <!-- <button ion-button block (click)="nav_home()">Volver a home</button> -->
-
 
 </ion-content>
