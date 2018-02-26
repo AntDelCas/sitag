@@ -4,7 +4,7 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
-import { HomePage, LoginPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage } from "../pages/index.paginas";
+import { HomePage, LoginPage, LoginAsPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage } from "../pages/index.paginas";
 
 import { MyApp } from './app.component';
 
@@ -14,6 +14,7 @@ import { MyApp } from './app.component';
     MyApp,
     HomePage,
     LoginPage,
+    LoginAsPage,
     IniRegisterPage,
     IniVisualizerPage,
     IniSuperuserPage
@@ -27,6 +28,7 @@ import { MyApp } from './app.component';
     MyApp,
     HomePage,
     LoginPage,
+    LoginAsPage,
     IniRegisterPage,
     IniVisualizerPage,
     IniSuperuserPage

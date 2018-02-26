@@ -1,12 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-
-/**
- * Generated class for the IniSuperuserPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { NavController, NavParams } from 'ionic-angular';
 
 @Component({
   selector: 'page-ini-superuser',
@@ -20,5 +13,34 @@ export class IniSuperuserPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad IniSuperuserPage');
   }
+
+  download_schemas(){
+
+  }
+
+  customize(){
+
+  }
+
+  start_registering(){
+
+  }
+
+  start_sacanning(){
+
+  }
+
+  config(){
+
+  }
+
+  register_directory(){
+
+  }
+
+
+
+
+
 
 }
