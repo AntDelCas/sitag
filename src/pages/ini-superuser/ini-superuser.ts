@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { GeneralinfoPage } from "../index.paginas";
+
 @Component({
   selector: 'page-ini-superuser',
   templateUrl: 'ini-superuser.html',
@@ -26,8 +28,8 @@ export class IniSuperuserPage {
 
   }
 
-  start_sacanning(){
-
+  start_sacanning() {
+    this.navCtrl.push( GeneralinfoPage );
   }
 
   config(){

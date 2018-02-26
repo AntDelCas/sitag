@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { GeneralinfoPage, RegisterdirectoryPage } from "../index.paginas";
+
 
 @Component({
   selector: 'page-ini-register',
@@ -15,12 +17,12 @@ export class IniRegisterPage {
     console.log('ionViewDidLoad IniRegisterPage');
   }
 
-  start_sacanning(){
-
+  start_scanning() {
+    this.navCtrl.push( GeneralinfoPage );
   }
 
-  register_directory(){
-
+  register_directory() {
+    this.navCtrl.push( RegisterdirectoryPage );
   }
 
 
