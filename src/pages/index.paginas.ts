@@ -12,3 +12,5 @@ export { RegisterreportPage } from "./registerreport/registerreport";
 export { CustomizePage } from "./customize/customize";
 export { ConfigPage } from "./config/config";
 export { RegisterPage } from "./register/register";
+
+export { AppGlobals } from "./app.global";

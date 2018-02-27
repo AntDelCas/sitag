@@ -1,13 +1,15 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 
-import { LoginPage } from "../index.paginas";
+import { LoginPage, AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
+
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   constructor(public navCtrl: NavController) {
 
