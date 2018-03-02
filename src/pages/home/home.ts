@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, ToastController } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
@@ -18,46 +18,29 @@ export class HomePage {
     public navCtrl: NavController,
     public network: Network,
     public platform: Platform,
-    public dataAccess: DataaccessProvider,
-    public toast: ToastController
+    public dataAccess: DataaccessProvider
     )
   {
       //Comprueba si tiene acceso a la red:
       if(navigator.onLine){
-        //Descarga JSON del servidor:
         AppGlobals.NETWORK_AVAILABLE = true;
-        this.getUsers();
+
+        //Llama al provider que descarga el JSON del servidor y los carga en memoria:
+        dataAccess.getUsers().then(data => {
+          AppGlobals.USERS_LIST = data;
+        });
       }else{
         //Utiliza los datos guardados en local (si existen):
         AppGlobals.NETWORK_AVAILABLE = false;
       }
 
-      //Registra un cambio en la disponibilidad de la red:
+      //Registra un cambio en la disponibilidad de la red y lo notifica:
       platform.ready().then(() => {
         this.network.onchange().subscribe(data => {
-          console.log(data)
-          this.displayNetworkUpdate(data.type);
+          // console.log(data)
+          dataAccess.displayNetworkUpdate(data.type);
         }, error => console.error(error));
-        // this.network.onchange().subscribe(x => console.log(x));
-        // this.network.onConnect().subscribe(x => console.log(x));
-        // this.network.onDisconnect().subscribe(x => console.log(x));
      });
-  }
-
-  //Llama al provider que gestiona al JSON del backend y guarda los datos en una variable global:
-  getUsers() {
-    this.dataAccess.getUsers()
-    .then(data => {
-      AppGlobals.USERS_LIST = data;
-    });
-  }
-
-  displayNetworkUpdate(connectionState: string){
-    let networkType = this.network.type;
-    this.toast.create({
-      message: `Ahora estás ${connectionState}.`,
-      duration: 3000
-    }).present();
   }
 
   nav_login(){
