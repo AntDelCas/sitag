@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AppGlobals } from "../../pages/index.paginas";
 
 /*
   Generated class for the DataaccessProvider provider.
@@ -26,4 +27,8 @@ export class DataaccessProvider {
   });
   }
 
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 }

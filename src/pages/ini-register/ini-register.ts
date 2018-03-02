@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { RegisterPage, RegisterdirectoryPage } from "../index.paginas";
+import { RegisterPage, RegisterdirectoryPage, AppGlobals } from "../index.paginas";
 
 
 @Component({
@@ -26,6 +26,9 @@ export class IniRegisterPage {
   }
 
 
-
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 
 }

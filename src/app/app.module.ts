@@ -57,7 +57,7 @@ import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
     SplashScreen,
     Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataaccessProvider,
+    DataaccessProvider
   ]
 })
 export class AppModule {}

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { RegistersheetPage, RegisterreportPage } from "../index.paginas";
+import { RegistersheetPage, RegisterreportPage, AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-registerdirectory',
@@ -34,7 +34,10 @@ export class RegisterdirectoryPage {
 
   }
 
-
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 
 
 }

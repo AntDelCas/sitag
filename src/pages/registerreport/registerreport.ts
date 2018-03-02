@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AppGlobals } from "../index.paginas";
 
 
 @Component({
@@ -14,5 +15,9 @@ export class RegisterreportPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterreportPage');
   }
-
+  
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 }

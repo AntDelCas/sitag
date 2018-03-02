@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { Platform } from 'ionic-angular';
 import { Network } from '@ionic-native/network';
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
@@ -18,7 +18,8 @@ export class HomePage {
     public navCtrl: NavController,
     public network: Network,
     public platform: Platform,
-    public dataAccess: DataaccessProvider
+    public dataAccess: DataaccessProvider,
+    public toast: ToastController
     )
   {
       //Comprueba si tiene acceso a la red:
@@ -33,10 +34,14 @@ export class HomePage {
 
       //Registra un cambio en la disponibilidad de la red:
       platform.ready().then(() => {
-        this.network.onchange().subscribe(x => console.log(x));
+        this.network.onchange().subscribe(data => {
+          console.log(data)
+          this.displayNetworkUpdate(data.type);
+        }, error => console.error(error));
+        // this.network.onchange().subscribe(x => console.log(x));
         // this.network.onConnect().subscribe(x => console.log(x));
         // this.network.onDisconnect().subscribe(x => console.log(x));
-       });
+     });
   }
 
   //Llama al provider que gestiona al JSON del backend y guarda los datos en una variable global:
@@ -47,6 +52,13 @@ export class HomePage {
     });
   }
 
+  displayNetworkUpdate(connectionState: string){
+    let networkType = this.network.type;
+    this.toast.create({
+      message: `Ahora estás ${connectionState}.`,
+      duration: 3000
+    }).present();
+  }
 
   nav_login(){
     this.navCtrl.push ( LoginPage );

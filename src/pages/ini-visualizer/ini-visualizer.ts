@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { GeneralinfoPage } from "../index.paginas";
+import { GeneralinfoPage, AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-ini-visualizer',
@@ -21,4 +21,8 @@ export class IniVisualizerPage {
     this.navCtrl.push( GeneralinfoPage );
   }
 
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 }

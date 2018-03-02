@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { LoginAsPage, CreateuserPage, AppGlobals } from "../index.paginas";
+import { HomePage, LoginAsPage, CreateuserPage, AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-login',
@@ -11,8 +11,12 @@ export class LoginPage {
 
   username : string;
   password: string;
+  isValidLogin: boolean = false;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public alertCtrl: AlertController) {
   }
 
   //Comprueba si el login es válido:
@@ -26,22 +30,33 @@ export class LoginPage {
       //entry.users.user
       //entry.users.password
 
-      //Las credenciales son válidas:
-      // if((this.username == entry.username) && (this.password == entry.address.geo.lng)){
-      //   AppGlobals.USER = entry.username;
-      //   this.navCtrl.push ( LoginAsPage );
-      // }
-      // //Fallo en la validación:
-      // else{
-      //
-      // }
+      // Las credenciales son válidas:
+      if((this.username == entry.username) && (this.password == entry.address.geo.lng)){
+        AppGlobals.USER = entry.username;
+        this.navCtrl.push ( LoginAsPage );
+        this.isValidLogin = true;
+      }
+
     }//for
-    this.navCtrl.push ( LoginAsPage );
+    // this.navCtrl.push ( LoginAsPage );
+
+    //Fallo en la validación:
+    if(!this.isValidLogin){
+    //Alerta del fallo de validación:
+      let alert = this.alertCtrl.create({
+        title: '¡Error!',
+        subTitle: 'Usuario o contraseña incorrectos.',
+        buttons: ['OK']
+      });
+      alert.present();
+    }
   }
 
   createaccount(){
     this.navCtrl.push ( CreateuserPage );
   }
 
-
+  nav_home(){
+    this.navCtrl.push ( HomePage );
+  }
 }

@@ -24,6 +24,4 @@ export class CreateuserPage {
     this.navCtrl.pop();
   }
 
-
-
 }

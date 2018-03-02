@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage } from "../index.paginas";
+import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage, AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-ini-superuser',
@@ -42,7 +42,10 @@ export class IniSuperuserPage {
   }
 
 
-
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 
 
 

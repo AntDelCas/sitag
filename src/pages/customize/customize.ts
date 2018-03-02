@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
+import { AppGlobals } from "../index.paginas";
 
 @Component({
   selector: 'page-customize',
@@ -13,5 +14,8 @@ export class CustomizePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad CustomizePage');
   }
-
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 }
