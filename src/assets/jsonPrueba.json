@@ -1,0 +1,69 @@
+{
+"lastUpdate": "2018-01-30 12:55:55",
+"countUsers": "4",
+"users": [ 
+{
+"user": "alvaro",
+"email": "alvaro@sinapseenergia.com",
+"password": "sinapse2018",
+"accesibility": [
+{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000000_k_000",
+"role": "owner"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000001_k_000",
+"role": "owner"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000002_k_000",
+"role": "owner"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000003_k_000",
+
+"role": "owner"
+}
+]
+},
+{
+"user": "jose_ignacio",
+"email": "j.ignacio.blanco@sinapseenergia.com",
+"password": "sinapse2018",
+"accesibility": [
+{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000000_k_000",
+"role": "reg"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000001_k_000",
+"role": "reg"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000002_k_000",
+"role": "vis"
+},{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000003_k_000",
+"role": "owner"
+}
+]
+},
+{
+"user": "rafa",
+"email": "rafa.alcaide@sinapseenergia.com",
+"password": "sinapse2018",
+"accesibility": [
+{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000000_k_000",
+"role": "vis"
+}
+]
+},
+{
+"user": "yesnier",
+"email": "ybravo@bettergy.es",
+"password": "bettergy2018",
+"accesibility": [
+{
+"register": "aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_000000_k_000",
+"role": "reg"
+}
+]
+}
+]
+}

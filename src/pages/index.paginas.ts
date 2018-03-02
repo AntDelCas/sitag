@@ -12,8 +12,7 @@ export { RegisterreportPage } from "./registerreport/registerreport";
 export { CustomizePage } from "./customize/customize";
 export { ConfigPage } from "./config/config";
 export { RegisterPage } from "./register/register";
-<<<<<<< HEAD
+
+// export { DataaccessProvider } from '../providers/dataaccess/dataaccess';
 
 export { AppGlobals } from "./app.global";
-=======
->>>>>>> a2f0851b7fbdacb85e9567acc8c6d4d30392f1be

@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { IniVisualizerPage, IniRegisterPage, IniSuperuserPage } from "../index.paginas";
+import { IniVisualizerPage, IniRegisterPage, IniSuperuserPage, AppGlobals, LoginPage } from "../index.paginas";
 
 @Component({
   selector: 'page-login-as',
@@ -31,5 +31,13 @@ export class LoginAsPage {
     this.navCtrl.push ( IniSuperuserPage );
   }
 
+  logOff(){
+    this.navCtrl.push ( LoginPage );
+  }
+
+  //Devuelve el nickname:
+  get getUsername() {
+   return AppGlobals.USER;
+  }
 
 }

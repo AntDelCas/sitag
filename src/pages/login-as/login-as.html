@@ -1,7 +1,7 @@
 <ion-content padding>
   <p>Si-Tag</p>
   <p>Solución integral para la trazabilidad de elementos de principio a fin</p>
-  <p>user: nombreUser</p>
+  <p>User: {{getUsername}}</p>
 
   <p>Log in as ...</p>
 
@@ -16,6 +16,7 @@
   <button ion-button block
   (click)="nav_superuser()">Superuser</button>
 
-  <button ion-button block color="danger">Log off</button>
+  <button ion-button block color="danger"
+  (click)="logOff()">Log off</button>
 
 </ion-content>

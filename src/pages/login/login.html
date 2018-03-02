@@ -8,11 +8,11 @@
 
     <ion-item>
       <ion-label color="primary" floating>Username</ion-label>
-      <ion-input name="username"></ion-input>
+      <ion-input name="username" [(ngModel)]="username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" floating>Password</ion-label>
-      <ion-input type="password" name="password"></ion-input>
+      <ion-input type="password" name="password" [(ngModel)]="password"></ion-input>
     </ion-item>
 
     <button ion-button block (click)="login()">Sign In</button>
@@ -23,7 +23,6 @@
   <p>last synchro 20180226 12:08:23</p>
 
 
-  <!-- <button ion-button block (click)="nav_home()">Volver a home</button> -->
-
+  <button ion-button block (click)="nav_home()">Volver a home</button>
 
 </ion-content>
