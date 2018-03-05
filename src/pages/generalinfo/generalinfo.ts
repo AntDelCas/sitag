@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { AppGlobals } from "../index.paginas";
+import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
 
 @Component({
   selector: 'page-generalinfo',
@@ -8,7 +9,11 @@ import { AppGlobals } from "../index.paginas";
 })
 export class GeneralinfoPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    public dataAccess: DataaccessProvider) {
+      // console.log(this.dataAccess.getGeneralInfo);
   }
 
   ionViewDidLoad() {

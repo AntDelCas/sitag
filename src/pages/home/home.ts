@@ -28,7 +28,10 @@ export class HomePage {
         //Llama al provider que descarga el JSON del servidor y los carga en memoria:
         dataAccess.getUsers().then(data => {
           AppGlobals.USERS_LIST = data;
+          AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
         });
+        
+        //TODO: Aqui se debe comparar los datos en local con los descargados desde el servidor
       }else{
         //Utiliza los datos guardados en local (si existen):
         AppGlobals.NETWORK_AVAILABLE = false;
@@ -37,7 +40,6 @@ export class HomePage {
       //Registra un cambio en la disponibilidad de la red y lo notifica:
       platform.ready().then(() => {
         this.network.onchange().subscribe(data => {
-          // console.log(data)
           dataAccess.displayNetworkUpdate(data.type);
         }, error => console.error(error));
      });

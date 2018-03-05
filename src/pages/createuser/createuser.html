@@ -5,22 +5,21 @@
 
   <p>Create user</p>
 
-  <form>
-
+  <form [formGroup]="myForm" (ngSubmit)="register()">
     <ion-item>
       <ion-label color="primary" floating>Username</ion-label>
-      <ion-input name="username"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label color="primary" floating>Password</ion-label>
-      <ion-input type="password" name="password"></ion-input>
+      <ion-input formControlName="username"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" floating>Email</ion-label>
-      <ion-input name="email"></ion-input>
+      <ion-input formControlName="email" type="text"></ion-input>
     </ion-item>
-
-    <button ion-button block (click)="register()" color="primary">Register</button>
+    <ion-item>
+      <ion-label color="primary" floating>Password</ion-label>
+      <ion-input type="password" formControlName="password"></ion-input>
+    </ion-item>
+    
+    <button ion-button block type="submit" [disabled]="!myForm.valid">Register</button>
     <button ion-button block (click)="cancel_register()" color="secondary">Cancel</button>
   </form>
 

@@ -11,10 +11,10 @@
   (click)="nav_visualizer()">Visualizer</button>
 
   <button ion-button block
-  (click)="nav_register()">Register</button>
+  (click)="nav_register()" [hidden]="isRegister">Register</button>
 
   <button ion-button block
-  (click)="nav_superuser()">Superuser</button>
+  (click)="nav_superuser()" [hidden]="isOwner">Superuser</button>
 
   <button ion-button block color="danger"
   (click)="logOff()">Log off</button>

@@ -3,13 +3,16 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import { IniVisualizerPage, IniRegisterPage, IniSuperuserPage, AppGlobals, LoginPage } from "../index.paginas";
 
+
 @Component({
   selector: 'page-login-as',
   templateUrl: 'login-as.html',
 })
 export class LoginAsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
@@ -30,12 +33,32 @@ export class LoginAsPage {
   }
 
   logOff(){
+    this.resetVariables();
     this.navCtrl.push ( LoginPage );
+  }
+
+  resetVariables(){
+    AppGlobals.IS_OWNER = false;
+    AppGlobals.IS_REGISTER = false;
   }
 
   //Devuelve el nickname:
   get getUsername() {
    return AppGlobals.USER;
+  }
+
+  //Valida los permisos de super usuario:
+  get isOwner(){
+    if(AppGlobals.IS_OWNER)
+      return false;
+    else return true;
+  }
+
+  //Valida los permisos de registrador:
+  get isRegister(){
+    if(AppGlobals.IS_REGISTER)
+      return false;
+    else return true;
   }
 
 }

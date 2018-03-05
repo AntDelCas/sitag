@@ -14,8 +14,9 @@ import { Network } from '@ionic-native/network';
 export class DataaccessProvider {
 
   //Link del backend:
-  apiUrl = 'https://jsonplaceholder.typicode.com';
-
+  // apiUrl = 'https://jsonplaceholder.typicode.com';
+  apiUrl= 'http://www.mocky.io/v2/';
+// http://www.mocky.io/v2/
   constructor(
     public http: HttpClient,
     public toast: ToastController,
@@ -27,11 +28,34 @@ export class DataaccessProvider {
   //Carga en memoria los datos del JSON descargado:
   getUsers() {
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'/users').subscribe(data => {
+    // this.http.get(this.apiUrl+'/users').subscribe(data => {
+    this.http.get(this.apiUrl+'5a9d24393100005700ab5277').subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);
     });
+  });
+  }
+
+  getGeneralInfo(){
+    return new Promise(resolve => {
+      // this.http.get(this.apiUrl+'/users').subscribe(data => {
+      this.http.get(this.apiUrl+'5a9d3e82310000dc1dab5327').subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
+  addUser(data) {
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'/users', JSON.stringify(data))
+      .subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
   });
   }
 
@@ -52,5 +76,12 @@ export class DataaccessProvider {
   //Devuelve el nickname:
   get getUsername() {
    return AppGlobals.USER;
+  }
+
+  //Devuelve la fecha y la hora actual:
+  get timeStamp(){
+    let myDate: string = new Date().getDate().toString() +"-"+ new Date().getMonth().toString() +"-"+ new Date().getFullYear().toString();
+    let hour: string = new Date().getHours().toString() +":"+new Date().getMinutes().toString() + ":" + new Date().getSeconds().toString();
+    return myDate + " " + hour;
   }
 }
