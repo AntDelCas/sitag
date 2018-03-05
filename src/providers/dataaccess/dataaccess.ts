@@ -21,7 +21,7 @@ export class DataaccessProvider {
     public toast: ToastController,
     public network: Network
   ) {
-    console.log('Hello DataaccessProvider Provider');
+
   }
 
   //Carga en memoria los datos del JSON descargado:
