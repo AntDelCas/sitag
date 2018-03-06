@@ -1,23 +1,42 @@
 <ion-header>
-
   <ion-navbar>
     <ion-title>General Info</ion-title>
   </ion-navbar>
-
 </ion-header>
 
 
 <ion-content padding>
-
   <p>Si-Tag</p>
   <p>Solución integral para la trazabilidad de elementos de principio a fin</p>
   <p>User: {{getUsername}}</p>
 
-  <p>CM10005_0517_008D_10_MC_EC_RF_520001</p>
+  <div *ngIf="general_info">
+    <p>{{general_info.registers[0].label}}</p>
+  </div>
 
-  <p>General Info</p>
-  <p>Identification</p>
-  <ion-grid>
+  <h4>General Info</h4>
+  <b>Identification</b>
+
+  <ion-grid *ngIf="general_info">
+    <ion-row *ngFor="let info of general_info.registers[0].attributes">
+      <ion-col Text-Capitalize>{{info.name}}</ion-col>
+      <ion-col>{{info.value}}</ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <h4 [hidden]="hasLocation">Location</h4>
+  <b [hidden]="hasLocation">GPS position</b>
+  <ion-grid [hidden]="hasLocation">
+    <ion-row>
+      <ion-col>Latitude</ion-col> <ion-col>{{attr_latitude}}</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>Longitude</ion-col> <ion-col>{{attr_longitude}}</ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
+
+  <!-- <ion-grid>
     <ion-row>
       <ion-col>
         Family
@@ -45,9 +64,6 @@
   </ion-grid>
 
 
-
-
-
   <p>Location</p>
   <p>GPS position</p>
   <ion-row>
@@ -65,7 +81,16 @@
     <ion-col>
       -6,2648
     </ion-col>
-  </ion-row>
+  </ion-row> -->
 
+  <!-- <ion-list *ngIf="generalInfo">
+      <ion-item *ngFor="let info of generalInfo.registers[0].attributes">
+        <h2>{{info.name}}</h2>
+        {{info.value}}
+      </ion-item>
 
-</ion-content>
+      <ion-item *ngFor="let item of attributes;">
+        <h3>{{item.name}}</h3>
+        {{item.value}}
+      </ion-item>
+  </ion-list>     -->

@@ -12,23 +12,20 @@ import { Network } from '@ionic-native/network';
 */
 @Injectable()
 export class DataaccessProvider {
-
+  data: any = null;
   //Link del backend:
-  // apiUrl = 'https://jsonplaceholder.typicode.com';
   apiUrl= 'http://www.mocky.io/v2/';
-// http://www.mocky.io/v2/
+
   constructor(
     public http: HttpClient,
     public toast: ToastController,
     public network: Network
   ) {
-
   }
 
   //Carga en memoria los datos del JSON descargado:
   getUsers() {
   return new Promise(resolve => {
-    // this.http.get(this.apiUrl+'/users').subscribe(data => {
     this.http.get(this.apiUrl+'5a9d24393100005700ab5277').subscribe(data => {
       resolve(data);
     }, err => {
@@ -37,9 +34,20 @@ export class DataaccessProvider {
   });
   }
 
+  //Carga esquema para el control de elementos
+  getSchema() {
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'5a9e7c333000004e00234c77').subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });
+  }
+
+  //Carga los datos del producto:
   getGeneralInfo(){
     return new Promise(resolve => {
-      // this.http.get(this.apiUrl+'/users').subscribe(data => {
       this.http.get(this.apiUrl+'5a9d3e82310000dc1dab5327').subscribe(data => {
         resolve(data);
       }, err => {
