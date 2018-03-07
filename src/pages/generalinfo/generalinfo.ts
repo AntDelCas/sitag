@@ -25,9 +25,7 @@ export class GeneralinfoPage {
   // "comments": ""
   general_info: any;
   schema: any;
-  attr_latitude: string;
-  attr_longitude: string;
-  has_location: boolean = false;
+  ordered_data : any = [];
 
   constructor(
     public navCtrl: NavController,
@@ -46,36 +44,71 @@ export class GeneralinfoPage {
       dataAccess.getGeneralInfo().then(data => {
         this.general_info = data;
 
-        //Comprueba si se debe mostrar la location:
-        for (let entry of this.general_info.registers[0].attributes) {
-          if(entry.name == 'latitude' || entry.name == 'longitude'){
-            this.has_location = true;
-
-            if(entry.name == 'latitude')
-              this.attr_latitude = entry.value;
-
-            if(entry.name == 'longitude')
-              this.attr_longitude = entry.value;
+        //Comprueba el ID del esquema que coincide con los datos de productos descargados.
+        //Carga "category" y "subcategory" en el JSON de producto utilizando los datos del esquema para identificar cada atributo.
+        if(this.general_info.registers[0].idSchema == this.schema.registers[0].idSchema){
+          let indexI = 0;
+          for(let general_info_att of this.general_info.registers[0].attributes){
+            let indexJ = 0;
+            for(let schema_att of this.schema.registers[0].attributes){
+              if(general_info_att.name == schema_att.name){
+                this.general_info.registers[0].attributes[indexI].category = schema_att.category;
+                this.general_info.registers[0].attributes[indexI].subcategory = schema_att.subcategory;
+              }
+              indexJ++;
+            }
+            indexI++;
           }
         }
 
+        //Ordena los datos de producto por "category" y genera la variable para mostrarlo en el HTML:
+        // <Ordena>
+        let category : any = [];
+        let exists : boolean = false;
+
+        for(let category_item of this.general_info.registers[0].attributes){
+          exists = false;
+
+          for(let category_exists of category)
+            if(category_item.category == category_exists)
+              exists = true;
+
+          if(!exists)
+            category.push(category_item.category);
+
+        }
+
+        for(let category_index of category){
+          let exists = false;
+          let generic_info_string = '';
+
+          for(let general_info_index of this.general_info.registers[0].attributes){
+            if(category_index == general_info_index.category){
+              if(category_index == '' && !exists){
+                generic_info_string = 'Generic Information';
+                exists = true;
+              }
+
+              this.ordered_data.push([
+                {name: general_info_index.name},
+                {value: general_info_index.value},
+                {category: !exists ? category_index : generic_info_string},
+                {subcategory: !exists ? general_info_index.subcategory : ""}
+              ]);
+
+              exists = true;
+              generic_info_string = '';
+            }
+          }
+        }
+        //</Ordena>
         loader.dismiss();
-        console.log(this.schema);
-        console.log(this.general_info);
       });
    });
   }
 
   ionViewDidLoad() {
 
-  }
-
-  //Muestra el apartado location en el HTML:
-  get hasLocation(){
-    if(this.has_location)
-      return false;
-    else
-      return true;
   }
 
   //Devuelve el nickname:

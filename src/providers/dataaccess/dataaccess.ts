@@ -37,7 +37,7 @@ export class DataaccessProvider {
   //Carga esquema para el control de elementos
   getSchema() {
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'5a9e7c333000004e00234c77').subscribe(data => {
+    this.http.get(this.apiUrl+'5a9fa3402e0000100074d123').subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);

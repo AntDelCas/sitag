@@ -10,6 +10,7 @@ import { HomePage, LoginPage, LoginAsPage, CreateuserPage, IniRegisterPage, IniV
 
 import { MyApp } from './app.component';
 import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
+import { DatabaseProvider } from '../providers/database/database';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
     SplashScreen,
     Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    DataaccessProvider
+    DataaccessProvider,
+    DatabaseProvider
   ]
 })
 export class AppModule {}
