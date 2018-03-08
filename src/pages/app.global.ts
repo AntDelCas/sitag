@@ -8,6 +8,9 @@ export class AppGlobals {
   //Lista de usuarios descargada del servidor:
   static USERS_LIST: any;
 
+  //Lista de usuarios existente en local:
+  static USERS_LIST_LOCAL: any;
+
   //Usuario logueado:
   static USER: string;
 

@@ -26,7 +26,7 @@ export class DataaccessProvider {
   //Carga en memoria los datos del JSON descargado:
   getUsers() {
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'5a9d24393100005700ab5277').subscribe(data => {
+    this.http.get(this.apiUrl+'5aa12fa9320000ef34e9ff88').subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);

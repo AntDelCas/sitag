@@ -39,7 +39,7 @@ export class GeneralinfoPage {
     loader.present().then(() => {
       dataAccess.getSchema().then(data => {
         this.schema = data;
-      });
+      }).then(data => {
 
       dataAccess.getGeneralInfo().then(data => {
         this.general_info = data;
@@ -104,7 +104,8 @@ export class GeneralinfoPage {
         //</Ordena>
         loader.dismiss();
       });
-   });
+    });
+   });//prueba
   }
 
   ionViewDidLoad() {
