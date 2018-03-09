@@ -22,7 +22,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public dataAccess: DataaccessProvider) {
       //Datos de prueba para login: (borrar)
-      for (let entry of AppGlobals.USERS_LIST.users) {
+      for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
         console.log("Usuario: " + entry.user + " Password: " + entry.password);
       }
   }

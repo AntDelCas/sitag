@@ -32,6 +32,8 @@ export class CreateuserPage {
     console.log('ionViewDidLoad CreateuserPage');
   }
 
+  //TODO: Fallo al cancelar registro, revisar.
+
   register() {
     //Recupera las variables del formulario:
     this.user.username = this.myForm.value.username;
