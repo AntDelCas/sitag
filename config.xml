@@ -86,4 +86,5 @@
     <engine name="android" spec="~7.0.0" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
     <allow-navigation href="http://172.26.10.93:8100" />
+    <plugin name="phonegap-plugin-barcodescanner" spec="^7.0.3" />
 </widget>
