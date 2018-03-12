@@ -72,7 +72,7 @@ export class DatabaseProvider {
     });
   }
 
-  getUsersJSON(){
+  getUsersFromLocal(){
     console.log("getUsersJSON()");
     return this.isReady()
     .then(()=>{

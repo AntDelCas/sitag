@@ -33,13 +33,25 @@ export class HomePage {
         AppGlobals.NETWORK_AVAILABLE = true;
 
         //Llama al provider que descarga el JSON del servidor y los carga en memoria:
-        dataAccess.getUsers().then(data => {
+        dataAccess.getUsersFromServer().then(data => {
           AppGlobals.USERS_LIST = data;
         }).then(data => {
 
           //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
-          database.getUsersJSON().then(data => {
+          database.getUsersFromLocal().then(data => {
             if(data){
+
+              //////////////////////
+              console.log("DATA");
+              for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
+                console.log("Usuario: " + entry.user + " Password: " + entry.password);
+              }
+              console.log("SERVER:")
+              for (let entry of AppGlobals.USERS_LIST.users) {
+                console.log("Usuario: " + entry.user + " Password: " + entry.password);
+              }
+              //////////////////
+
               //<Sincronización de datos existentes en ambos puntos>
               for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
                 for (let server_user of AppGlobals.USERS_LIST.users) {
@@ -68,8 +80,8 @@ export class HomePage {
 
                         //Unifica los items escaneados y sus permisos:
                         server_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
-                      }else{
-                        console.log(AppGlobals.USERS_LIST_LOCAL.users);
+
+                        //TODO: Actualizar usuario en el servidor
                       }
                     }
                   }
@@ -105,7 +117,17 @@ export class HomePage {
     something_changed_server = false,
     something_changed_local = false;
 
+    console.log("UsersUnion");
+    //////////////
+    for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
+      console.log("Usuario: " + entry.user + " Password: " + entry.password);
+    }
 
+    console.log("SERVER:")
+    for (let entry of AppGlobals.USERS_LIST.users) {
+      console.log("Usuario: " + entry.user + " Password: " + entry.password);
+    }
+    //////////////
     //Nuevos usuarios de local al servidor:
     for(let local_user of local){
       not_common = true;
@@ -148,9 +170,13 @@ export class HomePage {
       }
     }
 
+    console.log("something_changed_server " + something_changed_server);
+    console.log("something_changed_local " + something_changed_local);
+
     if(something_changed_local)
       this.addUser(AppGlobals.USERS_LIST_LOCAL);
-    if(something_changed_server){}
+    if(something_changed_server)
+      console.log("Hay un usuario local que no está en servidor");
       //TODO: añadir actualizar servidor
   }
 

@@ -22,7 +22,13 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public dataAccess: DataaccessProvider) {
       //Datos de prueba para login: (borrar)
+      console.log("LOCAL:")
       for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
+        console.log("Usuario: " + entry.user + " Password: " + entry.password);
+      }
+
+      console.log("SERVER:")
+      for (let entry of AppGlobals.USERS_LIST.users) {
         console.log("Usuario: " + entry.user + " Password: " + entry.password);
       }
   }
@@ -30,18 +36,20 @@ export class LoginPage {
   //Comprueba si el login es válido:
   login(){
     //Itera los datos cargados en memoria:
-    for (let entry of AppGlobals.USERS_LIST.users) {
+    for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
       // Las credenciales son válidas:
       if((this.username == entry.user) && (this.password == entry.password)){
         AppGlobals.USER = entry.user;
         this.isValidLogin = true;
 
         //Comprueba los permisos que tiene:
-        for (let permissions of entry.accesibility){
-          if(permissions.role == "owner")
-            AppGlobals.IS_OWNER = true;
-          if(permissions.role == "reg")
-            AppGlobals.IS_REGISTER = true;
+        if(entry.accesibility != ''){
+          for (let permissions of entry.accesibility){
+            if(permissions.role == "owner")
+              AppGlobals.IS_OWNER = true;
+            if(permissions.role == "reg")
+              AppGlobals.IS_REGISTER = true;
+          }
         }
       }
     }//for
