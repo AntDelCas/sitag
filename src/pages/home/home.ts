@@ -41,17 +41,6 @@ export class HomePage {
           database.getUsersFromLocal().then(data => {
             if(data){
 
-              //////////////////////
-              console.log("DATA");
-              for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
-                console.log("Usuario: " + entry.user + " Password: " + entry.password);
-              }
-              console.log("SERVER:")
-              for (let entry of AppGlobals.USERS_LIST.users) {
-                console.log("Usuario: " + entry.user + " Password: " + entry.password);
-              }
-              //////////////////
-
               //<Sincronización de datos existentes en ambos puntos>
               for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
                 for (let server_user of AppGlobals.USERS_LIST.users) {
@@ -90,7 +79,11 @@ export class HomePage {
               //Actualiza la hora de última sincronización:
               AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
             }else{
+              //Si no existen datos en local pero si en la nube, los guarda en local y los carga en memoria:
               this.addUser(AppGlobals.USERS_LIST);
+              AppGlobals.USERS_LIST_LOCAL = AppGlobals.USERS_LIST;
+              //Actualiza la hora de última sincronización:
+              AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
             }
             //</Sincronización de datos existentes en ambos puntos>
 
@@ -101,6 +94,17 @@ export class HomePage {
       }else{
         //Utiliza los datos guardados en local (si existen):
         AppGlobals.NETWORK_AVAILABLE = false;
+
+        database.getUsersFromLocal().then(data => {
+          if(!data){
+            let alert = this.alertCtrl.create({
+              title: 'Aviso',
+              subTitle: 'No existen datos locales ni conexión a internet.',
+              buttons: ['OK']
+            });
+            alert.present();
+          }
+        });
       }
 
       //Registra un cambio en la disponibilidad de la red y lo notifica:
@@ -118,16 +122,7 @@ export class HomePage {
     something_changed_local = false;
 
     console.log("UsersUnion");
-    //////////////
-    for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
-      console.log("Usuario: " + entry.user + " Password: " + entry.password);
-    }
 
-    console.log("SERVER:")
-    for (let entry of AppGlobals.USERS_LIST.users) {
-      console.log("Usuario: " + entry.user + " Password: " + entry.password);
-    }
-    //////////////
     //Nuevos usuarios de local al servidor:
     for(let local_user of local){
       not_common = true;
@@ -206,7 +201,7 @@ export class HomePage {
     let loader = this.loadingCtrl.create();
     loader.present().then(()=>{
       let userList : string = JSON.stringify(user_list);
-      this.database.addUser(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
+      this.database.addUserToLocal(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
         this.toast.create({
           message: `Actualización de datos completada.`,
           duration: 3000
@@ -219,5 +214,6 @@ export class HomePage {
   //Función de pruebas (borrar):
   public deleteTable(){
     this.database.deleteUser();
+    AppGlobals.USERS_LIST_LOCAL = '';
   }
 }

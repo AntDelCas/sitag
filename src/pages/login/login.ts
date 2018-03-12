@@ -22,15 +22,16 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public dataAccess: DataaccessProvider) {
       //Datos de prueba para login: (borrar)
-      console.log("LOCAL:")
-      for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
-        console.log("Usuario: " + entry.user + " Password: " + entry.password);
-      }
 
-      console.log("SERVER:")
-      for (let entry of AppGlobals.USERS_LIST.users) {
-        console.log("Usuario: " + entry.user + " Password: " + entry.password);
-      }
+        console.log("LOCAL:")
+        for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
+          console.log("Usuario: " + entry.user + " Password: " + entry.password);
+        }
+
+        console.log("SERVER:")
+        for (let entry of AppGlobals.USERS_LIST.users) {
+          console.log("Usuario: " + entry.user + " Password: " + entry.password);
+        }
   }
 
   //Comprueba si el login es válido:

@@ -18,9 +18,8 @@
       <ion-label color="primary" floating>Password</ion-label>
       <ion-input type="password" formControlName="password"></ion-input>
     </ion-item>
-    
-    <button ion-button block type="submit" [disabled]="!myForm.valid">Register</button>
-    <button ion-button block (click)="cancel_register()" color="secondary">Cancel</button>
-  </form>
 
+    <button ion-button block type="submit" [disabled]="!myForm.valid">Register</button>
+  </form>
+    <button ion-button block (click)="cancel_register()" color="secondary">Cancel</button>
 </ion-content>

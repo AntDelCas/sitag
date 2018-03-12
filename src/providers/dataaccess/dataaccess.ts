@@ -56,7 +56,7 @@ export class DataaccessProvider {
     });
   }
 
-  addUser(data) {
+  addUserToServer(data) {
   return new Promise((resolve, reject) => {
     this.http.post(this.apiUrl+'/users', JSON.stringify(data))
       .subscribe(res => {
