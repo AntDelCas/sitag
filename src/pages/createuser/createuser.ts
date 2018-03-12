@@ -75,6 +75,10 @@ export class CreateuserPage {
           lastUpdate: this.dataAccess.timeStamp,
           accesibility: ''
         });
+
+        //Actualiza los datos en local:
+        this.addUser(AppGlobals.USERS_LIST_LOCAL);
+
         for(let prueba of AppGlobals.USERS_LIST_LOCAL.users)
           console.log("Usuario: " + prueba.user + " Password: " + prueba.password);
         console.log(AppGlobals.USERS_LIST_LOCAL.users);
@@ -128,7 +132,7 @@ export class CreateuserPage {
     let loader = this.loadingCtrl.create();
     loader.present().then(()=>{
       let userList : string = JSON.stringify(user_list);
-      this.database.addUser(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
+      this.database.addUserToLocal(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
         this.toast.create({
           message: `Actualización de datos completada.`,
           duration: 3000

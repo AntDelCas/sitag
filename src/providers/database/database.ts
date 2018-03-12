@@ -62,7 +62,7 @@ export class DatabaseProvider {
     })
   }
 
-  addUser(date:string, user:string){
+  addUserToLocal(date:string, user:string){
     this.deleteUser();
     console.log("addUser");
     return this.isReady()
