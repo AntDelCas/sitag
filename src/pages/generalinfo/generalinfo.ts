@@ -105,7 +105,7 @@ export class GeneralinfoPage {
         loader.dismiss();
       });
     });
-   });//prueba
+   });
   }
 
   ionViewDidLoad() {

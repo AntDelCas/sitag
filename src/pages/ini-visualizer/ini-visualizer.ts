@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
-import { GeneralinfoPage, AppGlobals, ToastController } from "../index.paginas";
-
+import { GeneralinfoPage, AppGlobals } from "../index.paginas";
+import { ToastController } from 'ionic-angular';
 //plugin
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -13,7 +13,11 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 })
 export class IniVisualizerPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private barcodeScanner: BarcodeScanner, private toastCtrl: ToastController) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private barcodeScanner: BarcodeScanner,
+    private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -21,8 +25,7 @@ export class IniVisualizerPage {
   }
 
 
-  start_scanning() {
-
+  start_scanning() {  //
     //this.navCtrl.push( GeneralinfoPage );
     console.log("Realizando escaneo ...");
 
@@ -33,7 +36,6 @@ export class IniVisualizerPage {
       console.error("Error: ", err);
       this.mostrar_toast("Error del scan: " + err);
     });
-
   }
 
 
@@ -50,7 +52,6 @@ export class IniVisualizerPage {
       duration: 3000
     });
     toast.present();
-
   }
 
 

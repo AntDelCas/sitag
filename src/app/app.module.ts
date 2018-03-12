@@ -8,14 +8,13 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { HomePage, LoginPage, LoginAsPage, CreateuserPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage, GeneralinfoPage, RegisterdirectoryPage, RegistersheetPage, RegisterreportPage, CustomizePage, ConfigPage, RegisterPage } from "../pages/index.paginas";
 
-//plugins
-import { BarcodeScanner } from '@ionic-native/barcode-scanner';
-
 
 import { MyApp } from './app.component';
 
 import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
 import { DatabaseProvider } from '../providers/database/database';
+//plugins
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { SQLite } from '@ionic-native/sqlite';
 
 @NgModule({
@@ -63,10 +62,10 @@ import { SQLite } from '@ionic-native/sqlite';
     StatusBar,
     SplashScreen,
     Network,
-    BarcodeScanner,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     DataaccessProvider,
     DatabaseProvider,
+    BarcodeScanner,
     SQLite
   ]
 })

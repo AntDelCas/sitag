@@ -27,11 +27,11 @@ export class LoginPage {
         for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
           console.log("Usuario: " + entry.user + " Password: " + entry.password);
         }
-
-        console.log("SERVER:")
-        for (let entry of AppGlobals.USERS_LIST.users) {
-          console.log("Usuario: " + entry.user + " Password: " + entry.password);
-        }
+        // console.log("SERVER:")
+        // for (let entry of AppGlobals.USERS_LIST.users) {
+        //   console.log("Usuario: " + entry.user + " Password: " + entry.password);
+        // }
+      ///////
   }
 
   //Comprueba si el login es válido:
