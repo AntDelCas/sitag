@@ -1,8 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { GeneralinfoPage, AppGlobals } from "../index.paginas";
-import { ToastController } from 'ionic-angular';
 //plugin
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -25,25 +24,21 @@ export class IniVisualizerPage {
   }
 
 
-  start_scanning() {  //
-    //this.navCtrl.push( GeneralinfoPage );
-    console.log("Realizando escaneo ...");
-
+  start_scanning() {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log("Datos del scan: ", barcodeData.text);
-      this.mostrar_toast("Datos del scan: " + barcodeData.text);
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
+      this.navCtrl.push( GeneralinfoPage );
     }, (err) => {
       console.error("Error: ", err);
       this.mostrar_toast("Error del scan: " + err);
     });
   }
 
-
   //Devuelve el nickname:
   get getUsername() {
     return AppGlobals.USER;
   }
-
 
   //mostrar ToastController
   mostrar_toast(mensaje: string) {
@@ -53,7 +48,5 @@ export class IniVisualizerPage {
     });
     toast.present();
   }
-
-
 
 }

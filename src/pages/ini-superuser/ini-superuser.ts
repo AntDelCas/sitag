@@ -1,7 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController } from 'ionic-angular';
 
 import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage, AppGlobals } from "../index.paginas";
+
+import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
+//plugin
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @Component({
   selector: 'page-ini-superuser',
@@ -9,7 +13,12 @@ import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, Regi
 })
 export class IniSuperuserPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private barcodeScanner: BarcodeScanner,
+    private toastCtrl: ToastController,
+    public genericFunction: GenericfunctionsProvider) {
   }
 
   ionViewDidLoad() {
@@ -25,12 +34,30 @@ export class IniSuperuserPage {
   }
 
   start_register() {
-    this.navCtrl.push(RegisterPage);
+    this.barcodeScanner.scan().then((barcodeData) => {
+      console.log("Datos del scan: ", barcodeData.text);
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
 
+      //Comprueba si tiene permisos para registrar el producto que se ha escaneado:
+      if(this.genericFunction.check_hasPermissions())
+          this.navCtrl.push( RegisterPage );
+      else
+        this.navCtrl.push( GeneralinfoPage );
+    }, (err) => {
+      console.error("Error: ", err);
+      this.genericFunction.mostrar_toast("Error del scan: " + err);
+    });
   }
 
   start_sacanning() {
-    this.navCtrl.push(GeneralinfoPage);
+    this.barcodeScanner.scan().then((barcodeData) => {
+      console.log("Datos del scan: ", barcodeData.text);
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
+      this.navCtrl.push( GeneralinfoPage );
+    }, (err) => {
+      console.error("Error: ", err);
+      this.genericFunction.mostrar_toast("Error del scan: " + err);
+    });
   }
 
   config() {
@@ -40,7 +67,6 @@ export class IniSuperuserPage {
   register_directory() {
     this.navCtrl.push(RegisterdirectoryPage);
   }
-
 
   //Devuelve el nickname:
   get getUsername() {

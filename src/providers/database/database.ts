@@ -38,9 +38,8 @@ export class DatabaseProvider {
 
   private createTables(){
     return this.database.executeSql(
-      `CREATE TABLE IF NOT EXISTS users (
-        date TEXT,
-        user TEXT
+      `CREATE TABLE IF NOT EXISTS default_schema (
+      schema TEXT
       );`
     ,{}).catch((err)=>console.log("Error creando la base de datos.", err));
   }
@@ -95,11 +94,53 @@ export class DatabaseProvider {
     })
   }
 
+  getSchemaFromLocal(){
+    console.log("getSchemaFromLocal()");
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql("SELECT * from default_schema", [])
+      .then((data)=>{
+
+        let default_schema : any = [];
+
+        if(data.rows.length == 0)
+          return false;
+
+        for(let i=0; i<data.rows.length; i++){
+          default_schema.push(data.rows.item(i));
+        }
+
+        AppGlobals.DEFAULT_SCHEMA = JSON.parse(default_schema[0].schema);
+
+        return true;
+      })
+    })
+  }
+
+  addSchemaToLocal(schema:string){
+    this.deleteSchema();
+    console.log("addSchema");
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql('INSERT INTO default_schema(schema) VALUES (?);', [schema]).then((result)=>{
+      })
+    });
+  }
+
   deleteUser(){
     console.log("deleteUser()")
     return this.isReady()
     .then(()=>{
       return this.database.executeSql("DELETE FROM users", []).then((data)=>{
+      });
+    })
+  }
+
+  deleteSchema(){
+    console.log("deleteSchema()")
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql("DELETE FROM default_schema", []).then((data)=>{
       });
     })
   }

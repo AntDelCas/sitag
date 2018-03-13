@@ -40,7 +40,6 @@ export class HomePage {
           //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
           database.getUsersFromLocal().then(data => {
             if(data){
-
               //<Sincronización de datos existentes en ambos puntos>
               for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
                 for (let server_user of AppGlobals.USERS_LIST.users) {
@@ -90,6 +89,17 @@ export class HomePage {
             //Sincronización de usuarios NO existentes en ambos puntos:
             this.usersUnion(AppGlobals.USERS_LIST_LOCAL.users, AppGlobals.USERS_LIST.users);
           });
+
+        //Si no existe el modelo por defecto del esquema lo carga en memoria y guarda en local:
+        }).then(data =>{
+          database.getSchemaFromLocal().then(data => {
+            if(!data){
+              dataAccess.getSchema().then(data => {
+                AppGlobals.DEFAULT_SCHEMA = data;
+                this.addSchemaToLocal(data);
+              });
+            }
+          });
         });
       }else{
         //Utiliza los datos guardados en local (si existen):
@@ -104,6 +114,9 @@ export class HomePage {
             });
             alert.present();
           }
+        }).then(data => {
+          //Carga los datos del esquema guardados en local en memoria:
+          database.getSchemaFromLocal().then(data => {});
         });
       }
 
@@ -204,6 +217,20 @@ export class HomePage {
       this.database.addUserToLocal(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
         this.toast.create({
           message: `Actualización de datos completada.`,
+          duration: 3000
+        }).present();
+      });
+      loader.dismiss();
+    });
+  }
+
+  public addSchemaToLocal(donwloaded_schema:any){
+    let loader = this.loadingCtrl.create();
+    loader.present().then(()=>{
+      let schema : string = JSON.stringify(donwloaded_schema);
+      this.database.addSchemaToLocal(schema).then((list)=>{
+        this.toast.create({
+          message: `Esquema predeterminado descargado.`,
           duration: 3000
         }).present();
       });

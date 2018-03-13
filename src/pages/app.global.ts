@@ -17,6 +17,12 @@ export class AppGlobals {
   //Última sincronización de datos con el servidor:
   static LAST_SYNCHRO: string;
 
+  //Esquema de productos por defecto
+  static DEFAULT_SCHEMA: any;
+
+  //Etiqueta del producto
+  static PRODUCT_LABEL: string;
+
   //Permisos máximos sobre los objetos:
   static IS_REGISTER: boolean = false;
   static IS_OWNER: boolean = false;

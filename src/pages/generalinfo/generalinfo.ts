@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, LoadingController } from 'ionic-angular';
 import { AppGlobals } from "../index.paginas";
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
-import { LoadingController } from 'ionic-angular';
+
 
 @Component({
   selector: 'page-generalinfo',
@@ -34,6 +34,8 @@ export class GeneralinfoPage {
     public loadingCtrl: LoadingController)
   {
     let loader = this.loadingCtrl.create({});
+    //TODO: se hace la petición al servidor con el contenido de AppGlobals.PRODUCT_LABEL
+    //TODO: se descarga el esquema en función al referenciado por el producto escaneado.
 
     //Muestra un pop-up de carga mientras la información no está disponible:
     loader.present().then(() => {
@@ -115,5 +117,10 @@ export class GeneralinfoPage {
   //Devuelve el nickname:
   get getUsername() {
    return AppGlobals.USER;
+  }
+
+  //Devuelve el label del producto:
+  get getProductLabel() {
+   return AppGlobals.PRODUCT_LABEL;
   }
 }

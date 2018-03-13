@@ -12,8 +12,8 @@ export { RegisterreportPage } from "./registerreport/registerreport";
 export { CustomizePage } from "./customize/customize";
 export { ConfigPage } from "./config/config";
 export { RegisterPage } from "./register/register";
-// export { ToastController } from 'ionic-angular';
 
+// export { ToastController } from 'ionic-angular';
 // export { DataaccessProvider } from '../providers/dataaccess/dataaccess';
 
 export { AppGlobals } from "./app.global";

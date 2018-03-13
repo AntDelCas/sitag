@@ -1,8 +1,11 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 
-import { RegisterPage, RegisterdirectoryPage, AppGlobals } from "../index.paginas";
+import { RegisterPage, RegisterdirectoryPage, GeneralinfoPage, AppGlobals } from "../index.paginas";
 
+import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
+//plugin
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 @Component({
   selector: 'page-ini-register',
@@ -10,7 +13,13 @@ import { RegisterPage, RegisterdirectoryPage, AppGlobals } from "../index.pagina
 })
 export class IniRegisterPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(
+    public navCtrl: NavController,
+    public navParams: NavParams,
+    private barcodeScanner: BarcodeScanner,
+    private toastCtrl: ToastController,
+    public loadingCtrl: LoadingController,
+    public genericFunction: GenericfunctionsProvider) {
   }
 
   ionViewDidLoad() {
@@ -18,13 +27,24 @@ export class IniRegisterPage {
   }
 
   start_register() {
-    this.navCtrl.push( RegisterPage );
+    this.barcodeScanner.scan().then((barcodeData) => {
+      console.log("Datos del scan: ", barcodeData.text);
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
+
+      //Comprueba si tiene permisos para registrar el producto que se ha escaneado:
+      if(this.genericFunction.check_hasPermissions())
+          this.navCtrl.push( RegisterPage );
+      else
+        this.navCtrl.push( GeneralinfoPage );
+    }, (err) => {
+      console.error("Error: ", err);
+      this.genericFunction.mostrar_toast("Error del scan: " + err);
+    });
   }
 
   register_directory() {
     this.navCtrl.push( RegisterdirectoryPage );
   }
-
 
   //Devuelve el nickname:
   get getUsername() {

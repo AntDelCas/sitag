@@ -16,6 +16,8 @@ import { DatabaseProvider } from '../providers/database/database';
 //plugins
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { SQLite } from '@ionic-native/sqlite';
+import { GenericfunctionsProvider } from '../providers/genericfunctions/genericfunctions';
+
 
 @NgModule({
   declarations: [
@@ -66,7 +68,8 @@ import { SQLite } from '@ionic-native/sqlite';
     DataaccessProvider,
     DatabaseProvider,
     BarcodeScanner,
-    SQLite
+    SQLite,
+    GenericfunctionsProvider,
   ]
 })
 export class AppModule {}
