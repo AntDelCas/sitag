@@ -58,6 +58,7 @@ export class HomePage {
 
                       //Unifica los items escaneados y sus permisos:
                       local_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
+
                       this.addUser(AppGlobals.USERS_LIST_LOCAL);
                     }else{
                       if(user_list_date.getMilliseconds() != user_list_local_date.getMilliseconds()){
@@ -89,12 +90,11 @@ export class HomePage {
             //Sincronización de usuarios NO existentes en ambos puntos:
             this.usersUnion(AppGlobals.USERS_LIST_LOCAL.users, AppGlobals.USERS_LIST.users);
           });
-
         //Si no existe el modelo por defecto del esquema lo carga en memoria y guarda en local:
         }).then(data =>{
           database.getSchemaFromLocal().then(data => {
             if(!data){
-              dataAccess.getSchema().then(data => {
+              dataAccess.getSchema('0000').then(data => {
                 AppGlobals.DEFAULT_SCHEMA = data;
                 this.addSchemaToLocal(data);
               });
@@ -241,6 +241,7 @@ export class HomePage {
   //Función de pruebas (borrar):
   public deleteTable(){
     this.database.deleteUser();
+    this.database.deleteRegister();
     AppGlobals.USERS_LIST_LOCAL = '';
   }
 }

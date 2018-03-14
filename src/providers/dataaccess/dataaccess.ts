@@ -35,7 +35,7 @@ export class DataaccessProvider {
   }
 
   //Carga esquema para el control de elementos
-  getSchema() {
+  getSchema(identifier : string) {
   return new Promise(resolve => {
     this.http.get(this.apiUrl+'5a9fa3402e0000100074d123').subscribe(data => {
       resolve(data);
@@ -46,7 +46,7 @@ export class DataaccessProvider {
   }
 
   //Carga los datos del producto:
-  getGeneralInfo(){
+  getProductInfo(label : string){
     return new Promise(resolve => {
       this.http.get(this.apiUrl+'5a9d3e82310000dc1dab5327').subscribe(data => {
         resolve(data);

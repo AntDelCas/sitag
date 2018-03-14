@@ -11,7 +11,10 @@ export class AppGlobals {
   //Lista de usuarios existente en local:
   static USERS_LIST_LOCAL: any;
 
-  //Usuario logueado:
+  //Permisos que tiene el usuario sobre los productos:
+  static USER_ACCESIBILITY: any;
+
+  //Nombre usuario logueado:
   static USER: string;
 
   //Última sincronización de datos con el servidor:
@@ -19,6 +22,9 @@ export class AppGlobals {
 
   //Esquema de productos por defecto
   static DEFAULT_SCHEMA: any;
+
+  //Datos registrados aún no enviados a la nube:
+  static REGISTER_SHEET: any;
 
   //Etiqueta del producto
   static PRODUCT_LABEL: string;

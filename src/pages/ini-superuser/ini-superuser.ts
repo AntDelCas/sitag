@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
 import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage, AppGlobals } from "../index.paginas";
 
@@ -18,6 +18,7 @@ export class IniSuperuserPage {
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
     private toastCtrl: ToastController,
+    public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
   }
 
@@ -42,7 +43,16 @@ export class IniSuperuserPage {
       if(this.genericFunction.check_hasPermissions())
           this.navCtrl.push( RegisterPage );
       else
-        this.navCtrl.push( GeneralinfoPage );
+        if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
+          this.navCtrl.push( GeneralinfoPage );
+        else{
+          let alert = this.alertCtrl.create({
+            title: '¡Error!',
+            subTitle: 'No tienes permisos para visualizar este producto.',
+            buttons: ['OK']
+          });
+          alert.present();
+        }
     }, (err) => {
       console.error("Error: ", err);
       this.genericFunction.mostrar_toast("Error del scan: " + err);

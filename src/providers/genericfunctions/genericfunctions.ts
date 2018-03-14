@@ -42,4 +42,20 @@ export class GenericfunctionsProvider {
     return false;
   }
 
+  //Carga en memoria la accesibilidad del usuario actual:
+  public getAccesibility(){
+    for(let user of AppGlobals.USERS_LIST_LOCAL.users){
+      if(AppGlobals.USER == user.user)
+        AppGlobals.USER_ACCESIBILITY = user.accesibility;
+    }
+  }
+
+  //Comprueba si tiene los permisos mínimos para visualizar el producto:
+  public check_isVisualizer(label : string){
+    for(let current_label of AppGlobals.USER_ACCESIBILITY){
+      if(current_label.register == label)
+        return true;
+    }
+    return false;
+  }
 }

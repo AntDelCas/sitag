@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController } from 'ionic-angular';
+import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
 
 import { GeneralinfoPage, AppGlobals } from "../index.paginas";
+
+import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 //plugin
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
@@ -16,7 +18,9 @@ export class IniVisualizerPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController) {
+    private toastCtrl: ToastController,
+    public alertCtrl: AlertController,
+    public genericFunction: GenericfunctionsProvider) {
   }
 
   ionViewDidLoad() {
@@ -28,7 +32,17 @@ export class IniVisualizerPage {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log("Datos del scan: ", barcodeData.text);
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
-      this.navCtrl.push( GeneralinfoPage );
+
+      if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
+        this.navCtrl.push( GeneralinfoPage );
+      else{
+        let alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: 'No tienes permisos para visualizar este producto.',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
     }, (err) => {
       console.error("Error: ", err);
       this.mostrar_toast("Error del scan: " + err);

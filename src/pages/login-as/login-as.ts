@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 
+import { DatabaseProvider } from '../../providers/database/database';
+
 import { IniVisualizerPage, IniRegisterPage, IniSuperuserPage, AppGlobals, LoginPage } from "../index.paginas";
 
 
@@ -12,7 +14,8 @@ export class LoginAsPage {
 
   constructor(
     public navCtrl: NavController,
-    public navParams: NavParams) {
+    public navParams: NavParams,
+    public database:DatabaseProvider) {
   }
 
   ionViewDidLoad() {
@@ -25,11 +28,15 @@ export class LoginAsPage {
   }
 
   nav_register(){
-    this.navCtrl.push ( IniRegisterPage );
+    this.database.getRegisterFromLocal(AppGlobals.USER).then(data => {
+      this.navCtrl.push ( IniRegisterPage );
+    });
   }
 
   nav_superuser(){
-    this.navCtrl.push ( IniSuperuserPage );
+    this.database.getRegisterFromLocal(AppGlobals.USER).then(data => {
+      this.navCtrl.push ( IniSuperuserPage );
+    });
   }
 
   logOff(){

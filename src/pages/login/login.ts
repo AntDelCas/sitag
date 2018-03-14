@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
+import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 
 import { HomePage, LoginAsPage, CreateuserPage, IniVisualizerPage, AppGlobals } from "../index.paginas";
 
@@ -20,9 +21,9 @@ export class LoginPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     public alertCtrl: AlertController,
-    public dataAccess: DataaccessProvider) {
-      //Datos de prueba para login: (borrar)
-
+    public dataAccess: DataaccessProvider,
+    public genericFunction: GenericfunctionsProvider) {
+        //Datos de prueba para login: (borrar)
         console.log("LOCAL:")
         for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
           console.log("Usuario: " + entry.user + " Password: " + entry.password);
@@ -43,6 +44,9 @@ export class LoginPage {
         AppGlobals.USER = entry.user;
         this.isValidLogin = true;
 
+        //Carga en memoria la accesibilidad del usuario:
+        this.genericFunction.getAccesibility();
+        
         //Comprueba los permisos que tiene:
         if(entry.accesibility != ''){
           for (let permissions of entry.accesibility){

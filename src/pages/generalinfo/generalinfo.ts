@@ -9,22 +9,9 @@ import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
   templateUrl: 'generalinfo.html',
 })
 export class GeneralinfoPage {
-  // "idSchema": "0000",
-  // "type": "computers",
-  // "label": "EQUCOM_ASUS_551C_PC_LP_05_16_007661_0_000",
-  // "dateTime": "",
-  // "countAttributes": "12",
-  // "attributes"
-  // ===== Attributos: =====
-  // "name": "name",
-  // "value": "Portátil ASUS",
-  // "category": "",
-  // "subcategory": "",
-  // "control": "",
-  // "pattern": "",
-  // "comments": ""
   general_info: any;
   schema: any;
+  schema_identifier: string;
   ordered_data : any = [];
 
   constructor(
@@ -39,13 +26,12 @@ export class GeneralinfoPage {
 
     //Muestra un pop-up de carga mientras la información no está disponible:
     loader.present().then(() => {
-      dataAccess.getSchema().then(data => {
-        this.schema = data;
-      }).then(data => {
-
-      dataAccess.getGeneralInfo().then(data => {
+      dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
         this.general_info = data;
-
+        this.schema_identifier = this.general_info.registers[0].idSchema;
+      }).then(data => {
+        dataAccess.getSchema(this.schema_identifier).then(data => {
+          this.schema = data;
         //Comprueba el ID del esquema que coincide con los datos de productos descargados.
         //Carga "category" y "subcategory" en el JSON de producto utilizando los datos del esquema para identificar cada atributo.
         if(this.general_info.registers[0].idSchema == this.schema.registers[0].idSchema){

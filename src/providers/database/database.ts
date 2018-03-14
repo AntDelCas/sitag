@@ -38,11 +38,29 @@ export class DatabaseProvider {
 
   private createTables(){
     return this.database.executeSql(
-      `CREATE TABLE IF NOT EXISTS default_schema (
-      schema TEXT
+      `CREATE TABLE IF NOT EXISTS users (
+        date TEXT,
+        user TEXT
       );`
-    ,{}).catch((err)=>console.log("Error creando la base de datos.", err));
+    ,{}).then(()=>{
+      return this.database.executeSql(
+        `CREATE TABLE IF NOT EXISTS default_schema (
+          schema TEXT
+        );`
+      ,{})
+    }).then(()=>{
+      return this.database.executeSql(
+        `CREATE TABLE IF NOT EXISTS register_sheet (
+          user TEXT,
+          register TEXT
+        );`
+      ,{})
+    })
+    .catch((err)=>console.log("Error creando la base de datos.", err));
   }
+
+
+
 
   private isReady(){
     return new Promise((resolve) =>{
@@ -61,6 +79,7 @@ export class DatabaseProvider {
     })
   }
 
+  /////////// USERS
   addUserToLocal(date:string, user:string){
     this.deleteUser();
     console.log("addUser");
@@ -75,7 +94,7 @@ export class DatabaseProvider {
     console.log("getUsersJSON()");
     return this.isReady()
     .then(()=>{
-      return this.database.executeSql("SELECT * from users", [])
+      return this.database.executeSql("SELECT * FROM users", [])
       .then((data)=>{
 
         let usersJSON : any = [];
@@ -94,11 +113,22 @@ export class DatabaseProvider {
     })
   }
 
+  deleteUser(){
+    console.log("deleteUser()")
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql("DELETE FROM users", []).then((data)=>{
+      });
+    })
+  }
+
+
+  /////////// SCHEMA
   getSchemaFromLocal(){
     console.log("getSchemaFromLocal()");
     return this.isReady()
     .then(()=>{
-      return this.database.executeSql("SELECT * from default_schema", [])
+      return this.database.executeSql("SELECT * FROM default_schema", [])
       .then((data)=>{
 
         let default_schema : any = [];
@@ -127,20 +157,54 @@ export class DatabaseProvider {
     });
   }
 
-  deleteUser(){
-    console.log("deleteUser()")
-    return this.isReady()
-    .then(()=>{
-      return this.database.executeSql("DELETE FROM users", []).then((data)=>{
-      });
-    })
-  }
-
   deleteSchema(){
     console.log("deleteSchema()")
     return this.isReady()
     .then(()=>{
       return this.database.executeSql("DELETE FROM default_schema", []).then((data)=>{
+      });
+    })
+  }
+
+  /////////// REGISTER
+  getRegisterFromLocal(user : string){
+    console.log("getRegisterFromLocal()");
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql("SELECT * FROM register_sheet WHERE user=?", [user])
+      .then((data)=>{
+
+        let register_sheet : any = [];
+
+        if(data.rows.length == 0)
+          return false;
+
+        for(let i=0; i<data.rows.length; i++){
+          register_sheet.push(data.rows.item(i));
+        }
+
+        AppGlobals.REGISTER_SHEET = JSON.parse(register_sheet[0].schema);
+
+        return true;
+      })
+    })
+  }
+
+  addRegisterToLocal(user:string, register:string){
+    this.deleteSchema();
+    console.log("addSchema");
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql('INSERT INTO register_sheet(user,register) VALUES (?,?);', [user,register]).then((result)=>{
+      })
+    });
+  }
+
+  deleteRegister(){
+    console.log("deleteRegister()")
+    return this.isReady()
+    .then(()=>{
+      return this.database.executeSql("DELETE FROM register_sheet", []).then((data)=>{
       });
     })
   }
