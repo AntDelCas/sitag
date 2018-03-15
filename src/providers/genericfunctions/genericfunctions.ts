@@ -1,8 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { ToastController } from 'ionic-angular';
+import { ToastController, AlertController } from 'ionic-angular';
 import { AppGlobals } from "../../pages/index.paginas";
+import { DatabaseProvider } from "../database/database";
 /*
   Generated class for the GenericfunctionsProvider provider.
 
@@ -14,7 +15,9 @@ export class GenericfunctionsProvider {
 
   constructor(
     public http: HttpClient,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController,
+    public database:DatabaseProvider,
+    public alertCtrl: AlertController
   ){
     console.log('Hello GenericfunctionsProvider Provider');
   }
@@ -55,6 +58,21 @@ export class GenericfunctionsProvider {
     for(let current_label of AppGlobals.USER_ACCESIBILITY){
       if(current_label.register == label)
         return true;
+    }
+    return false;
+  }
+
+  public alreadyRegistered(){
+    console.log("alreadyRegistered");
+    //Intenta cargar en memoria datos de la base de datos en local:
+    this.database.getRegisterFromLocal(AppGlobals.USER);
+
+    if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0){
+      return false;
+    }else{
+      for(let reg of AppGlobals.REGISTER_SHEET.registers)
+        if(AppGlobals.PRODUCT_LABEL == reg.label)
+          return true;
     }
     return false;
   }

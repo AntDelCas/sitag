@@ -56,9 +56,22 @@ export class DataaccessProvider {
     });
   }
 
+  //Añade los datos de usuario al servidor:
   addUserToServer(data) {
   return new Promise((resolve, reject) => {
-    this.http.post(this.apiUrl+'/users', JSON.stringify(data))
+    this.http.post(this.apiUrl+'users', JSON.stringify(data))
+      .subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+  }
+
+  //Añade los datos del registro al servidor:
+  addRegisterToServer(data) {
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'register', JSON.stringify(data))
       .subscribe(res => {
         resolve(res);
       }, (err) => {

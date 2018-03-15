@@ -171,9 +171,8 @@ export class DatabaseProvider {
     console.log("getRegisterFromLocal()");
     return this.isReady()
     .then(()=>{
-      return this.database.executeSql("SELECT * FROM register_sheet WHERE user=?", [user])
+      return this.database.executeSql("SELECT * FROM register_sheet WHERE user = ?", [user])
       .then((data)=>{
-
         let register_sheet : any = [];
 
         if(data.rows.length == 0)
@@ -183,19 +182,19 @@ export class DatabaseProvider {
           register_sheet.push(data.rows.item(i));
         }
 
-        AppGlobals.REGISTER_SHEET = JSON.parse(register_sheet[0].schema);
-
+        AppGlobals.REGISTER_SHEET = JSON.parse(register_sheet[0].register);
         return true;
       })
     })
   }
 
   addRegisterToLocal(user:string, register:string){
-    this.deleteSchema();
-    console.log("addSchema");
+    this.deleteRegister();
+    console.log("addRegisterToLocal");
     return this.isReady()
     .then(()=>{
       return this.database.executeSql('INSERT INTO register_sheet(user,register) VALUES (?,?);', [user,register]).then((result)=>{
+        console.log(result);
       })
     });
   }

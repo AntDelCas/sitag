@@ -34,6 +34,14 @@ export class IniRegisterPage {
 
       //Comprueba si tiene permisos para registrar el producto que se ha escaneado:
       if(this.genericFunction.check_hasPermissions())
+        if(this.genericFunction.alreadyRegistered()){
+          let alert = this.alertCtrl.create({
+            title: '¡Error!',
+            subTitle: 'Ese producto ya ha sido registrado.',
+            buttons: ['OK']
+          });
+          alert.present();
+        }else
           this.navCtrl.push( RegisterPage );
       else
         if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))

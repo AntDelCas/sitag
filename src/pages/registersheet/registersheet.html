@@ -15,30 +15,14 @@
 
   <p>Register Directory</p>
 
-  <p>CM10005_0517_008D_10_MC_EC_RF_520001<br> Register date: 20180130 12:05:12<br>State: active<br>
-    Description/Incidents: OK<br>
-    Test ID: T1234t<br>
-    Warranty: 20200130
-  </p>
-
-  <p>CM10005_0517_008D_10_MC_EC_RF_520002<br> Register date: 20180130 12:05:12<br>State: active<br>
-    Description/Incidents: OK<br>
-    Test ID: T1234t<br>
-    Warranty: 20200130
-  </p>
-
-  <p>CM10005_0517_008D_10_MC_EC_RF_520003<br> Register date: 20180130 12:05:12<br>State: active<br>
-    Description/Incidents: OK<br>
-    Test ID: T1234t<br>
-    Warranty: 20200130
-  </p>
-
-  <p>CM10005_0517_008D_10_MC_EC_RF_520004<br> Register date: 20180130 12:05:12<br>State: active<br>
-    Description/Incidents: OK<br>
-    Test ID: T1234t<br>
-    Warranty: 20200130
-  </p>
-
-
-
+  <div *ngIf="register_sheet">
+    <div *ngFor="let register of register_sheet">
+      <b>{{register.label}}</b>
+      <b Text-Capitalize>{{register.type}}</b>
+      <div *ngFor="let attributes of register.attributes">
+        {{attributes.name}}: {{attributes.value}}
+      </div>
+      <br>
+    </div>
+  </div>
 </ion-content>

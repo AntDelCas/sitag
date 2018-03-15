@@ -3,11 +3,11 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { LoadingController } from 'ionic-angular';
 
-import { AppGlobals } from "../index.paginas";
+import { IniRegisterPage, AppGlobals } from "../index.paginas";
 
 import { DatabaseProvider } from '../../providers/database/database';
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
-
+import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 
 
 @Component({
@@ -27,7 +27,8 @@ export class RegisterPage {
     public dataAccess: DataaccessProvider,
     public alertCtrl: AlertController,
     public loadingCtrl: LoadingController,
-    public database:DatabaseProvider)
+    public database:DatabaseProvider,
+    public genericFunction: GenericfunctionsProvider)
   {
     //Carga elementos a rellenar del esquema:
     let loader = this.loadingCtrl.create({});
@@ -45,8 +46,6 @@ export class RegisterPage {
             for(let element of this.schema.registers[0].attributes){
               this.elements.push(element.name);
             }
-
-            console.log(this.general_info);
             loader.dismiss();
           });
         });
@@ -65,90 +64,6 @@ export class RegisterPage {
         }
       }
     }
-    //////////////////////////////////
-    AppGlobals.REGISTER_SHEET =
-{
-user: "j.ignacio",
-countRegisters: "2",
-lastModified: "2018-01-30 12:55:55",
-registers: [
-{
-idSchema: "0000",
-type: "computers",
-label: "EQUCOM_ASUS_551C_PC_LP_05_16_007660_1_000",
-dateTime: "2018-01-30 12:55:55",
-countAttributes: "2",
-attributes: [
-{
-name: "latitude",
-value: "36.52",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-},
-{
-name: "longitude",
-value: "-6.22",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-}
-]
-},
-{
-idSchema: "0000",
-type: "computers",
-label: "EQUCOM_ASUS_551C_PC_LP_05_16_007661_0_000",
-dateTime: "2018-01-30 12:55:55",
-countAttributes: "10",
-attributes: [
-{
-name: "name",
-value: "Portátil ASUS",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-},
-{
-name: "family",
-value: "Activo de Sinapse",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-},
-{
-name: "type",
-value: "PC",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-},
-{
-name: "longitude",
-value: "-6.22",
-category: "",
-subcategory: "",
-control: "",
-pattern: "",
-comments: ""
-}
-]
-}
-]
-}
-;
-
-    /////////////////////////////////////
   }
 
   ionViewDidLoad() {
@@ -159,18 +74,45 @@ comments: ""
     //Extrae las claves generadas en el form:
     let ngForm_keys = Object.keys(data.value);
 
+    //Guarda en memoria los datos introducidos por el usuario:
+    //if(si no existe ningún registro) else (hay al menos un registro en memoria)
     if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0){
-      // AppGlobals.REGISTER_SHEET.user = AppGlobals.USER;
-      // AppGlobals.REGISTER_SHEET.countRegisters = '1';
-      // AppGlobals.REGISTER_SHEET.lastModified = this.general_info.lastModified;
-      // AppGlobals.REGISTER_SHEET.registers.push(
-      //   idSchema: ''
-      // );
+        let attributes:any = [];
 
-      console.log(AppGlobals.REGISTER_SHEET);
+        for (let key of ngForm_keys){
+          attributes.push({
+            name: key,
+            value: data.value[key],
+            category: "",
+            subcategory: "",
+            control: "",
+            pattern: "",
+            comments: "" });
+        }
+
+      AppGlobals.REGISTER_SHEET =
+        {
+        user: AppGlobals.USER,
+        countRegisters: "1",
+        lastModified: this.general_info.lastModified,
+        registers: [
+        {
+        idSchema: this.general_info.registers[0].idSchema,
+        type: this.general_info.registers[0].type,
+        label: AppGlobals.PRODUCT_LABEL,
+        dateTime: this.general_info.registers[0].dateTime,
+        countAttributes: attributes.length.toString(),
+        attributes: attributes
+        },
+        ]
+        };
     }else{
-      console.log("Else");
       let attributes:any = [];
+
+      let countRegisters:number = AppGlobals.REGISTER_SHEET.countRegisters;
+      countRegisters++;
+
+      AppGlobals.REGISTER_SHEET.countRegisters = countRegisters.toString();
 
       for (let key of ngForm_keys){
           attributes.push({
@@ -182,28 +124,19 @@ comments: ""
             pattern: "",
             comments: "" });
       }
-
-      console.log(AppGlobals.REGISTER_SHEET);
-
-      // console.log("Atributes:");
-      // console.log(attributes);
-
-        AppGlobals.REGISTER_SHEET.push({
-            idSchema: '5555',
-            type: 'mices',
-            label: 'talCual',
-            dateTime: 'DD/MM/AAAA',
-            countAttributes: '+1',
-            attributes: attributes
+        AppGlobals.REGISTER_SHEET.registers.push({
+          idSchema: this.general_info.registers[0].idSchema,
+          type: this.general_info.registers[0].type,
+          label: AppGlobals.PRODUCT_LABEL,
+          dateTime: this.general_info.registers[0].dateTime,
+          countAttributes: attributes.length.toString(),
+          attributes: attributes
         });
-
-      console.log(AppGlobals.REGISTER_SHEET);
     }
 
-    // for (let key of ngForm_keys){
-    //   console.log("Key: " + key);
-    //   console.log("Value: " + data.value[key]);
-    // }
+    this.database.addRegisterToLocal(AppGlobals.USER, JSON.stringify(AppGlobals.REGISTER_SHEET));
+    this.genericFunction.mostrar_toast('Datos de registro guardados.');
+    this.navCtrl.push ( IniRegisterPage );
   }
 
   //Devuelve el nickname:
