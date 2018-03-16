@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, LoadingController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 
-import { RegisterPage, RegisterdirectoryPage, GeneralinfoPage, AppGlobals } from "../index.paginas";
+import { RegisterPage, RegisterdirectoryPage, GeneralinfoPage, AppGlobals, LoginAsPage } from "../index.paginas";
 
 import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 //plugin
@@ -17,7 +17,6 @@ export class IniRegisterPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController,
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
@@ -67,6 +66,10 @@ export class IniRegisterPage {
   //Devuelve el nickname:
   get getUsername() {
    return AppGlobals.USER;
+  }
+
+  backHome(){
+    this.navCtrl.push ( LoginAsPage );
   }
 
 }

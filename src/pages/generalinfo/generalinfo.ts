@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController } from 'ionic-angular';
-import { AppGlobals } from "../index.paginas";
+import { AppGlobals, LoginAsPage } from "../index.paginas";
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
 
 
@@ -108,5 +108,9 @@ export class GeneralinfoPage {
   //Devuelve el label del producto:
   get getProductLabel() {
    return AppGlobals.PRODUCT_LABEL;
+  }
+
+  backHome(){
+    this.navCtrl.push ( LoginAsPage );
   }
 }

@@ -46,7 +46,7 @@ export class LoginPage {
 
         //Carga en memoria la accesibilidad del usuario:
         this.genericFunction.getAccesibility();
-        
+
         //Comprueba los permisos que tiene:
         if(entry.accesibility != ''){
           for (let permissions of entry.accesibility){
@@ -54,6 +54,8 @@ export class LoginPage {
               AppGlobals.IS_OWNER = true;
             if(permissions.role == "reg")
               AppGlobals.IS_REGISTER = true;
+            if(permissions.role == "vis")
+              AppGlobals.IS_VISUALIZER = true;
           }
         }
       }

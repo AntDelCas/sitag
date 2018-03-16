@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title>Register Report</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="backHome()">
+        <ion-icon name="md-home"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -15,10 +20,10 @@
 
     <p>Register Report</p>
 
-    <p>Register name: j.ignacio<br>
-      Register start: 20180130 12:05:12<br>
-      Register ending: 20180130 13:00:00<br>
-      Number of register: 50
+    <p><b>Register name</b>: {{getUsername}}<br>
+      <b>Register start</b>: {{register_start}}<br>
+      <b>Register ending</b>: {{register_ending}}<br>
+      <b>Number of register</b>: {{countRegisters}}
     </p>
 
 </ion-content>

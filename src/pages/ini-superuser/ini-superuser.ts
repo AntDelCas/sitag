@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage, AppGlobals } from "../index.paginas";
+import { GeneralinfoPage, RegisterdirectoryPage, CustomizePage, ConfigPage, RegisterPage, AppGlobals, LoginAsPage } from "../index.paginas";
 
 import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 //plugin
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { DataaccessProvider } from "../../providers/dataaccess/dataaccess";
 
 @Component({
   selector: 'page-ini-superuser',
@@ -17,9 +18,9 @@ export class IniSuperuserPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController,
     public alertCtrl: AlertController,
-    public genericFunction: GenericfunctionsProvider) {
+    public genericFunction: GenericfunctionsProvider,
+    public dataAccess: DataaccessProvider) {
   }
 
   ionViewDidLoad() {
@@ -27,20 +28,46 @@ export class IniSuperuserPage {
   }
 
   download_schemas() {
-
+    this.dataAccess.getAllSchemas().then(data =>{
+      AppGlobals.SCHEMA_LIST = data;
+      this.genericFunction.mostrar_toast('Lista de esquemas descargados.');
+      console.log(AppGlobals.SCHEMA_LIST);
+    });
   }
 
   customize() {
-    this.navCtrl.push(CustomizePage);
+    this.barcodeScanner.scan().then((barcodeData) => {
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
+
+      //Comprueba si tiene permisos para registrar el producto que se ha escaneado:
+      if(this.genericFunction.check_isOwner())
+        this.navCtrl.push(CustomizePage);
+      else{
+        let alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: 'No tienes permisos para visualizar este producto.',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+    });
+
   }
 
   start_register() {
     this.barcodeScanner.scan().then((barcodeData) => {
-      console.log("Datos del scan: ", barcodeData.text);
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
 
       //Comprueba si tiene permisos para registrar el producto que se ha escaneado:
       if(this.genericFunction.check_hasPermissions())
+        if(this.genericFunction.alreadyRegistered()){
+          let alert = this.alertCtrl.create({
+            title: '¡Error!',
+            subTitle: 'Ese producto ya ha sido registrado.',
+            buttons: ['OK']
+          });
+          alert.present();
+        }else
           this.navCtrl.push( RegisterPage );
       else
         if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
@@ -63,7 +90,17 @@ export class IniSuperuserPage {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log("Datos del scan: ", barcodeData.text);
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
-      this.navCtrl.push( GeneralinfoPage );
+
+      if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
+        this.navCtrl.push( GeneralinfoPage );
+      else{
+        let alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: 'No tienes permisos para visualizar este producto.',
+          buttons: ['OK']
+        });
+        alert.present();
+      }
     }, (err) => {
       console.error("Error: ", err);
       this.genericFunction.mostrar_toast("Error del scan: " + err);
@@ -83,6 +120,8 @@ export class IniSuperuserPage {
    return AppGlobals.USER;
   }
 
-
+  backHome(){
+    this.navCtrl.push ( LoginAsPage );
+  }
 
 }

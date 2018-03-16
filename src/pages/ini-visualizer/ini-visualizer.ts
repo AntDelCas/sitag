@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, ToastController, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController } from 'ionic-angular';
 
-import { GeneralinfoPage, AppGlobals } from "../index.paginas";
+import { GeneralinfoPage, AppGlobals, LoginAsPage } from "../index.paginas";
 
 import { GenericfunctionsProvider } from '../../providers/genericfunctions/genericfunctions';
 //plugin
@@ -18,7 +18,6 @@ export class IniVisualizerPage {
     public navCtrl: NavController,
     public navParams: NavParams,
     private barcodeScanner: BarcodeScanner,
-    private toastCtrl: ToastController,
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
   }
@@ -26,7 +25,6 @@ export class IniVisualizerPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad IniVisualizerPage');
   }
-
 
   start_scanning() {
     this.barcodeScanner.scan().then((barcodeData) => {
@@ -45,7 +43,7 @@ export class IniVisualizerPage {
       }
     }, (err) => {
       console.error("Error: ", err);
-      this.mostrar_toast("Error del scan: " + err);
+      this.genericFunction.mostrar_toast("Error del scan: " + err);
     });
   }
 
@@ -54,13 +52,7 @@ export class IniVisualizerPage {
     return AppGlobals.USER;
   }
 
-  //mostrar ToastController
-  mostrar_toast(mensaje: string) {
-    let toast = this.toastCtrl.create({
-      message: mensaje,
-      duration: 3000
-    });
-    toast.present();
+  backHome(){
+    this.navCtrl.push ( LoginAsPage );
   }
-
 }

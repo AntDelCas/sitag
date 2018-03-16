@@ -8,7 +8,7 @@
 
   <!-- Según el o los roles que lleguen del ws, se mostrarán 1, 2 ó los 3 botones. -->
   <button ion-button block
-  (click)="nav_visualizer()">Visualizer</button>
+  (click)="nav_visualizer()" [hidden]="isVisualizer">Visualizer</button>
 
   <button ion-button block
   (click)="nav_register()" [hidden]="isRegister">Register</button>

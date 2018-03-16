@@ -8,6 +8,7 @@ import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
 import { DatabaseProvider } from '../../providers/database/database';
 
 import { LoginPage } from "../index.paginas";
+import { GenericfunctionsProvider } from "../../providers/genericfunctions/genericfunctions";
 
 @Component({
   selector: 'page-createuser',
@@ -24,7 +25,8 @@ export class CreateuserPage {
     private loadingCtrl:LoadingController,
     public alertCtrl: AlertController,
     public toast: ToastController,
-    public database:DatabaseProvider
+    public database:DatabaseProvider,
+    public genericFunction: GenericfunctionsProvider
   ) {
     //Valida los campos del formulario:
     //Password mínimo 8 caracteres
@@ -39,8 +41,6 @@ export class CreateuserPage {
     console.log('ionViewDidLoad CreateuserPage');
   }
 
-  //TODO: Fallo al cancelar registro, revisar.
-
   register() {
     //Comprueba si hay conexión:
     if(AppGlobals.NETWORK_AVAILABLE){
@@ -51,14 +51,14 @@ export class CreateuserPage {
         //Llama al provider que descarga el JSON del servidor y los carga en memoria:
         this.dataAccess.getUsersFromServer().then(data => {
           AppGlobals.USERS_LIST_LOCAL = data;
-          AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
+          AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
 
           //Añade el nuevo usuario a la lista en memoria:
           AppGlobals.USERS_LIST_LOCAL.users.push({
             user: this.myForm.value.username,
             email: this.myForm.value.email,
             password: this.myForm.value.password,
-            lastUpdate: this.dataAccess.timeStamp,
+            lastUpdate: this.genericFunction.timeStamp,
             accesibility: ''
           });
 
@@ -72,7 +72,7 @@ export class CreateuserPage {
           user: this.myForm.value.username,
           email: this.myForm.value.email,
           password: this.myForm.value.password,
-          lastUpdate: this.dataAccess.timeStamp,
+          lastUpdate: this.genericFunction.timeStamp,
           accesibility: ''
         });
 
@@ -93,7 +93,7 @@ export class CreateuserPage {
           user: this.myForm.value.username,
           email: this.myForm.value.email,
           password: this.myForm.value.password,
-          lastUpdate: this.dataAccess.timeStamp,
+          lastUpdate: this.genericFunction.timeStamp,
           accesibility: ''
         });
         //Actualiza los datos en local:
@@ -107,21 +107,13 @@ export class CreateuserPage {
               user: this.myForm.value.username,
               email: this.myForm.value.email,
               password: this.myForm.value.password,
-              lastUpdate: this.dataAccess.timeStamp,
+              lastUpdate: this.genericFunction.timeStamp,
               accesibility: ''
             });
             //Actualiza los datos en local:
             this.addUser(AppGlobals.USERS_LIST_LOCAL);
           }else console.log("No existen datos de usuario en la BD");
         });
-
-        //TODO: Aquí se debe comprobar si existen datos en local y cargarlos en memoria si los hubiera.
-        //if(datosEnMemoria)
-        //AppGlobals.USERS_LIST.push(this.user);
-        //else
-
-        //Inicia la variable con el usuario nuevo:
-        // AppGlobals.USERS_LIST = this.user;
       }
     }//If NETWORK_AVAILABLE
 

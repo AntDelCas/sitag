@@ -2,6 +2,11 @@
 
   <ion-navbar>
     <ion-title>Config</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="backHome()">
+        <ion-icon name="md-home"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -17,18 +22,16 @@
 
   <p>Config Server</p>
 
-  <form>
+  <form [formGroup]="myForm" (ngSubmit)="save()">
     <ion-item>
       <ion-label color="primary" floating>Url</ion-label>
-      <ion-input name="url"></ion-input>
+      <ion-input formControlName="url"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label color="primary" floating>Port</ion-label>
-      <ion-input name="port"></ion-input>
+      <ion-input formControlName="port"></ion-input>
     </ion-item>
-
     <button ion-button block color="primary">Save</button>
-
   </form>
-
+    <button ion-button block (click)="cancel()" color="secondary">Cancel</button>
 </ion-content>

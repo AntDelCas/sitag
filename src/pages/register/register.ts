@@ -3,7 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { LoadingController } from 'ionic-angular';
 
-import { IniRegisterPage, AppGlobals } from "../index.paginas";
+import { IniRegisterPage, AppGlobals, LoginAsPage } from "../index.paginas";
 
 import { DatabaseProvider } from '../../providers/database/database';
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
@@ -94,13 +94,13 @@ export class RegisterPage {
         {
         user: AppGlobals.USER,
         countRegisters: "1",
-        lastModified: this.general_info.lastModified,
+        lastModified: this.genericFunction.timeStamp,
         registers: [
         {
         idSchema: this.general_info.registers[0].idSchema,
         type: this.general_info.registers[0].type,
         label: AppGlobals.PRODUCT_LABEL,
-        dateTime: this.general_info.registers[0].dateTime,
+        dateTime: this.genericFunction.timeStamp,//this.general_info.registers[0].dateTime,
         countAttributes: attributes.length.toString(),
         attributes: attributes
         },
@@ -113,6 +113,7 @@ export class RegisterPage {
       countRegisters++;
 
       AppGlobals.REGISTER_SHEET.countRegisters = countRegisters.toString();
+      AppGlobals.REGISTER_SHEET.lastModified = this.genericFunction.timeStamp;
 
       for (let key of ngForm_keys){
           attributes.push({
@@ -128,7 +129,7 @@ export class RegisterPage {
           idSchema: this.general_info.registers[0].idSchema,
           type: this.general_info.registers[0].type,
           label: AppGlobals.PRODUCT_LABEL,
-          dateTime: this.general_info.registers[0].dateTime,
+          dateTime: this.genericFunction.timeStamp,//this.general_info.registers[0].dateTime,
           countAttributes: attributes.length.toString(),
           attributes: attributes
         });
@@ -147,5 +148,9 @@ export class RegisterPage {
   //Devuelve el label del producto:
   get getProductLabel() {
    return AppGlobals.PRODUCT_LABEL;
+  }
+
+  backHome(){
+    this.navCtrl.push ( LoginAsPage );
   }
 }

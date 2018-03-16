@@ -47,6 +47,9 @@ export class LoginAsPage {
   resetVariables(){
     AppGlobals.IS_OWNER = false;
     AppGlobals.IS_REGISTER = false;
+    AppGlobals.IS_VISUALIZER = false;
+    AppGlobals.PRODUCT_LABEL = '';
+    AppGlobals.REGISTER_SHEET = [];    
   }
 
   //Devuelve el nickname:
@@ -68,4 +71,10 @@ export class LoginAsPage {
     else return true;
   }
 
+  //Valida los permisos de visualizador:
+  get isVisualizer(){
+    if(AppGlobals.IS_VISUALIZER)
+      return false;
+    else return true;
+  }
 }

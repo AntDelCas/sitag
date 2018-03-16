@@ -1,7 +1,12 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>customize</ion-title>
+    <ion-title>Customize</ion-title>
+    <ion-buttons end>
+      <button ion-button icon-only (click)="backHome()">
+        <ion-icon name="md-home"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -17,19 +22,18 @@
 
   <p>Log in as ...</p>
 
-
   <p>Scanned item</p>
-  <p>CM10005_0517_0080_10_MC_EC_RF_520003</p>
+  <p>{{getProductLabel}}</p>
 
   <ion-item>
     <ion-label>Seleccione un categoría</ion-label>
-    <ion-select [(ngModel)]="categoria">
+    <ion-select [(ngModel)]="categoria" #category (ionChange)="categorySelected(category.value)">
       <ion-option value="1">Categoría 1</ion-option>
       <ion-option value="2">Categoría 2</ion-option>
     </ion-select>
   </ion-item>
 
-  <ion-item>
+  <ion-item [hidden]="check_categorySelected">
     <ion-label>Seleccione un subcategoría</ion-label>
     <ion-select [(ngModel)]="subcategoria">
       <ion-option value="1">Subcategoría 1</ion-option>

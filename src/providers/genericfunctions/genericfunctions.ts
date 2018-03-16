@@ -45,6 +45,20 @@ export class GenericfunctionsProvider {
     return false;
   }
 
+  //Comprueba si el usuario es propietario del producto escaneado:
+  public check_isOwner(){
+    for(let current_user of AppGlobals.USERS_LIST_LOCAL.users){
+      if(current_user.user == AppGlobals.USER){
+        for(let register of current_user.accesibility){
+          if(register.register == AppGlobals.PRODUCT_LABEL && register.role == 'owner'){
+            return true;
+          }
+        }
+      }
+    }
+    return false;
+  }
+
   //Carga en memoria la accesibilidad del usuario actual:
   public getAccesibility(){
     for(let user of AppGlobals.USERS_LIST_LOCAL.users){
@@ -75,5 +89,12 @@ export class GenericfunctionsProvider {
           return true;
     }
     return false;
+  }
+
+  //Devuelve la fecha y la hora actual:
+  get timeStamp(){
+    let myDate: string = new Date().getFullYear().toString() + "-" + new Date().getMonth().toString() + "-" + new Date().getDate().toString();
+    let hour: string = new Date().getHours().toString() + ":" + new Date().getMinutes().toString() + ":" + new Date().getSeconds().toString();
+    return myDate + " " + hour;
   }
 }

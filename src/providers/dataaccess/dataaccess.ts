@@ -45,6 +45,17 @@ export class DataaccessProvider {
   });
   }
 
+  //Descarga todos los esquemas (owner):
+  getAllSchemas(){
+    return new Promise(resolve => {
+      this.http.get(this.apiUrl+'5aab93342e00005900138dd5').subscribe(data => {
+        resolve(data);
+      }, err => {
+        console.log(err);
+      });
+    });
+  }
+
   //Carga los datos del producto:
   getProductInfo(label : string){
     return new Promise(resolve => {
@@ -80,6 +91,18 @@ export class DataaccessProvider {
   });
   }
 
+  //Añade los datos del reporte de registro al servidor:
+  addRegisterReportToServer(data) {
+  return new Promise((resolve, reject) => {
+    this.http.post(this.apiUrl+'report', JSON.stringify(data))
+      .subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+  });
+  }
+
   //Notifica los cambios en la disponibilidad de la red:
   displayNetworkUpdate(connectionState: string){
     //Actualiza la variable global
@@ -97,12 +120,5 @@ export class DataaccessProvider {
   //Devuelve el nickname:
   get getUsername() {
    return AppGlobals.USER;
-  }
-
-  //Devuelve la fecha y la hora actual:
-  get timeStamp(){
-    let myDate: string = new Date().getDate().toString() +"-"+ new Date().getMonth().toString() +"-"+ new Date().getFullYear().toString();
-    let hour: string = new Date().getHours().toString() +":"+new Date().getMinutes().toString() + ":" + new Date().getSeconds().toString();
-    return myDate + " " + hour;
   }
 }

@@ -8,6 +8,7 @@ import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
 import { DatabaseProvider } from '../../providers/database/database';
 
 import { LoginPage, AppGlobals } from "../index.paginas";
+import { GenericfunctionsProvider } from "../../providers/genericfunctions/genericfunctions";
 
 @Component({
   selector: 'page-home',
@@ -25,7 +26,8 @@ export class HomePage {
     private loadingCtrl:LoadingController,
     public alertCtrl: AlertController,
     public toast: ToastController,
-    public database:DatabaseProvider
+    public database:DatabaseProvider,
+    public genericFunction: GenericfunctionsProvider
     )
   {
       //Comprueba si tiene acceso a la red:
@@ -46,7 +48,7 @@ export class HomePage {
                   if(local_user.user == server_user.user){
                     let user_list_date = new Date(server_user.lastUpdate);
                     let user_list_local_date = new Date(local_user.lastUpdate);
-
+                    //TODO: revisar correcto funcionamiento de la fecha (días > 12):
                     //Comprueba cual fecha es menor:
                     //if (la fecha del servidor es más actual) else (la fecha de los datos locales son más recientes)
                     if(user_list_date > user_list_local_date){
@@ -77,13 +79,13 @@ export class HomePage {
                 }
               }
               //Actualiza la hora de última sincronización:
-              AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
+              AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
             }else{
               //Si no existen datos en local pero si en la nube, los guarda en local y los carga en memoria:
               this.addUser(AppGlobals.USERS_LIST);
               AppGlobals.USERS_LIST_LOCAL = AppGlobals.USERS_LIST;
               //Actualiza la hora de última sincronización:
-              AppGlobals.LAST_SYNCHRO = this.dataAccess.timeStamp;
+              AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
             }
             //</Sincronización de datos existentes en ambos puntos>
 

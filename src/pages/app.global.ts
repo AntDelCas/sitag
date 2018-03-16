@@ -23,6 +23,9 @@ export class AppGlobals {
   //Esquema de productos por defecto
   static DEFAULT_SCHEMA: any;
 
+  //Lista de todos los esquemas (descargable por owner):
+  static SCHEMA_LIST: any;
+
   //Datos registrados aún no enviados a la nube:
   static REGISTER_SHEET: any;
 
@@ -30,6 +33,7 @@ export class AppGlobals {
   static PRODUCT_LABEL: string;
 
   //Permisos máximos sobre los objetos:
+  static IS_VISUALIZER: boolean = false;
   static IS_REGISTER: boolean = false;
   static IS_OWNER: boolean = false;
 }
