@@ -56,10 +56,10 @@ export class DataaccessProvider {
     });
   }
 
-  //Carga los datos del producto:
+  //Carga los datos del producto:   5a9d3e82310000dc1dab5327
   getProductInfo(label : string){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5a9d3e82310000dc1dab5327').subscribe(data => {
+      this.http.get(this.apiUrl+'5aaf782b2d000057006efd75').subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);
@@ -82,7 +82,8 @@ export class DataaccessProvider {
   //Añade los datos del registro al servidor:
   addRegisterToServer(data) {
   return new Promise((resolve, reject) => {
-    this.http.post(this.apiUrl+'register', JSON.stringify(data))
+    // this.http.post(this.apiUrl+'register', JSON.stringify(data))
+    this.http.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
       .subscribe(res => {
         resolve(res);
       }, (err) => {

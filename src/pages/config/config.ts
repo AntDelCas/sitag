@@ -28,7 +28,6 @@ export class ConfigPage {
   }
 
   save(){
-    //TODO: Enviar nueva configuración al servidor:
     this.genericFunction.mostrar_toast('Nueva configuración del servidor guardada con éxito.');
     console.log("URL: ");
     console.log(this.myForm.value.url);

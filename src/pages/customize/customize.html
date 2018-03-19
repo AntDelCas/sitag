@@ -25,23 +25,32 @@
   <p>Scanned item</p>
   <p>{{getProductLabel}}</p>
 
-  <ion-item>
-    <ion-label>Seleccione un categoría</ion-label>
-    <ion-select [(ngModel)]="categoria" #category (ionChange)="categorySelected(category.value)">
-      <ion-option value="1">Categoría 1</ion-option>
-      <ion-option value="2">Categoría 2</ion-option>
-    </ion-select>
-  </ion-item>
+  <div *ngIf="category_list">
+    <ion-item>
+      <ion-label>Seleccione un categoría</ion-label>
+      <ion-select [(ngModel)]="categoria" #category (ionChange)="categorySelected(category.value)">
+        <ion-option *ngFor="let info of category_list" value="{{info}}">{{info}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
-  <ion-item [hidden]="check_categorySelected">
-    <ion-label>Seleccione un subcategoría</ion-label>
-    <ion-select [(ngModel)]="subcategoria">
-      <ion-option value="1">Subcategoría 1</ion-option>
-      <ion-option value="2">Subcategoría 2</ion-option>
-    </ion-select>
-  </ion-item>
+  <div *ngIf="subcategory_list">
+    <ion-item [hidden]="check_categorySelected">
+      <ion-label>Seleccione un subcategoría</ion-label>
+      <ion-select [(ngModel)]="subcategoria" #subcategory (ionChange)="subcategorySelected(subcategory.value)">
+        <ion-option *ngFor="let info of subcategory_list" value="{{info}}">{{info}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
 
+  <br>
 
-  <button ion-button block color="primary">Save</button>
+  <form #data="ngForm" (ngSubmit)="save(data)" novalidate>
+    <ion-item *ngFor="let element of element_list">
+      <ion-label color="primary" Text-Capitalize>{{element.name}}</ion-label>
+      <ion-input placeholder="{{element.value}}" name="{{element.name}}" ngModel></ion-input>
+    </ion-item>
 
+    <button ion-button block color="primary">Save</button>
+  </form>
 </ion-content>

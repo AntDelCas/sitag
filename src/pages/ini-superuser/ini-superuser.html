@@ -13,7 +13,6 @@
 
 <ion-content padding>
 
-
     <p>Si-Tag</p>
     <p>Solución integral para la trazabilidad de elementos de principio a fin</p>
     <p>User: {{getUsername}}</p>
@@ -21,23 +20,21 @@
     <p>Log in as ...</p>
 
     <button ion-button block
-    (click)="download_schemas()">Download schemas</button>
-
-    <button ion-button block
-    (click)="customize()">Customize</button>
+    (click)="start_sacanning()">Start Scanning</button>
 
     <button ion-button block
     (click)="start_register()">Start registering</button>
 
     <button ion-button block
-    (click)="start_sacanning()">Start Scanning</button>
-
-    <button ion-button block
-    (click)="config()">Config</button>
+    (click)="customize()">Customize</button>
 
     <button ion-button block
     (click)="register_directory()">Register Directory</button>
 
+    <button ion-button block
+    (click)="download_schemas()">Download schemas</button>
 
+    <button ion-button block
+    (click)="config()">Config</button>
 
 </ion-content>

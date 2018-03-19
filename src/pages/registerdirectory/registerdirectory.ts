@@ -42,12 +42,7 @@ export class RegisterdirectoryPage {
     //TODO: hacer doble comprobación (como en open_register_report) para evitar acceso en la BD si ya existen datos cargados en memoria:
     this.database.getRegisterFromLocal(AppGlobals.USER).then(()=>{
       if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0){
-        let alert = this.alertCtrl.create({
-          title: 'Aviso',
-          subTitle: 'No existe ningún registro que enviar.',
-          buttons: ['OK']
-        });
-        alert.present();
+        this.genericFunction.mostrar_toast('No hay registros que enviar actualmente.');
       }else{
         //TODO: habilitar este método cuando esté el backend final.
         //TODO: recoger respuesta del servidor y mostrar si se ha completado con éxito el envío (notificar al usuario y borrar los datos de local si hay éxito)
@@ -82,14 +77,14 @@ export class RegisterdirectoryPage {
         if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0)
           this.genericFunction.mostrar_toast('No hay reporte de registros que enviar actualmente.');
         else{
-          console.log("Envío de report a la plataforma.");
+          console.log("Envío de report a la plataforma."); //TODO: envío de registro a la plataforma
           // this.dataAccess.addRegisterReportToServer(AppGlobals.REGISTER_SHEET).then(data => {
             this.genericFunction.mostrar_toast('Datos del informe de registros enviado con éxito.');
           // });
         }
       });
     else
-      console.log("Envío de report a la plataforma.");
+      console.log("Envío de report a la plataforma."); //TODO: envío de registro a la plataforma
       // this.dataAccess.addRegisterReportToServer(AppGlobals.REGISTER_SHEET).then(data => {
         this.genericFunction.mostrar_toast('Datos del informe de registros enviado con éxito.');
       // });
