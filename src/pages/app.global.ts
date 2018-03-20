@@ -32,6 +32,9 @@ export class AppGlobals {
   //Etiqueta del producto
   static PRODUCT_LABEL: string;
 
+  //Token para la validación de las consultas:
+  static HEADER_TOKEN: string;
+
   //Permisos máximos sobre los objetos:
   static IS_VISUALIZER: boolean = false;
   static IS_REGISTER: boolean = false;

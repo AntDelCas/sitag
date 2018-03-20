@@ -34,75 +34,87 @@ export class HomePage {
       if(navigator.onLine){
         AppGlobals.NETWORK_AVAILABLE = true;
 
-        //Llama al provider que descarga el JSON del servidor y los carga en memoria:
-        dataAccess.getUsersFromServer().then(data => {
-          AppGlobals.USERS_LIST = data;
-        }).then(data => {
+        let getToken : any = {
+          username: "ailem",
+          password: "ailem"
+        }
 
-          //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
-          database.getUsersFromLocal().then(data => {
-            if(data){
-              //<Sincronización de datos existentes en ambos puntos>
-              for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
-                for (let server_user of AppGlobals.USERS_LIST.users) {
-                  if(local_user.user == server_user.user){
-                    let user_list_date = new Date(server_user.lastUpdate);
-                    let user_list_local_date = new Date(local_user.lastUpdate);
-                    //TODO: revisar correcto funcionamiento de la fecha (días > 12):
-                    //Comprueba cual fecha es menor:
-                    //if (la fecha del servidor es más actual) else (la fecha de los datos locales son más recientes)
-                    if(user_list_date > user_list_local_date){
-                      //Actualiza los datos locales:
-                      local_user.user = server_user.user;
-                      local_user.email = server_user.email;
-                      local_user.password = server_user.password;
-                      local_user.lastUpdate = server_user.lastUpdate;
+        this.dataAccess.getTokenFromServer(getToken).then(data => {
+          let token : any = data;
+          AppGlobals.HEADER_TOKEN = token.token;
 
-                      //Unifica los items escaneados y sus permisos:
-                      local_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
+          //Llama al provider que descarga el JSON del servidor y los carga en memoria:
+          dataAccess.getUsersFromServer().then(data => {
+            AppGlobals.USERS_LIST = data;
+          }).then(data => {
 
-                      this.addUser(AppGlobals.USERS_LIST_LOCAL);
-                    }else{
-                      if(user_list_date.getMilliseconds() != user_list_local_date.getMilliseconds()){
-                        server_user.user = local_user.user;
-                        server_user.email = local_user.email
-                        server_user.password = local_user.password;;
-                        server_user.lastUpdate = local_user.lastUpdate;
+            //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
+            database.getUsersFromLocal().then(data => {
+              if(data){
+                //<Sincronización de datos existentes en ambos puntos>
+                for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
+                  for (let server_user of AppGlobals.USERS_LIST.users) {
+                    if(local_user.user == server_user.user){
+                      let user_list_date = new Date(server_user.lastUpdate);
+                      let user_list_local_date = new Date(local_user.lastUpdate);
+                      //TODO: revisar correcto funcionamiento de la fecha (días > 12):
+                      //Comprueba cual fecha es menor:
+                      //if (la fecha del servidor es más actual) else (la fecha de los datos locales son más recientes)
+                      if(user_list_date > user_list_local_date){
+                        //Actualiza los datos locales:
+                        local_user.user = server_user.user;
+                        local_user.email = server_user.email;
+                        local_user.password = server_user.password;
+                        local_user.lastUpdate = server_user.lastUpdate;
 
                         //Unifica los items escaneados y sus permisos:
-                        server_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
+                        local_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
 
-                        //TODO: Actualizar usuario en el servidor
+                        this.addUser(AppGlobals.USERS_LIST_LOCAL);
+                      }else{
+                        if(user_list_date.getMilliseconds() != user_list_local_date.getMilliseconds()){
+                          server_user.user = local_user.user;
+                          server_user.email = local_user.email
+                          server_user.password = local_user.password;;
+                          server_user.lastUpdate = local_user.lastUpdate;
+
+                          //Unifica los items escaneados y sus permisos:
+                          server_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
+
+                          //TODO: Actualizar usuario en el servidor
+                        }
                       }
                     }
                   }
                 }
+                //Actualiza la hora de última sincronización:
+                AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
+              }else{
+                //Si no existen datos en local pero si en la nube, los guarda en local y los carga en memoria:
+                this.addUser(AppGlobals.USERS_LIST);
+                AppGlobals.USERS_LIST_LOCAL = AppGlobals.USERS_LIST;
+                //Actualiza la hora de última sincronización:
+                AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
               }
-              //Actualiza la hora de última sincronización:
-              AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
-            }else{
-              //Si no existen datos en local pero si en la nube, los guarda en local y los carga en memoria:
-              this.addUser(AppGlobals.USERS_LIST);
-              AppGlobals.USERS_LIST_LOCAL = AppGlobals.USERS_LIST;
-              //Actualiza la hora de última sincronización:
-              AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
-            }
-            //</Sincronización de datos existentes en ambos puntos>
+              //</Sincronización de datos existentes en ambos puntos>
 
-            //Sincronización de usuarios NO existentes en ambos puntos:
-            this.usersUnion(AppGlobals.USERS_LIST_LOCAL.users, AppGlobals.USERS_LIST.users);
+              //Sincronización de usuarios NO existentes en ambos puntos:
+              this.usersUnion(AppGlobals.USERS_LIST_LOCAL.users, AppGlobals.USERS_LIST.users);
+            });
+          //Si no existe el modelo por defecto del esquema lo carga en memoria y guarda en local:
+          }).then(data =>{
+            database.getSchemaFromLocal().then(data => {
+              if(!data){
+                dataAccess.getSchema('0000').then(data => {
+                  AppGlobals.DEFAULT_SCHEMA = data;
+                  this.addSchemaToLocal(data);
+                });
+              }
+            });
           });
-        //Si no existe el modelo por defecto del esquema lo carga en memoria y guarda en local:
-        }).then(data =>{
-          database.getSchemaFromLocal().then(data => {
-            if(!data){
-              dataAccess.getSchema('0000').then(data => {
-                AppGlobals.DEFAULT_SCHEMA = data;
-                this.addSchemaToLocal(data);
-              });
-            }
-          });
+        //////////////
         });
+        //////////////
       }else{
         //Utiliza los datos guardados en local (si existen):
         AppGlobals.NETWORK_AVAILABLE = false;
@@ -168,6 +180,13 @@ export class HomePage {
       }
       if(not_common){
         something_changed_local = true;
+        //Actualiza el recuento de usuarios:
+        let countUsers : number = AppGlobals.USERS_LIST_LOCAL.countUsers;
+        console.log(countUsers);
+        countUsers++;
+        console.log(countUsers);
+        AppGlobals.USERS_LIST_LOCAL.countUsers = countUsers.toString();
+
         AppGlobals.USERS_LIST_LOCAL.users.push(
           {
             user: server_user.user,
@@ -179,6 +198,9 @@ export class HomePage {
         );
       }
     }
+
+    console.log("User list local: ");
+    console.log(AppGlobals.USERS_LIST_LOCAL);
 
     console.log("something_changed_server " + something_changed_server);
     console.log("something_changed_local " + something_changed_local);
@@ -217,10 +239,7 @@ export class HomePage {
     loader.present().then(()=>{
       let userList : string = JSON.stringify(user_list);
       this.database.addUserToLocal(AppGlobals.LAST_SYNCHRO, userList).then((list)=>{
-        this.toast.create({
-          message: `Actualización de datos completada.`,
-          duration: 3000
-        }).present();
+        this.genericFunction.mostrar_toast('Actualización de datos completada.');
       });
       loader.dismiss();
     });
@@ -231,10 +250,7 @@ export class HomePage {
     loader.present().then(()=>{
       let schema : string = JSON.stringify(donwloaded_schema);
       this.database.addSchemaToLocal(schema).then((list)=>{
-        this.toast.create({
-          message: `Esquema predeterminado descargado.`,
-          duration: 3000
-        }).present();
+        this.genericFunction.mostrar_toast('Esquema predeterminado descargado.');
       });
       loader.dismiss();
     });
@@ -245,5 +261,10 @@ export class HomePage {
     this.database.deleteUser();
     this.database.deleteRegister();
     AppGlobals.USERS_LIST_LOCAL = '';
+  }
+
+  //Carga en memoria el token para el acceso a las consultas:
+  public getToken(){
+
   }
 }

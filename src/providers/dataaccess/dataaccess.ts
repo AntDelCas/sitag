@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppGlobals } from "../../pages/index.paginas";
 import { ToastController } from 'ionic-angular';
@@ -15,7 +15,7 @@ export class DataaccessProvider {
   data: any = null;
   //Link del backend:
   apiUrl= 'http://www.mocky.io/v2/';
-
+  url = 'https://sitag.bettergy.es/api/';
   constructor(
     public http: HttpClient,
     public toast: ToastController,
@@ -23,10 +23,39 @@ export class DataaccessProvider {
   ) {
   }
 
+  //Añade los datos de usuario al servidor:
+  getTokenFromServer(data) {
+  return new Promise((resolve, reject) => {
+    this.http.post(this.url+'login/', data)//, options)
+      .subscribe(res => {
+        resolve(res);
+      }, (err) => {
+        reject(err);
+      });
+    });
+  }
+
+  //Carga en memoria los datos del JSON descargado:
+  // getUsersFromServer() {
+  // return new Promise(resolve => {
+  //   this.http.get(this.apiUrl+'5aa263472f0000ae17d4656d').subscribe(data => {
+  //     resolve(data);
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // });
+  // }
+
   //Carga en memoria los datos del JSON descargado:
   getUsersFromServer() {
+  console.log("getUsersFromServer()");
+  console.log(AppGlobals.HEADER_TOKEN);
+
+  const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
+  // const headers = httpHeaders.append("Authorization", AppGlobals.HEADER_TOKEN);
+
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'5aa263472f0000ae17d4656d').subscribe(data => {
+    this.http.get(this.url+'users/', { headers : headers }).subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);
@@ -76,7 +105,7 @@ export class DataaccessProvider {
       }, (err) => {
         reject(err);
       });
-  });
+    });
   }
 
   //Añade los datos del registro al servidor:

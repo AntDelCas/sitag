@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { FormBuilder, NgForm } from '@angular/forms';
+import { NgForm } from '@angular/forms';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { AppGlobals, LoginAsPage, IniSuperuserPage } from "../index.paginas";
 import { DataaccessProvider } from "../../providers/dataaccess/dataaccess";
@@ -89,7 +89,7 @@ export class CustomizePage {
         this.element_list.push(attribute);
     }
   }
-
+  
   get check_categorySelected(){
     if(this.category_selected)
       return false;
@@ -111,6 +111,7 @@ export class CustomizePage {
         if(attribute.category == this.current_category && attribute.subcategory == this.current_subcategory && attribute.name == key)
           attribute.value = data.value[key];
     }
+
     if(AppGlobals.NETWORK_AVAILABLE){
       this.dataAccess.addRegisterToServer(this.general_info).then(response =>{
         this.navCtrl.push ( IniSuperuserPage );
@@ -124,6 +125,20 @@ export class CustomizePage {
       });
       alert.present();
     }
+  }
+
+  checkValueCategory(value:string){
+    if(value == '')
+      return 'Sin categoria'
+    else
+      return value;
+  }
+
+  checkValueSubcategory(value:string){
+    if(value == '')
+      return 'Sin subcategoria'
+    else
+      return value;
   }
 
   backHome(){

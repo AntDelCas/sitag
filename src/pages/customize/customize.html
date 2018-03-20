@@ -29,7 +29,7 @@
     <ion-item>
       <ion-label>Seleccione un categoría</ion-label>
       <ion-select [(ngModel)]="categoria" #category (ionChange)="categorySelected(category.value)">
-        <ion-option *ngFor="let info of category_list" value="{{info}}">{{info}}</ion-option>
+        <ion-option *ngFor="let info of category_list" value="{{info}}">{{checkValueCategory(info)}}</ion-option>
       </ion-select>
     </ion-item>
   </div>
@@ -38,7 +38,7 @@
     <ion-item [hidden]="check_categorySelected">
       <ion-label>Seleccione un subcategoría</ion-label>
       <ion-select [(ngModel)]="subcategoria" #subcategory (ionChange)="subcategorySelected(subcategory.value)">
-        <ion-option *ngFor="let info of subcategory_list" value="{{info}}">{{info}}</ion-option>
+        <ion-option *ngFor="let info of subcategory_list" value="{{info}}">{{checkValueSubcategory(info)}}</ion-option>
       </ion-select>
     </ion-item>
   </div>
