@@ -78,10 +78,10 @@ export class DataaccessProvider {
   //Descarga todos los esquemas (owner):
   getAllSchemas(){
   console.log("getAllSchemas()");
-  
+
   const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'schema/', { headers : headers }).subscribe(data => {
+      this.http.get(this.url+'schema/', { headers : headers }).subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);
@@ -92,7 +92,7 @@ export class DataaccessProvider {
   //Carga los datos del producto:   5a9d3e82310000dc1dab5327
   getProductInfo(label : string){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5aaf782b2d000057006efd75').subscribe(data => {
+      this.http.get(this.apiUrl+'5ab3888e2f00006600ca37d8').subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);

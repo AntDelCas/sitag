@@ -27,24 +27,24 @@ export class IniVisualizerPage {
   }
 
   start_scanning() {
-    this.barcodeScanner.scan().then((barcodeData) => {
-      console.log("Datos del scan: ", barcodeData.text);
-      AppGlobals.PRODUCT_LABEL = barcodeData.text;
+    // this.barcodeScanner.scan().then((barcodeData) => {
+    //   console.log("Datos del scan: ", barcodeData.text);
+    //   AppGlobals.PRODUCT_LABEL = barcodeData.text;
 
-      if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
+      // if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
         this.navCtrl.push( GeneralinfoPage );
-      else{
-        let alert = this.alertCtrl.create({
-          title: '¡Error!',
-          subTitle: 'No tienes permisos para visualizar este producto.',
-          buttons: ['OK']
-        });
-        alert.present();
-      }
-    }, (err) => {
-      console.error("Error: ", err);
-      this.genericFunction.mostrar_toast("Error del scan: " + err);
-    });
+      // else{
+      //   let alert = this.alertCtrl.create({
+      //     title: '¡Error!',
+      //     subTitle: 'No tienes permisos para visualizar este producto.',
+      //     buttons: ['OK']
+      //   });
+      //   alert.present();
+      // }
+    // }, (err) => {
+    //   console.error("Error: ", err);
+    //   this.genericFunction.mostrar_toast("Error del scan: " + err);
+    // });
   }
 
   //Devuelve el nickname:
