@@ -50,6 +50,8 @@ export class HomePage {
 
             //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
             database.getUsersFromLocal().then(data => {
+              let user_updated: boolean = false;
+
               if(data){
                 //<Sincronización de datos existentes en ambos puntos>
                 for (let local_user of AppGlobals.USERS_LIST_LOCAL.users) {
@@ -61,6 +63,7 @@ export class HomePage {
                       //Comprueba cual fecha es menor:
                       //if (la fecha del servidor es más actual) else (la fecha de los datos locales son más recientes)
                       if(user_list_date > user_list_local_date){
+                        user_updated = true;
                         //Actualiza los datos locales:
                         local_user.user = server_user.user;
                         local_user.email = server_user.email;
@@ -70,9 +73,10 @@ export class HomePage {
                         //Unifica los items escaneados y sus permisos:
                         local_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
 
-                        this.addUser(AppGlobals.USERS_LIST_LOCAL);
+
                       }else{
                         if(user_list_date.getMilliseconds() != user_list_local_date.getMilliseconds()){
+                          user_updated = true;
                           server_user.user = local_user.user;
                           server_user.email = local_user.email
                           server_user.password = local_user.password;;
@@ -87,6 +91,10 @@ export class HomePage {
                     }
                   }
                 }
+
+                //Si se ha actualizado la accesibilidad:
+                if(user_updated)
+                  this.addUser(AppGlobals.USERS_LIST_LOCAL);
                 //Actualiza la hora de última sincronización:
                 AppGlobals.LAST_SYNCHRO = this.genericFunction.timeStamp;
               }else{

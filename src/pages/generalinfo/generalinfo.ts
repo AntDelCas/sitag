@@ -30,8 +30,19 @@ export class GeneralinfoPage {
         this.general_info = data;
         this.schema_identifier = this.general_info.registers[0].idSchema;
       }).then(data => {
-        dataAccess.getSchema(this.schema_identifier).then(data => {
-          this.schema = data;
+        dataAccess.getAllSchemas().then(data => {
+          AppGlobals.SCHEMA_LIST = data;
+
+          for(let current_schema of AppGlobals.SCHEMA_LIST.registers){
+            if(current_schema.attributes.idSchema == this.general_info.registers[0].idSchema){
+              this.schema = data;
+            }
+          }
+
+          console.log(AppGlobals.SCHEMA_LIST);
+          console.log(this.schema);
+
+
         //Comprueba el ID del esquema que coincide con los datos de productos descargados.
         //Carga "category" y "subcategory" en el JSON de producto utilizando los datos del esquema para identificar cada atributo.
         if(this.general_info.registers[0].idSchema == this.schema.registers[0].idSchema){

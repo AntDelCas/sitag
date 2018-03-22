@@ -65,8 +65,9 @@ export class DataaccessProvider {
 
   //Carga esquema para el control de elementos
   getSchema(identifier : string) {
+
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'5a9fa3402e0000100074d123').subscribe(data => {
+    this.http.get(this.url+'5a9fa3402e0000100074d123').subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);
@@ -76,8 +77,11 @@ export class DataaccessProvider {
 
   //Descarga todos los esquemas (owner):
   getAllSchemas(){
+  console.log("getAllSchemas()");
+  
+  const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5aab93342e00005900138dd5').subscribe(data => {
+      this.http.get(this.apiUrl+'schema/', { headers : headers }).subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);
