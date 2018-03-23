@@ -35,16 +35,25 @@ export class RegisterPage {
 
     if(AppGlobals.NETWORK_AVAILABLE){
       //TODO: se descarga el esquema en función al referenciado por el producto escaneado.
+      //TODO: Filtrado por atributo control:
       loader.present().then(() => {
         dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
           this.general_info = data;
           this.schema_identifier = this.general_info.registers[0].idSchema;
         }).then(data => {
-          dataAccess.getSchema(this.schema_identifier).then(data => {
-            this.schema = data;
+          dataAccess.getAllSchemas().then(data => {
+            AppGlobals.SCHEMA_LIST = data;
 
-            for(let element of this.schema.registers[0].attributes){
-              this.elements.push(element.name);
+            for(let current_schema of AppGlobals.SCHEMA_LIST.registers){
+              if(current_schema.idSchema == this.general_info.registers[0].idSchema)
+                this.schema = current_schema;
+            }
+
+            console.log(this.schema);
+
+            for(let element of this.schema.attributes){
+              if(element.control.substring(0,1) == "1")
+                this.elements.push(element.name);
             }
             loader.dismiss();
           });
@@ -84,7 +93,7 @@ export class RegisterPage {
             name: key,
             value: data.value[key],
             category: "",
-            subcategory: "",
+            // subcategory: "",
             control: "",
             pattern: "",
             comments: "" });
@@ -120,7 +129,7 @@ export class RegisterPage {
             name: key,
             value: data.value[key],
             category: "",
-            subcategory: "",
+            // subcategory: "",
             control: "",
             pattern: "",
             comments: "" });

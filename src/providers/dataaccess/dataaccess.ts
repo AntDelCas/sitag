@@ -36,9 +36,26 @@ export class DataaccessProvider {
   }
 
   //Carga en memoria los datos del JSON descargado:
+  getUsersFromServer() {
+  return new Promise(resolve => {
+    this.http.get(this.apiUrl+'5aa263472f0000ae17d4656d').subscribe(data => {
+      resolve(data);
+    }, err => {
+      console.log(err);
+    });
+  });
+  }
+
+  //Carga en memoria los datos del JSON descargado:
   // getUsersFromServer() {
+  // console.log("getUsersFromServer()");
+  // console.log(AppGlobals.HEADER_TOKEN);
+  //
+  // const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
+  // // const headers = httpHeaders.append("Authorization", AppGlobals.HEADER_TOKEN);
+  //
   // return new Promise(resolve => {
-  //   this.http.get(this.apiUrl+'5aa263472f0000ae17d4656d').subscribe(data => {
+  //   this.http.get(this.url+'users/', { headers : headers }).subscribe(data => {
   //     resolve(data);
   //   }, err => {
   //     console.log(err);
@@ -46,34 +63,18 @@ export class DataaccessProvider {
   // });
   // }
 
-  //Carga en memoria los datos del JSON descargado:
-  getUsersFromServer() {
-  console.log("getUsersFromServer()");
-  console.log(AppGlobals.HEADER_TOKEN);
-
-  const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
-  // const headers = httpHeaders.append("Authorization", AppGlobals.HEADER_TOKEN);
-
-  return new Promise(resolve => {
-    this.http.get(this.url+'users/', { headers : headers }).subscribe(data => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });
-  }
-
   //Carga esquema para el control de elementos
-  getSchema(identifier : string) {
-
-  return new Promise(resolve => {
-    this.http.get(this.url+'5a9fa3402e0000100074d123').subscribe(data => {
-      resolve(data);
-    }, err => {
-      console.log(err);
-    });
-  });
-  }
+  // DEPRECATED
+  // getSchema(identifier : string) {
+  //
+  // return new Promise(resolve => {
+  //   this.http.get(this.url+'5a9fa3402e0000100074d123').subscribe(data => {
+  //     resolve(data);
+  //   }, err => {
+  //     console.log(err);
+  //   });
+  // });
+  // }
 
   //Descarga todos los esquemas (owner):
   getAllSchemas(){

@@ -45,7 +45,6 @@ export class GeneralinfoPage {
             }
           }
 
-          console.log(AppGlobals.SCHEMA_LIST.registers);
           console.log(this.schema);
 
         if(has_valid_schema){
@@ -67,9 +66,6 @@ export class GeneralinfoPage {
             }
           }
 
-          console.log("Control push: ");
-          console.log(this.general_info.registers[0]);
-
           //Ordena los datos de producto por "category" y genera la variable para mostrarlo en el HTML:
           // <Ordena>
           let category : any = [];
@@ -90,21 +86,22 @@ export class GeneralinfoPage {
           }
 
           let control : string;
-
+          console.log(this.general_info.registers[0].attributes);
           for(let category_index of category){
             let exists = false;
             let generic_info_string = '';
-
+            // console.log("CATEGORY - " + category_index);
             for(let general_info_index of this.general_info.registers[0].attributes){
+              // console.log("General info: " + general_info_index.category);
               if(category_index == general_info_index.category){
+                control = general_info_index.control;//.substring(2,3);
+                console.log("Control: " + control);
+
                 if(category_index == '' && !exists){
                   generic_info_string = 'Generic Information';
                   exists = true;
                 }
-                //TODO: Comprobar que funciona el parámetro de control de registrador para todos los campos.
-                //Comprueba si el atributo tiene valor de visualizado:
-                control = general_info_index.control.substring(2,3);
-                console.log("Control: " + control);
+                //TODO: Cambiar control (general_info_index) por control(schema)
 
                 if(control == "1"){
                   this.ordered_data.push([

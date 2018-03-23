@@ -113,9 +113,10 @@ export class HomePage {
           }).then(data =>{
             database.getSchemaFromLocal().then(data => {
               if(!data){
-                dataAccess.getSchema('0000').then(data => {
-                  AppGlobals.DEFAULT_SCHEMA = data;
-                  this.addSchemaToLocal(data);
+                dataAccess.getAllSchemas().then(data => {
+                  //TODO: seleccionar default schema
+                  // AppGlobals.DEFAULT_SCHEMA = data;
+                  // this.addSchemaToLocal(data);
                 });
               }
             });

@@ -27,6 +27,7 @@ export class IniVisualizerPage {
   }
 
   start_scanning() {
+    //TODO: Modo testeo, descomentar este código
     // this.barcodeScanner.scan().then((barcodeData) => {
     //   console.log("Datos del scan: ", barcodeData.text);
     //   AppGlobals.PRODUCT_LABEL = barcodeData.text;
