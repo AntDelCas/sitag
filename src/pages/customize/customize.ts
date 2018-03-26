@@ -28,6 +28,7 @@ export class CustomizePage {
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider)
     {
+      //TODO: ¿Para el owner se muestran todos los atributos que tenga el producto o dependen del esquema?
       let loader = this.loadingCtrl.create({});
 
       loader.present().then(() => {
@@ -89,7 +90,7 @@ export class CustomizePage {
         this.element_list.push(attribute);
     }
   }
-  
+
   get check_categorySelected(){
     if(this.category_selected)
       return false;

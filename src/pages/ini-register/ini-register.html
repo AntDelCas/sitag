@@ -21,13 +21,14 @@
 
   <p>Log in as ...</p>
 
-  <button ion-button block
-  (click)="start_register()">Start Registering</button>
+  <button ion-button icon-start block (click)="start_register()">
+    <ion-icon name="md-add-circle"></ion-icon>
+    Start registering
+  </button>
 
-  <button ion-button block
-  (click)="register_directory()">Register Directory</button>
-
-
-
-
+  <button ion-button block icon-start (click)="register_directory()">
+    <ion-icon name="md-clipboard"></ion-icon>
+    Register Directory
+  </button>
+  
 </ion-content>

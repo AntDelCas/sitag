@@ -34,8 +34,6 @@ export class RegisterPage {
     let loader = this.loadingCtrl.create({});
 
     if(AppGlobals.NETWORK_AVAILABLE){
-      //TODO: se descarga el esquema en función al referenciado por el producto escaneado.
-      //TODO: Filtrado por atributo control:
       loader.present().then(() => {
         dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
           this.general_info = data;
@@ -48,8 +46,6 @@ export class RegisterPage {
               if(current_schema.idSchema == this.general_info.registers[0].idSchema)
                 this.schema = current_schema;
             }
-
-            console.log(this.schema);
 
             for(let element of this.schema.attributes){
               if(element.control.substring(0,1) == "1")
@@ -69,7 +65,8 @@ export class RegisterPage {
         alert.present();
       }else{
         for(let element of AppGlobals.DEFAULT_SCHEMA.registers[0].attributes){
-          this.elements.push(element.name);
+          if(element.control.substring(0,1) == "1")
+            this.elements.push(element.name);
         }
       }
     }

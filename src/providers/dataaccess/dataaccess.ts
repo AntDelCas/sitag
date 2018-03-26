@@ -93,7 +93,7 @@ export class DataaccessProvider {
   //Carga los datos del producto:   5a9d3e82310000dc1dab5327
   getProductInfo(label : string){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5ab3888e2f00006600ca37d8').subscribe(data => {
+      this.http.get(this.apiUrl+'5ab8adac2c00004b001860cc').subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);

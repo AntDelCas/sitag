@@ -13,6 +13,7 @@ import { MyApp } from './app.component';
 
 import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
 import { DatabaseProvider } from '../providers/database/database';
+
 //plugins
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { SQLite } from '@ionic-native/sqlite';

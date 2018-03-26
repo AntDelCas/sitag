@@ -19,22 +19,33 @@
 
     <p>Log in as ...</p>
 
-    <button ion-button block
-    (click)="start_sacanning()">Start Scanning</button>
+    <button ion-button icon-start block (click)="start_sacanning()">
+      <ion-icon name="md-qr-scanner"></ion-icon>
+      Start Scanning
+    </button>
 
-    <button ion-button block
-    (click)="start_register()">Start registering</button>
+    <button ion-button icon-start block (click)="start_register()">
+      <ion-icon name="md-add-circle"></ion-icon>
+      Start registering
+    </button>
 
-    <button ion-button block
-    (click)="customize()">Customize</button>
+    <button ion-button icon-start block (click)="customize()">
+      <ion-icon name="md-hammer"></ion-icon>
+      Customize
+    </button>
 
-    <button ion-button block
-    (click)="register_directory()">Register Directory</button>
+    <button ion-button block icon-start (click)="register_directory()">
+      <ion-icon name="md-clipboard"></ion-icon>
+      Register Directory
+    </button>
 
-    <button ion-button block
-    (click)="download_schemas()">Download schemas</button>
+    <button ion-button icon-start block (click)="download_schemas()">
+      <ion-icon name="md-cloud-download"></ion-icon>
+      Download schemas
+    </button>
 
-    <button ion-button block
-    (click)="config()">Config</button>
-
+    <button ion-button icon-start block (click)="config()">
+      <ion-icon name="md-settings"></ion-icon>
+      Config
+    </button>
 </ion-content>
