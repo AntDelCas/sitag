@@ -9,6 +9,11 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   selector: 'page-generalinfo',
   templateUrl: 'generalinfo.html',
 })
+
+/**
+  * @name: GeneralinfoPage
+  * @description: Muestra toda la información disponible del producto escaneado. Depende de los permisos que el esquema del producto tenga en el atributo "control".
+  */
 export class GeneralinfoPage {
   general_info: any;
   schema: any;
@@ -30,14 +35,16 @@ export class GeneralinfoPage {
       //Muestra un pop-up de carga mientras la información no está disponible:
       loader.present().then(() => {
         let has_valid_schema: boolean = false;
-
+        //Dsecarga la información del producto escaneado.
         dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
           this.general_info = data;
           this.schema_identifier = this.general_info.registers[0].idSchema;
         }).then(data => {
+          //Descarga los esquemas de producto:
           dataAccess.getAllSchemas().then(data => {
             AppGlobals.SCHEMA_LIST = data;
 
+            //Comprueba si existe un esquema válido para el producto escaneado.
             for(let current_schema of AppGlobals.SCHEMA_LIST.registers){
               if(current_schema.idSchema == this.schema_identifier){
                 has_valid_schema = true;
@@ -67,7 +74,6 @@ export class GeneralinfoPage {
             }
 
             //Ordena los datos de producto por "category" y genera la variable para mostrarlo en el HTML:
-            // <Ordena>
             let category : any = [];
             let exists : boolean = false;
 
@@ -87,30 +93,28 @@ export class GeneralinfoPage {
 
             let control : string;
 
-            console.log(this.general_info.registers[0].attributes);
-
+            //Itera por todos los elementos que tengan categorías que también aparecen en el esquema y si tienen permisos para la visualización, carga los datos
+            //en la variable ordered_data, que se mostrará en el template.
             for(let category_index of category){
               let exists = false;
               let generic_info_string = '';
-              // console.log("CATEGORY - " + category_index);
+
               for(let general_info_index of this.general_info.registers[0].attributes){
-                // console.log("General info: " + general_info_index.category);
                 if(category_index == general_info_index.category){
                   control = general_info_index.control.substring(2,3);
 
-                  console.log("Control: " + control);
-
+                  //Guarda como categoria la cadena "Generic Information" si la categoría estaba vacía.
                   if(category_index == '' && !exists){
                     generic_info_string = 'Generic Information';
                     exists = true;
                   }
 
+                  //Comprueba si el atributo tiene permisos para que sea visualizado por un usuario:
                   if(control == "1"){
                     this.ordered_data.push([
                       {name: general_info_index.name},
                       {value: general_info_index.value},
                       {category: !exists ? category_index : generic_info_string},
-                      // {subcategory: !exists ? general_info_index.subcategory : ""}
                     ]);
                   }
                   exists = true;
@@ -123,9 +127,9 @@ export class GeneralinfoPage {
             this.genericFunction.mostrar_toast('No existe ningún esquema de datos para este producto.');
             this.navCtrl.push ( IniVisualizerPage );
           }
-          //</Ordena>
           loader.dismiss();
 
+          //Si no hay ninguna categoría coincidente entre los datos del producto y los del esquema del producto, se notifica al usuario.
           if(this.ordered_data == 0){
             let alert = this.alertCtrl.create({
               title: 'Aviso',

@@ -25,6 +25,7 @@
   <p>Scanned item</p>
   <p>{{getProductLabel}}</p>
 
+  <!-- Comprueba que la variable category_list esté lista antes de tratar los datos. Carga en un dropdown menu la lista de categorías que el esquema del producto permite mostrar -->
   <div *ngIf="category_list">
     <ion-item>
       <ion-label>Seleccione un categoría</ion-label>
@@ -34,6 +35,8 @@
     </ion-item>
   </div>
 
+<!-- Comprueba que la variable subcategory_list esté lista antes de tratar los datos. Carga en un dropdown menu la lista de subcategorías dependientes de la categoría seleccionada
+en el ngModel="categoria" que el esquema del producto permite mostrar -->
   <div *ngIf="subcategory_list">
     <ion-item [hidden]="check_categorySelected">
       <ion-label>Seleccione un subcategoría</ion-label>
@@ -44,7 +47,7 @@
   </div>
 
   <br>
-
+<!-- Muestra los atributos (con sus datos actualmente definidos en la base de datos) vinculados a la categoria y subcategoria seleccionada que el esquema de producto permite mostrar -->
   <form #data="ngForm" (ngSubmit)="save(data)" novalidate>
     <ion-item *ngFor="let element of element_list">
       <ion-label color="primary" Text-Capitalize>{{element.name}}</ion-label>

@@ -9,6 +9,12 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   selector: 'page-config',
   templateUrl: 'config.html',
 })
+
+/**
+  * @name: ConfigPage
+  * @description: Página de configuración del servidor (owner). Permite modificar el puerto y la URL del backend al que se le hacen las consultas.
+  */
+
 export class ConfigPage {
   myForm: FormGroup;
 
@@ -27,7 +33,12 @@ export class ConfigPage {
     console.log('ionViewDidLoad ConfigPage');
   }
 
+/**
+  * @name: save()
+  * @description: Guarda la nueva configuración del servidor (URL y Puerto) y notifica al usuario los cambios.
+  */
   save(){
+    //TODO: ¿Cómo afecta este cambio a la aplicación?
     this.genericFunction.mostrar_toast('Nueva configuración del servidor guardada con éxito.');
     console.log("URL: ");
     console.log(this.myForm.value.url);

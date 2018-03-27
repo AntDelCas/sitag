@@ -161,7 +161,12 @@ export class HomePage {
      });
   }
 
-  //Los usuarios que no existan en uno u otro punto, se guardan en ambos:
+  /**
+    * @name: usersUnion(local:any, server:any)
+    * @description: Recibe la lista de usuarios guardados en local y la de los usuarios guardados en la plataforma. Compara las dos listas y añade los usuarios no comunes
+    * a ambas listas para igualarlas.
+    * @param: local - lista de usuarios locales. server - lista de usuarios descargados del servidor.
+    */
   public usersUnion(local:any, server:any){
     let not_common:boolean = true,
     something_changed_server = false,
@@ -169,15 +174,23 @@ export class HomePage {
 
     console.log("UsersUnion");
 
-    //Nuevos usuarios de local al servidor:
+    //Comprueba si hay usuarios en local que no existan en la plataforma y los guarda en la lista en memoria de usuarios del servidor.
     for(let local_user of local){
       not_common = true;
+
       for(let server_user of server){
           if(local_user.user == server_user.user)
             not_common = false;
       }
+
+      //Si el usuario no existe en el servidor, lo añade a la lista en memoria.
       if(not_common){
         something_changed_server = true;
+        //Actualiza el recuento de usuarios:
+        let countUsers : number = AppGlobals.USERS_LIST.countUsers;
+        countUsers++;
+        AppGlobals.USERS_LIST.countUsers = countUsers.toString();
+
         AppGlobals.USERS_LIST.users.push(
           {
             user: local_user.user,
@@ -190,20 +203,21 @@ export class HomePage {
       }
     }
 
-    //Nuevos usuarios del servidor a local:
+    //Comprueba si hay usuarios en el servidor que no existan en local y los guarda en la lista en memoria de usuarios.
     for(let server_user of server){
-    not_common = true;
+      not_common = true;
+
       for(let local_user of local){
         if(local_user.user == server_user.user)
           not_common = false;
       }
+
+      //Si el usuario no existe en local, lo añade a la lista en memoria.
       if(not_common){
         something_changed_local = true;
         //Actualiza el recuento de usuarios:
         let countUsers : number = AppGlobals.USERS_LIST_LOCAL.countUsers;
-        console.log(countUsers);
         countUsers++;
-        console.log(countUsers);
         AppGlobals.USERS_LIST_LOCAL.countUsers = countUsers.toString();
 
         AppGlobals.USERS_LIST_LOCAL.users.push(
@@ -224,6 +238,7 @@ export class HomePage {
     console.log("something_changed_server " + something_changed_server);
     console.log("something_changed_local " + something_changed_local);
 
+    //Comprueba si hay cambios en local o en el servidor y guarda en el punto que sea necesario.
     if(something_changed_local)
       this.addUser(AppGlobals.USERS_LIST_LOCAL);
     if(something_changed_server)
@@ -231,7 +246,12 @@ export class HomePage {
       //TODO: añadir actualizar servidor
   }
 
-  //Une los elementos registrados para un usuario entre los datos de la nube y los locales:
+  /**
+    * @name: mergeAccesibility(local_accesibility : any, server_accesibility : any)
+    * @description: Recibe la accesbilidad (permisos) de los usuarios locales y los usuarios en la plataforma y une en una sola lista de accesibilidad.
+    * @param: local_accesibility - lista de permisos sobre los productos de un usuario local. server_accesibility - lista de permisos sobre los productos de un usuario en la nube.
+    * @return: una lista de toda la accesibilidad de un usuario (local + servidor).
+    */
   public mergeAccesibility(local_accesibility:any, server_accesibility:any){
     let merged_data:any = [];
     let index = 0;
@@ -253,6 +273,13 @@ export class HomePage {
     this.navCtrl.push ( LoginPage );
   }
 
+
+  /**
+    * @name: addUser(user_list:any)
+    * @description: Guarda la lista de usuarios cargados en memoria en la base de datos en local. Formatea los datos y hace una llamada al provider que gestiona la base de datos.
+    * Notifica al usuario si la actualización ha sido completada.
+    * @param: La lista de usuarios actualizada que está guardada en memoria.
+    */
   public addUser(user_list:any){
     let loader = this.loadingCtrl.create();
     loader.present().then(()=>{
@@ -275,16 +302,21 @@ export class HomePage {
     });
   }
 
-  //Función de pruebas (borrar):
-  public deleteTable(){
-    this.database.deleteUser();
-    this.database.deleteRegister();
-    AppGlobals.USERS_LIST_LOCAL = '';
-  }
-
+  /**
+    * @name: check_everythingLoaded()
+    * @description: Comprueba si todos los procesos de home han sido completados y está toda la información necesaria para arrancar la aplicación disponible.
+    * @return: false - si todo ha sido cargado correctamente. true - si aún quedan datos por cargar
+    */
   get check_everythingLoaded(){
     if(this.everything_loaded)
       return false;
     else return true;
   }
+
+  // TODO: Función de pruebas (borrar:)
+  // public deleteTable(){
+  //   this.database.deleteUser();
+  //   this.database.deleteRegister();
+  //   AppGlobals.USERS_LIST_LOCAL = '';
+  // }
 }

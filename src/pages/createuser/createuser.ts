@@ -14,6 +14,11 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   selector: 'page-createuser',
   templateUrl: 'createuser.html',
 })
+
+/**
+  * @name: CreateuserPage
+  * @description: Registra un nuevo usuario en la aplicación.
+  */
 export class CreateuserPage {
   myForm: FormGroup;
 
@@ -41,11 +46,19 @@ export class CreateuserPage {
     console.log('ionViewDidLoad CreateuserPage');
   }
 
+  /**
+    * @name: register()
+    * @description: Guarda los datos de registro introducidos por el usuario. Los datos se guardarán en local y se cargarán en el servidor en la siguiente sincronización
+    * (inicio de la app).
+    * Comprueba si hay conexión y datos de usuarios en local. Si hay conexión y no datos locales, los intenta descargar y añade el nuevo registro a esta lista. Si no hubiera
+    * conectividad ni datos cargados en local, el usuario se generaría igualmente y se sincronizaría con la plataforma en el siguiente inicio de la app. Hasta que no se realizase
+    * una sincronización de los datos, los nuevos usuarios no tendrían ningún rol (owner, register o visualizer), por lo que solo podrían escanear las etiquetas y se les mostrará
+    * un string con el escaneo sin ningún otro dato.
+    */
   register() {
     //Comprueba si hay conexión:
     if(AppGlobals.NETWORK_AVAILABLE){
-      //Si hay conexión pero no se ha cargado correctamente el JSON en memoria, vuelve a intentarlo:
-      // if(!Array.isArray(AppGlobals.USERS_LIST_LOCAL)){
+      //Si hay conexión pero no se ha cargado correctamente el JSON en memoria, vuelve a intentar cargarlo:
       if(AppGlobals.USERS_LIST_LOCAL  === undefined){
         console.log("El JSON NO existía en memoria");
         //Llama al provider que descarga el JSON del servidor y los carga en memoria:
@@ -78,14 +91,9 @@ export class CreateuserPage {
 
         //Actualiza los datos en local:
         this.addUser(AppGlobals.USERS_LIST_LOCAL);
-
-        for(let prueba of AppGlobals.USERS_LIST_LOCAL.users)
-          console.log("Usuario: " + prueba.user + " Password: " + prueba.password);
-        console.log(AppGlobals.USERS_LIST_LOCAL.users);
       }
     }else{
       //No hay conexión pero la lista de usuarios existe en memoria:
-      // if(Array.isArray(AppGlobals.USERS_LIST_LOCAL) && AppGlobals.USERS_LIST_LOCAL.length){
       if(AppGlobals.USERS_LIST_LOCAL === undefined && AppGlobals.USERS_LIST_LOCAL.length){
         console.log("No hay conexión pero la lista de usuarios existe en memoria:");
         //Añade el nuevo usuario a la lista en memoria:
@@ -119,6 +127,13 @@ export class CreateuserPage {
 
     this.nav_login();
   }
+
+  /**
+    * @name: addUser(user_list:any)
+    * @description: Guarda la lista de usuarios cargados en memoria en la base de datos en local. Formatea los datos y hace una llamada al provider que gestiona la base de datos.
+    * Notifica al usuario si la actualización ha sido completada.
+    * @param: La lista de usuarios actualizada que está guardada en memoria.
+    */
 
   public addUser(user_list:any){
     let loader = this.loadingCtrl.create();

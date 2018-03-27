@@ -17,8 +17,7 @@
   <p>{{getProductLabel}}</p>
 
 
-  <!-- <h4>General Info</h4>
-  <b>Identification</b> -->
+  <!-- Comprueba si la variable ordered_data está disponible. Carga los datos contenidos en esta variable y los muestra (category, name, value). -->
   <div *ngIf="ordered_data">
     <ion-grid *ngFor="let info of ordered_data">
       <h4 Text-Capitalize>{{info[2].category}}</h4>
@@ -29,14 +28,4 @@
       </ion-row>
     </ion-grid>
   </div>
-  <!-- <h4 [hidden]="hasLocation">Location</h4>
-  <b [hidden]="hasLocation">GPS position</b>
-  <ion-grid [hidden]="hasLocation">
-    <ion-row>
-      <ion-col>Latitude</ion-col> <ion-col>{{attr_latitude}}</ion-col>
-    </ion-row>
-    <ion-row>
-      <ion-col>Longitude</ion-col> <ion-col>{{attr_longitude}}</ion-col>
-    </ion-row> -->
-  <!-- </ion-grid> -->
 </ion-content>

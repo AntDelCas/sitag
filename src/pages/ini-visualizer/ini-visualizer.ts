@@ -26,26 +26,31 @@ export class IniVisualizerPage {
     console.log('ionViewDidLoad IniVisualizerPage');
   }
 
+  /**
+    * @name: start_scanning()
+    * @description: Escanea un código QR, comprueba si el usuario escaneando tiene permisos para visualizar ese producto. Guarda la etiqueta escaneada en la variable
+    * AppGlobals.PRODUCT_LABEL
+    */
   start_scanning() {
-    //TODO: Modo testeo, descomentar este código
-    // this.barcodeScanner.scan().then((barcodeData) => {
-    //   console.log("Datos del scan: ", barcodeData.text);
-    //   AppGlobals.PRODUCT_LABEL = barcodeData.text;
+    this.barcodeScanner.scan().then((barcodeData) => {
+      console.log("Datos del scan: ", barcodeData.text);
+      AppGlobals.PRODUCT_LABEL = barcodeData.text;
 
-      // if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
+      if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
         this.navCtrl.push( GeneralinfoPage );
-      // else{
-      //   let alert = this.alertCtrl.create({
-      //     title: '¡Error!',
-      //     subTitle: 'No tienes permisos para visualizar este producto.',
-      //     buttons: ['OK']
-      //   });
-      //   alert.present();
-      // }
-    // }, (err) => {
-    //   console.error("Error: ", err);
-    //   this.genericFunction.mostrar_toast("Error del scan: " + err);
-    // });
+      else{
+        let alert = this.alertCtrl.create({
+          title: '¡Error!',
+          subTitle: 'No tienes permisos para visualizar este producto.',
+          message: "Etiqueta: " + AppGlobals.PRODUCT_LABEL,
+          buttons: ['OK']
+        });
+        alert.present();
+      }
+    }, (err) => {
+      console.error("Error: ", err);
+      this.genericFunction.mostrar_toast("Error del scan: " + err);
+    });
   }
 
   //Devuelve el nickname:

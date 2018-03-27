@@ -27,6 +27,10 @@ export class IniSuperuserPage {
     console.log('ionViewDidLoad IniSuperuserPage');
   }
 
+  /**
+    * @name: download_schemas()
+    * @description: Descarga la lista de esquemas de producto del servidor.
+    */
   download_schemas() {
     this.dataAccess.getAllSchemas().then(data =>{
       AppGlobals.SCHEMA_LIST = data;
@@ -35,6 +39,11 @@ export class IniSuperuserPage {
     });
   }
 
+  /**
+    * @name: customize()
+    * @description: Escanea un código QR, comprueba si el usuario escaneando tiene permisos para personalizar ese producto. Guarda la etiqueta escaneada en la variable
+    * AppGlobals.PRODUCT_LABEL
+    */
   customize() {
     this.barcodeScanner.scan().then((barcodeData) => {
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
@@ -45,7 +54,7 @@ export class IniSuperuserPage {
       else{
         let alert = this.alertCtrl.create({
           title: '¡Error!',
-          subTitle: 'No tienes permisos para visualizar este producto.',
+          subTitle: 'No tienes permisos para modificar este producto.',
           buttons: ['OK']
         });
         alert.present();
@@ -54,6 +63,11 @@ export class IniSuperuserPage {
 
   }
 
+  /**
+    * @name: start_register()
+    * @description: Escanea un código QR, comprueba si el usuario escaneando tiene permisos para registrar/visualizar ese producto. Guarda la etiqueta escaneada en la variable
+    * AppGlobals.PRODUCT_LABEL
+    */
   start_register() {
     this.barcodeScanner.scan().then((barcodeData) => {
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
@@ -86,7 +100,12 @@ export class IniSuperuserPage {
     });
   }
 
-  start_sacanning() {
+  /**
+    * @name: start_scanning()
+    * @description: Escanea un código QR, comprueba si el usuario escaneando tiene permisos para visualizar ese producto. Guarda la etiqueta escaneada en la variable
+    * AppGlobals.PRODUCT_LABEL
+    */
+  start_scanning() {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log("Datos del scan: ", barcodeData.text);
       AppGlobals.PRODUCT_LABEL = barcodeData.text;

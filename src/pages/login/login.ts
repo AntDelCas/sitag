@@ -23,7 +23,7 @@ export class LoginPage {
     public alertCtrl: AlertController,
     public dataAccess: DataaccessProvider,
     public genericFunction: GenericfunctionsProvider) {
-        //Datos de prueba para login: (borrar)
+        //TODO: Datos de prueba para login: (borrar)
         console.log("LOCAL:")
         for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
           console.log("Usuario: " + entry.user + " Password: " + entry.password);
@@ -35,7 +35,10 @@ export class LoginPage {
       ///////
   }
 
-  //Comprueba si el login es válido:
+  /**
+    * @name: login()
+    * @description: Valida los datos de autentificación del usuario y guarda en memoria sus roles (owner, register o visualizer), que influirán en su navegación en la aplicación.
+    */
   login(){
     //Itera los datos cargados en memoria:
     for (let entry of AppGlobals.USERS_LIST_LOCAL.users) {
@@ -79,7 +82,11 @@ export class LoginPage {
     }
   }
 
-  //Devuelve el timeStamp de la última sincronización de usuarios:
+  /**
+    * @name: lastSynchro()
+    * @description: Devuelve el timeStamp de la última sincronización de usuarios.
+    * @return: timeStamp de la última sincronización de usuarios.
+    */
   get lastSynchro(){
     return AppGlobals.LAST_SYNCHRO;
   }

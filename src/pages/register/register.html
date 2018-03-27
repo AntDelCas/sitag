@@ -23,7 +23,7 @@
   <p>Scanned item</p>
   <p>{{getProductLabel}}</p>
 
-
+  <!-- Formulario que carga dinámicamente atributos de un producto (vinculados a un esquema) y los guarda en la variable data. -->
   <form #data="ngForm" (ngSubmit)="save(data)" novalidate>
     <ion-item *ngFor="let element of elements">
       <ion-label color="primary" Text-Capitalize>{{element}}</ion-label>

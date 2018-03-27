@@ -30,9 +30,9 @@ export class RegisterPage {
     public database:DatabaseProvider,
     public genericFunction: GenericfunctionsProvider)
   {
-    //Carga elementos a rellenar del esquema:
-    let loader = this.loadingCtrl.create({});
 
+    let loader = this.loadingCtrl.create({});
+    //Comprueba si hay conexión a internet.
     if(AppGlobals.NETWORK_AVAILABLE){
       loader.present().then(() => {
         dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
@@ -42,20 +42,32 @@ export class RegisterPage {
           dataAccess.getAllSchemas().then(data => {
             AppGlobals.SCHEMA_LIST = data;
 
-            for(let current_schema of AppGlobals.SCHEMA_LIST.registers){
-              if(current_schema.idSchema == this.general_info.registers[0].idSchema)
-                this.schema = current_schema;
-            }
+            //Comprueba hay algún esquema disponible para este producto.
+            if(AppGlobals.SCHEMA_LIST === undefined || AppGlobals.SCHEMA_LIST.length == 0){
+              let alert = this.alertCtrl.create({
+                title: '¡Error!',
+                subTitle: 'No existe ningún esquema disponible.',
+                buttons: ['OK']
+              });
+              alert.present();
+            }else{
+              for(let current_schema of AppGlobals.SCHEMA_LIST.registers){
+                if(current_schema.idSchema == this.general_info.registers[0].idSchema)
+                  this.schema = current_schema;
+              }
 
-            for(let element of this.schema.attributes){
-              if(element.control.substring(0,1) == "1")
-                this.elements.push(element.name);
+              //Comprueba con el esquema si el elemento debe ser mostrado (si tiene permisos de registro).
+              for(let element of this.schema.attributes){
+                if(element.control.substring(0,1) == "1")
+                  this.elements.push(element.name);
+              }
             }
             loader.dismiss();
           });
         });
       });
     }else{
+      //Si no hay conexión a internet ni ningún esquema cargado en memoria:
       if(AppGlobals.DEFAULT_SCHEMA === undefined || AppGlobals.DEFAULT_SCHEMA.length == 0){
         let alert = this.alertCtrl.create({
           title: '¡Error!',
@@ -64,6 +76,7 @@ export class RegisterPage {
         });
         alert.present();
       }else{
+        //Comprueba con el esquema si el elemento debe ser mostrado (si tiene permisos de registro).
         for(let element of AppGlobals.DEFAULT_SCHEMA.registers[0].attributes){
           if(element.control.substring(0,1) == "1")
             this.elements.push(element.name);
@@ -76,12 +89,17 @@ export class RegisterPage {
     console.log('ionViewDidLoad RegisterPage');
   }
 
+  /**
+    * @name: save(data : NgForm)
+    * @description: Guarda los datos del registro en el backend.
+    * @param: Recibe los datos recogidos por el formulario
+    */
   save(data: NgForm) {
     //Extrae las claves generadas en el form:
     let ngForm_keys = Object.keys(data.value);
 
     //Guarda en memoria los datos introducidos por el usuario:
-    //if(si no existe ningún registro) else (hay al menos un registro en memoria)
+    //Si no existe ningún registro,
     if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0){
         let attributes:any = [];
 
@@ -113,6 +131,7 @@ export class RegisterPage {
         ]
         };
     }else{
+      //Hay al menos un registro en memoria.
       let attributes:any = [];
 
       let countRegisters:number = AppGlobals.REGISTER_SHEET.countRegisters;
@@ -141,6 +160,7 @@ export class RegisterPage {
         });
     }
 
+    //Guarda los datos del registro en local.
     this.database.addRegisterToLocal(AppGlobals.USER, JSON.stringify(AppGlobals.REGISTER_SHEET));
     this.genericFunction.mostrar_toast('Datos de registro guardados.');
     this.navCtrl.push ( IniRegisterPage );

@@ -26,6 +26,11 @@ export class IniRegisterPage {
     console.log('ionViewDidLoad IniRegisterPage');
   }
 
+  /**
+    * @name: start_register()
+    * @description: Escanea un código QR, comprueba si el usuario escaneando tiene permisos para registrar/visualizar ese producto. Guarda la etiqueta escaneada en la variable
+    * AppGlobals.PRODUCT_LABEL
+    */
   start_register() {
     this.barcodeScanner.scan().then((barcodeData) => {
       console.log("Datos del scan: ", barcodeData.text);
