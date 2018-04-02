@@ -20,6 +20,9 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   * @description: Registra un nuevo usuario en la aplicación.
   */
 export class CreateuserPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Datos recogidos del formulario */
   myForm: FormGroup;
 
   constructor(
@@ -40,10 +43,6 @@ export class CreateuserPage {
         email: ['', [Validators.required, Validators.email]],
         password: ['', [Validators.required, Validators.minLength(8)]]
       });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CreateuserPage');
   }
 
   /**
@@ -134,7 +133,6 @@ export class CreateuserPage {
     * Notifica al usuario si la actualización ha sido completada.
     * @param: La lista de usuarios actualizada que está guardada en memoria.
     */
-
   public addUser(user_list:any){
     let loader = this.loadingCtrl.create();
     loader.present().then(()=>{
@@ -149,10 +147,18 @@ export class CreateuserPage {
     });
   }
 
+  /**
+    * @name: nav_login()
+    * @description: Navega a la interfaz de login.
+    */
   nav_login(){
     this.navCtrl.push ( LoginPage );
   }
 
+  /**
+    * @name: cancel_register()
+    * @description: Cancela la acción y vuelve a la interfaz anterior.
+    */
   cancel_register() {
     this.navCtrl.pop();
   }

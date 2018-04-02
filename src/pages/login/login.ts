@@ -11,10 +11,13 @@ import { HomePage, LoginAsPage, CreateuserPage, IniVisualizerPage, AppGlobals } 
   templateUrl: 'login.html',
 })
 export class LoginPage {
-
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Usuario que será registrado en la aplicación. */
   username : string;
+  /** @description: Contraseña del usuario que será registrado en la aplicación. */
   password: string;
-  indexOfUser : number = 0;
+  /** @description: Especifica si una validación de usuario es válida al contrastarla con los datos existentes en la aplicación. */
   isValidLogin: boolean = false;
 
   constructor(
@@ -91,10 +94,18 @@ export class LoginPage {
     return AppGlobals.LAST_SYNCHRO;
   }
 
+  /**
+    * @name: createaccount()
+    * @description: Navega hacia la interfaz de creación de usuario.
+    */
   createaccount(){
     this.navCtrl.push ( CreateuserPage );
   }
 
+  /**
+    * @name: nav_home()
+    * @description: Navega hacia la interfaz de home.
+    */
   nav_home(){
     this.navCtrl.push ( HomePage );
   }

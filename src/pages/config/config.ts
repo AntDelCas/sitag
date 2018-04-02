@@ -16,6 +16,9 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   */
 
 export class ConfigPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Datos recogidos del formulario */
   myForm: FormGroup;
 
   constructor(
@@ -29,9 +32,6 @@ export class ConfigPage {
       });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConfigPage');
-  }
 
 /**
   * @name: save()
@@ -46,15 +46,26 @@ export class ConfigPage {
     console.log(this.myForm.value.port);
   }
 
+  /**
+    * @name: cancel()
+    * @description: Cancela la acción y vuelve a la interfaz anterior.
+    */
   cancel() {
     this.navCtrl.pop();
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

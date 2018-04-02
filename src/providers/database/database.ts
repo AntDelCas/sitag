@@ -13,7 +13,7 @@ import { AppGlobals } from "../../pages/index.paginas";
 export class DatabaseProvider {
 
   private database: SQLiteObject;
-  //initially set dbReady status to false
+  //Inicia dbReady en falso.
   private database_ready = new BehaviorSubject<boolean>(false);
 
   constructor(

@@ -13,6 +13,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   templateUrl: 'ini-visualizer.html',
 })
 export class IniVisualizerPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   constructor(
     public navCtrl: NavController,
@@ -20,10 +22,6 @@ export class IniVisualizerPage {
     private barcodeScanner: BarcodeScanner,
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IniVisualizerPage');
   }
 
   /**
@@ -53,11 +51,18 @@ export class IniVisualizerPage {
     });
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
     return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

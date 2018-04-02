@@ -15,9 +15,15 @@ import { GenericfunctionsProvider } from '../../providers/genericfunctions/gener
   templateUrl: 'register.html',
 })
 export class RegisterPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Esquema que da estructura a los datos del producto que serán mostrados al usuario. */
   schema: any;
+  /** @description: Identificador del esquema requerido por el producto. */
   schema_identifier: string;
+  /** @description: Datos del producto escaneado. */
   general_info: any;
+  /** @description: Lista de atributos del producto que serán mostrados al usuario. */
   elements: any = [];
 
   constructor(
@@ -83,10 +89,6 @@ export class RegisterPage {
         }
       }
     }
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterPage');
   }
 
   /**
@@ -166,16 +168,26 @@ export class RegisterPage {
     this.navCtrl.push ( IniRegisterPage );
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
-  //Devuelve el label del producto:
+  /**
+    * @name: getProductLabel()
+    * @description: Devuelve el la etiqueta del producto escaneado.
+    */
   get getProductLabel() {
    return AppGlobals.PRODUCT_LABEL;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

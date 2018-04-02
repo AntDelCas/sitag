@@ -85,6 +85,7 @@ export class GenericfunctionsProvider {
   /**
     * @name: check_isVisualizer(label : string)
     * @description: Comprueba si el usuario que está escaneando el producto tiene permisos de visualizado.
+    * @param: La etiqueta del producto escaneado.
     * @return false - si no tiene permisos de visualizado. true - si tiene permisos de visualizado.
     */
   public check_isVisualizer(label : string){

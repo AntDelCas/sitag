@@ -11,6 +11,8 @@ import { IniVisualizerPage, IniRegisterPage, IniSuperuserPage, AppGlobals, Login
   templateUrl: 'login-as.html',
 })
 export class LoginAsPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   constructor(
     public navCtrl: NavController,
@@ -18,27 +20,38 @@ export class LoginAsPage {
     public database:DatabaseProvider) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginAsPage');
-  }
-
-  //Según el o los roles que lleguen del ws, se mostrarán 1, 2 ó los 3 botones.
+  /**
+    * @name: nav_visualizer()
+    * @description: Navega hacia la interfaz de visualizador.
+    */
   nav_visualizer(){
     this.navCtrl.push ( IniVisualizerPage );
   }
 
+  /**
+    * @name: nav_register()
+    * @description: Navega hacia la interfaz de registrador.
+    */
   nav_register(){
     this.database.getRegisterFromLocal(AppGlobals.USER).then(data => {
       this.navCtrl.push ( IniRegisterPage );
     });
   }
 
+  /**
+    * @name: nav_superuser()
+    * @description: Navega hacia la interfaz de super usuario.
+    */
   nav_superuser(){
     this.database.getRegisterFromLocal(AppGlobals.USER).then(data => {
       this.navCtrl.push ( IniSuperuserPage );
     });
   }
 
+  /**
+    * @name: register_directory()
+    * @description: Borra los datos en memoria generados por el usuario y lo desconecta de la aplicación. Navega hacia la interfaz de login..
+    */
   logOff(){
     this.resetVariables();
     this.navCtrl.push ( LoginPage );
@@ -47,7 +60,7 @@ export class LoginAsPage {
 
   /**
     * @name: resetVariables()
-    * @description: Reinicia las variables para hacer un log-off de la aplicación correcto.    
+    * @description: Reinicia las variables para hacer un log-off de la aplicación correcto.
     */
   resetVariables(){
     AppGlobals.IS_OWNER = false;
@@ -57,7 +70,10 @@ export class LoginAsPage {
     AppGlobals.REGISTER_SHEET = [];
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }

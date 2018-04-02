@@ -15,13 +15,25 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   * @description: Permite al usuario owner modificar los datos de los atributos ya guardados en la base de datos de los productos escaneados.
   */
 export class CustomizePage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Datos del producto escaneado. */
   general_info: any = [];
+  /** @description: Lista de atributos del producto escaneado. */
   attributes: any = [];
+  /** @description: Lista de categorías de los atributos del producto escaneado. */
   category_list: any = [];
+  /** @description: Lista de subcategorías de la categoría seleccionada del producto escaneado. */
   subcategory_list: any = [];
+  /** @description: Lista de elementos de la subcategoría seleccionada del producto escaneado. */
   element_list: any = [];
+  /** @description: Categoría actualmente seleccionada en la interfaz de usuario. */
   current_category: string;
+  /** @description: Subcategoría actualmente seleccionada en la interfaz de usuario. */
   current_subcategory: string;
+  /**
+    * @description: Especifica si hay una categoría seleccionada por el usuario o no.
+    * @return false - si no hay categoría seleccionada. true - Si hay categoría seleccionada. */
   category_selected : boolean = false;
 
   constructor(
@@ -55,21 +67,11 @@ export class CustomizePage {
       });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad CustomizePage');
-  }
-
-  //Devuelve el nickname:
-  get getUsername() {
-   return AppGlobals.USER;
-  }
-
   /**
     * @name: categorySelected(category : string)
     * @description: Carga las subcategorías dependientes de la categoría que el usuario ha seleccionado en el dropdown menu de categoría.
     * @param: Recibe la categoría seleccionada en el dropdown menú de categoría, en el template.
     */
-
   categorySelected(category : string){
     //Reinicia los valores de los campos que se muestran el template.
     this.category_selected = true;
@@ -178,6 +180,18 @@ export class CustomizePage {
       return value;
   }
 
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
+  get getUsername() {
+   return AppGlobals.USER;
+  }
+
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

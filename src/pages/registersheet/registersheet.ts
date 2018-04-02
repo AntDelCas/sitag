@@ -10,6 +10,9 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   templateUrl: 'registersheet.html',
 })
 export class RegistersheetPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+  /** @description: Lista de datos de los productos escaneados. */
   register_sheet : any = [];
 
   constructor(
@@ -23,15 +26,18 @@ export class RegistersheetPage {
       this.register_sheet.push(reg);
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegistersheetPage');
-  }
-
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

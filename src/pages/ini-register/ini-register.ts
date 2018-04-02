@@ -12,6 +12,8 @@ import { BarcodeScanner } from '@ionic-native/barcode-scanner';
   templateUrl: 'ini-register.html',
 })
 export class IniRegisterPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   constructor(
     public navCtrl: NavController,
@@ -20,10 +22,6 @@ export class IniRegisterPage {
     public loadingCtrl: LoadingController,
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IniRegisterPage');
   }
 
   /**
@@ -64,15 +62,26 @@ export class IniRegisterPage {
     });
   }
 
+  /**
+    * @name: register_directory()
+    * @description: Navega hacia la interfaz de directorio de registro.
+    */
   register_directory() {
     this.navCtrl.push( RegisterdirectoryPage );
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

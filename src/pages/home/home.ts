@@ -15,8 +15,10 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   templateUrl: 'home.html'
 })
 export class HomePage {
-
+  /** @description: Cabecera inicial de la aplicación: */  
   texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+
+  /** @description: Especifica si todo el contenido necesario está cargado. */
   everything_loaded : boolean = false;
 
   constructor(
@@ -291,6 +293,11 @@ export class HomePage {
     });
   }
 
+  /**
+    * @name: addSchemaToLocal(donwloaded_schema:any)
+    * @description: Guarda en local el esquema predeterminado de la aplicación para el visionado de productos.
+    * @param: El esquema predeterminado de la aplicación.
+    */
   public addSchemaToLocal(donwloaded_schema:any){
     let loader = this.loadingCtrl.create();
     loader.present().then(()=>{

@@ -14,6 +14,9 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
 
 export class RegisterdirectoryPage {
 
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
+
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
@@ -22,11 +25,6 @@ export class RegisterdirectoryPage {
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider) {
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RegisterdirectoryPage');
-  }
-
 
   /**
     * @name: open_register_sheet()
@@ -106,11 +104,18 @@ export class RegisterdirectoryPage {
       // });
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }

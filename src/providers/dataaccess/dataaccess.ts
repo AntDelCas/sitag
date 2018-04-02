@@ -12,9 +12,9 @@ import { Network } from '@ionic-native/network';
 */
 @Injectable()
 export class DataaccessProvider {
-  data: any = null;
   //Link del backend:
   apiUrl= 'http://www.mocky.io/v2/';
+  /** @param: Link del backend */
   url = 'https://sitag.bettergy.es/api/';
   constructor(
     public http: HttpClient,

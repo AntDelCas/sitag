@@ -1,42 +1,47 @@
 export class AppGlobals {
 
+  /** @description: Cabecera inicial de la aplicación. */
   static TEXTO_CABECERA: string = "<p>Si-Tag</p><p>Solución integral para la trazabilidad de elementos de principio a fin.</p>";
 
-  //Estado de la conexión a internet:
+  /** @description: Estado de la conexión a internet. */
   static NETWORK_AVAILABLE: boolean = false;
 
-  //Lista de usuarios descargada del servidor:
+  /** @description: Lista de usuarios descargada del servidor. */
   static USERS_LIST: any;
 
-  //Lista de usuarios existente en local:
+  /** @description: Lista de usuarios existente en local. */
   static USERS_LIST_LOCAL: any;
 
-  //Permisos que tiene el usuario sobre los productos:
+  /** @description: Permisos que tiene el usuario sobre los productos. */
   static USER_ACCESIBILITY: any;
 
-  //Nombre usuario logueado:
+  /** @description: Nombre usuario logueado. */
   static USER: string;
 
-  //Última sincronización de datos con el servidor:
+  /** @description: Última sincronización de datos con el servidor. */
   static LAST_SYNCHRO: string;
 
-  //Esquema de productos por defecto
+  /** @description: Esquema de productos por defecto. */
   static DEFAULT_SCHEMA: any;
 
-  //Lista de todos los esquemas (descargable por owner):
+  /** @description: Lista de todos los esquemas (descargable por owner). */
   static SCHEMA_LIST: any;
 
-  //Datos registrados aún no enviados a la nube:
+  /** @description: Datos registrados aún no enviados a la nube. */
   static REGISTER_SHEET: any;
 
-  //Etiqueta del producto
+  /** @description: Etiqueta del producto. */
   static PRODUCT_LABEL: string;
 
-  //Token para la validación de las consultas:
+  /** @description: Token para la validación de las consultas. */
   static HEADER_TOKEN: string;
 
-  //Permisos máximos sobre los objetos:
+  /** @description: El usuario tiene permisos de visualizador. */
   static IS_VISUALIZER: boolean = false;
+
+  /** @description: El usuario tiene permisos de registrador. */
   static IS_REGISTER: boolean = false;
+
+  /** @description: El usuario tiene permisos de owner. */
   static IS_OWNER: boolean = false;
 }

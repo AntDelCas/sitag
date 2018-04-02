@@ -13,6 +13,8 @@ import { DataaccessProvider } from "../../providers/dataaccess/dataaccess";
   templateUrl: 'ini-superuser.html',
 })
 export class IniSuperuserPage {
+  /** @description: Cabecera inicial de la aplicación: */
+  texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   constructor(
     public navCtrl: NavController,
@@ -21,10 +23,6 @@ export class IniSuperuserPage {
     public alertCtrl: AlertController,
     public genericFunction: GenericfunctionsProvider,
     public dataAccess: DataaccessProvider) {
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad IniSuperuserPage');
   }
 
   /**
@@ -126,19 +124,34 @@ export class IniSuperuserPage {
     });
   }
 
+  /**
+    * @name: config()
+    * @description: Navega hacia la interfaz de configuración.
+    */
   config() {
     this.navCtrl.push(ConfigPage);
   }
 
+  /**
+    * @name: register_directory()
+    * @description: Navega hacia la interfaz de directorio de registro.
+    */
   register_directory() {
     this.navCtrl.push(RegisterdirectoryPage);
   }
 
-  //Devuelve el nickname:
+  /**
+    * @name: getUsername()
+    * @description: Devuelve el nick del usuario que está validado en la aplicación.
+    */
   get getUsername() {
    return AppGlobals.USER;
   }
 
+  /**
+    * @name: backHome()
+    * @description: Navega hacia la interfaz de selección de tipo de usuario.
+    */
   backHome(){
     this.navCtrl.push ( LoginAsPage );
   }
