@@ -20,6 +20,7 @@
 
   <p>Register Directory</p>
 
+  <!-- Muestra los datos de cada producto registrado hasta ahora por ese usuario -->
   <div *ngIf="register_sheet">
     <div *ngFor="let register of register_sheet">
       <b>{{register.label}}</b>

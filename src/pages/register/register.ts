@@ -92,7 +92,7 @@ export class RegisterPage {
   /**
     * @name: save(data : NgForm)
     * @description: Guarda los datos del registro en el backend.
-    * @param: Recibe los datos recogidos por el formulario
+    * @param: Recibe los datos recogidos por el formulario.
     */
   save(data: NgForm) {
     //Extrae las claves generadas en el form:

@@ -15,6 +15,7 @@ export class RegisterreportPage {
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams) {
+      //Carga en memoria el resumen de datos de los escaneos producidos en la aplicación.
       for(let reg of AppGlobals.REGISTER_SHEET.registers)
         this.date_list.push(reg.dateTime);
       this.register_start = this.date_list[0];

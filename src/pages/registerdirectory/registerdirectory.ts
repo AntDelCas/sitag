@@ -28,6 +28,10 @@ export class RegisterdirectoryPage {
   }
 
 
+  /**
+    * @name: open_register_sheet()
+    * @description: Carga en memoria los datos de los productos que han sido registrados en la aplicación.
+    */
   open_register_sheet() {
     //Carga en memoria los datos de los productos registrados:
     this.database.getRegisterFromLocal(AppGlobals.USER).then(response => {
@@ -38,6 +42,10 @@ export class RegisterdirectoryPage {
     });
   }
 
+  /**
+    * @name: send_register_sheet()
+    * @description: Envía a la plataforma los datos que habían sido registrados hasta el momento y los borra de memoria (dejan de poderse consultar en la app).
+    */
   send_register_sheet() {
     //TODO: hacer doble comprobación (como en open_register_report) para evitar acceso en la BD si ya existen datos cargados en memoria:
     this.database.getRegisterFromLocal(AppGlobals.USER).then(()=>{
@@ -56,6 +64,10 @@ export class RegisterdirectoryPage {
     });
   }
 
+  /**
+    * @name: open_register_report()
+    * @description: Muestra un resumen de los productos escaneados (hora inicio, hora fin, cantidad de productos escaneados, etc).
+    */
   open_register_report() {
     //Carga en memoria los datos de los productos registrados:
     if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0)
@@ -70,6 +82,10 @@ export class RegisterdirectoryPage {
   }
 
   //TODO: Envío del report a la plataforma (construir JSON y activar método addRegisterReportToServer())
+  /**
+    * @name: send_register_report()
+    * @description: Envía a la plataforma el resumen de los productos escaneados hasta el momento y los borra de memoria (dejan de poderse consultar en la app),
+    */
   send_register_report() {
     //Carga en memoria los datos de los productos registrados:
     if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0)

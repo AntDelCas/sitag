@@ -18,6 +18,7 @@ export class RegistersheetPage {
     public database:DatabaseProvider,
     public genericFunction: GenericfunctionsProvider)
   {
+    //Carga en memoria los datos de los productos escaneados.
     for(let reg of AppGlobals.REGISTER_SHEET.registers)
       this.register_sheet.push(reg);
   }

@@ -36,6 +36,10 @@ export class DatabaseProvider {
     });
   }
 
+  /**
+    * @name: createTables()
+    * @description: Crea las tablas con las que operará la base de datos.
+    */
   private createTables(){
     return this.database.executeSql(
       `CREATE TABLE IF NOT EXISTS users (
@@ -59,9 +63,10 @@ export class DatabaseProvider {
     .catch((err)=>console.log("Error creando la base de datos.", err));
   }
 
-
-
-
+  /**
+    * @name: isReady()
+    * @description: Comprueba si la base de datos está disponible para interactuar con ella.
+    */
   private isReady(){
     return new Promise((resolve) =>{
       //if dbReady is true, resolve
@@ -79,7 +84,13 @@ export class DatabaseProvider {
     })
   }
 
-  /////////// USERS
+  /////////// USERS ///////////
+
+  /**
+    * @name: addUserToLocal(date:string, user:string)
+    * @description: Añade a la base de datos local un nuevo usuario.
+    * @param: date - timeStamp de cuando se crea el usuario, user - usuario que va a ser creado.
+    */
   addUserToLocal(date:string, user:string){
     this.deleteUser();
     console.log("addUser");
@@ -90,6 +101,10 @@ export class DatabaseProvider {
     });
   }
 
+  /**
+    * @name: getUsersFromLocal()
+    * @description: Carga en memoria la lista de usuarios disponibles en la base de datos local.
+    */
   getUsersFromLocal(){
     console.log("getUsersJSON()");
     return this.isReady()
@@ -113,6 +128,10 @@ export class DatabaseProvider {
     })
   }
 
+  /**
+    * @name: deleteUser()
+    * @description: Borra todos los datos de la tabla de usuarios de la base de datos local.
+    */
   deleteUser(){
     console.log("deleteUser()")
     return this.isReady()
@@ -123,7 +142,12 @@ export class DatabaseProvider {
   }
 
 
-  /////////// SCHEMA
+  /////////// SCHEMA ///////////
+
+  /**
+    * @name: getSchemaFromLocal()
+    * @description: Descarga el esquema por defecto para visionado de elementos en la aplicación.
+    */
   getSchemaFromLocal(){
     console.log("getSchemaFromLocal()");
     return this.isReady()
@@ -147,6 +171,11 @@ export class DatabaseProvider {
     })
   }
 
+  /**
+    * @name: addSchemaToLocal(schema : string)
+    * @description: Añade esquema predeterminado a la base de datos en local de la aplicación.
+    * @param: Esquema predeterminado para el visionado de productos.
+    */
   addSchemaToLocal(schema:string){
     this.deleteSchema();
     console.log("addSchema");
@@ -157,6 +186,10 @@ export class DatabaseProvider {
     });
   }
 
+  /**
+    * @name: deleteSchema()
+    * @description: Borra todos los datos de la tabla de default_schema de la base de datos local.
+    */
   deleteSchema(){
     console.log("deleteSchema()")
     return this.isReady()
@@ -166,7 +199,13 @@ export class DatabaseProvider {
     })
   }
 
-  /////////// REGISTER
+  /////////// REGISTER ///////////
+
+  /**
+    * @name: getRegisterFromLocal(user : string)
+    * @description: Consulta en la base de datos local los datos de la hoja de registro de los productos escaneados.
+    * @param: Usuario que está utilizando la aplicación (del que se consultan los registros).
+    */
   getRegisterFromLocal(user : string){
     console.log("getRegisterFromLocal()");
     return this.isReady()
@@ -188,6 +227,11 @@ export class DatabaseProvider {
     })
   }
 
+  /**
+    * @name: addRegisterToLocal(user : string, register : string)
+    * @description: Añade los datos del producto registrado a la tabla register_sheet
+    * @param: user - usuario que está registrando el producto. register - datos del producto registrado.
+    */
   addRegisterToLocal(user:string, register:string){
     this.deleteRegister();
     console.log("addRegisterToLocal");
@@ -199,6 +243,10 @@ export class DatabaseProvider {
     });
   }
 
+  /**
+    * @name: deleteRegister()
+    * @description: Borra todos los datos de la tabla register_sheet.
+    */
   deleteRegister(){
     console.log("deleteRegister()")
     return this.isReady()

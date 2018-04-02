@@ -22,7 +22,11 @@ export class GenericfunctionsProvider {
     console.log('Hello GenericfunctionsProvider Provider');
   }
 
-  //mostrar ToastController
+  /**
+    * @name: mostrar_toast(mensaje : string)
+    * @description: Muestra un mensaje al usuario.
+    * @param: El mensaje que se mostrará al usuario.
+    */
   mostrar_toast(mensaje: string) {
     let toast = this.toastCtrl.create({
       message: mensaje,
@@ -31,7 +35,11 @@ export class GenericfunctionsProvider {
     toast.present();
   }
 
-  //Comprueba si el usuario tiene permisos para el producto escaneado:
+  /**
+    * @name: check_hasPermissions()
+    * @description: Comprueba si el usuario tiene permisos en producto escaneado.
+    * @return false - si no tiene permisos sobre el producto. true - si tiene permisos sobre el producto.
+    */
   public check_hasPermissions(){
     for(let current_user of AppGlobals.USERS_LIST_LOCAL.users){
       if(current_user.user == AppGlobals.USER){
@@ -45,7 +53,11 @@ export class GenericfunctionsProvider {
     return false;
   }
 
-  //Comprueba si el usuario es propietario del producto escaneado:
+  /**
+    * @name: check_isOwner()
+    * @description: Comprueba si el usuario es el propietario del producto escaneado.
+    * @return false - si no es propietario. true - si es propietario.
+    */
   public check_isOwner(){
     for(let current_user of AppGlobals.USERS_LIST_LOCAL.users){
       if(current_user.user == AppGlobals.USER){
@@ -59,7 +71,10 @@ export class GenericfunctionsProvider {
     return false;
   }
 
-  //Carga en memoria la accesibilidad del usuario actual:
+  /**
+    * @name: getAccesibility()
+    * @description: Carga en memoria la accesibilidad del usuario actual (permisos por cada producto)
+    */
   public getAccesibility(){
     for(let user of AppGlobals.USERS_LIST_LOCAL.users){
       if(AppGlobals.USER == user.user)
@@ -67,7 +82,11 @@ export class GenericfunctionsProvider {
     }
   }
 
-  //Comprueba si tiene los permisos mínimos para visualizar el producto:
+  /**
+    * @name: check_isVisualizer(label : string)
+    * @description: Comprueba si el usuario que está escaneando el producto tiene permisos de visualizado.
+    * @return false - si no tiene permisos de visualizado. true - si tiene permisos de visualizado.
+    */
   public check_isVisualizer(label : string){
     for(let current_label of AppGlobals.USER_ACCESIBILITY){
       if(current_label.register == label)
@@ -76,6 +95,11 @@ export class GenericfunctionsProvider {
     return false;
   }
 
+  /**
+    * @name: alreadyRegistered()
+    * @description: Comprueba si el producto que está siendo escaneado ha sido registrado anteriormente.
+    * @return false - si no ha sido registrado. true - si ya ha sido registrado.
+    */
   public alreadyRegistered(){
     console.log("alreadyRegistered");
     //Intenta cargar en memoria datos de la base de datos en local:
@@ -91,7 +115,11 @@ export class GenericfunctionsProvider {
     return false;
   }
 
-  //Devuelve la fecha y la hora actual:
+  /**
+    * @name: timeStamp()
+    * @description: Devuelve la fecha y la hora actual.
+    * @return: La hora y la fecha actual.
+    */
   get timeStamp(){
     let myDate: string = new Date().getFullYear().toString() + "-" + new Date().getMonth().toString() + "-" + new Date().getDate().toString();
     let hour: string = new Date().getHours().toString() + ":" + new Date().getMinutes().toString() + ":" + new Date().getSeconds().toString();
