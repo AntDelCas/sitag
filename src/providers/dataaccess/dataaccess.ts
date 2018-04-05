@@ -45,7 +45,7 @@ export class DataaccessProvider {
     */
   getUsersFromServer() {
   return new Promise(resolve => {
-    this.http.get(this.apiUrl+'5aa263472f0000ae17d4656d').subscribe(data => {
+    this.http.get(this.apiUrl+'5ac5e3384a000011007e0513').subscribe(data => {
       resolve(data);
     }, err => {
       console.log(err);
@@ -105,9 +105,11 @@ export class DataaccessProvider {
     * @description: Descarga la información disponible del producto escaneado.
     * @param: La etiqueta identificadora del producto.
     */
+
+  // 5ab8adac2c00004b001860cc
   getProductInfo(label : string){
     return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5ab8adac2c00004b001860cc').subscribe(data => {
+      this.http.get(this.apiUrl+'5ac60c234a00005b007e05f8').subscribe(data => {
         resolve(data);
       }, err => {
         console.log(err);
@@ -136,16 +138,29 @@ export class DataaccessProvider {
     * @description: Añade un nuevo registro de producto a la plataforma.
     * @param: Datos de registro de producto.
     */
+  // addRegisterToServer(data) {
+  // return new Promise((resolve, reject) => {
+  //   // this.http.post(this.apiUrl+'register', JSON.stringify(data))
+  //   this.http.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
+  //     .subscribe(res => {
+  //       resolve(res);
+  //     }, (err) => {
+  //       reject(err);
+  //     });
+  // });
+  // }
+
   addRegisterToServer(data) {
-  return new Promise((resolve, reject) => {
-    // this.http.post(this.apiUrl+'register', JSON.stringify(data))
-    this.http.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
-      .subscribe(res => {
-        resolve(res);
-      }, (err) => {
-        reject(err);
+    console.log("addRegisterToServer()");
+
+    const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
+      return new Promise(resolve => {
+        this.http.post(this.url+'registers/', data, { headers : headers }).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
       });
-  });
   }
 
   /**

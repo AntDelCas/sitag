@@ -77,11 +77,23 @@ export class LoginPage {
       });
       alert.present();
     }else{
-      //Si no tiene rol concreto redirige directamente a la página de visualizador:
-      if(AppGlobals.IS_OWNER || AppGlobals.IS_REGISTER)
-        this.navCtrl.push ( LoginAsPage );
-      else
-        this.navCtrl.push ( IniVisualizerPage );
+      let getToken : any = {
+        username: this.username,
+        password: this.password
+      }
+
+      //Guarda el token del usuario validado:
+      this.dataAccess.getTokenFromServer(getToken).then(data => {
+        let token : any = data;
+        console.log(token);
+        AppGlobals.HEADER_TOKEN = token.token;
+
+        //Si no tiene rol concreto redirige directamente a la página de visualizador:
+        if(AppGlobals.IS_OWNER || AppGlobals.IS_REGISTER)
+          this.navCtrl.push ( LoginAsPage );
+        else
+          this.navCtrl.push ( IniVisualizerPage );
+      });
     }
   }
 

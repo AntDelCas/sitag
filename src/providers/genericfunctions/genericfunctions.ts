@@ -126,4 +126,57 @@ export class GenericfunctionsProvider {
     let hour: string = new Date().getHours().toString() + ":" + new Date().getMinutes().toString() + ":" + new Date().getSeconds().toString();
     return myDate + " " + hour;
   }
+
+  /**
+  aaa -> Subfamilia
+  - bbbb -> Categoría
+  - cccc -> Marca
+  - dddd -> Modelo
+  - ee -> Tipo
+  - ff -> Subtipo
+  - gg -> Característica
+  - hh ->Fecha de producción MM
+  - ii -> Fecha de producción YY
+  - jjjjjj -> Id/Número de serie
+  - k -> Tipo de etiqueta (genérica o no)
+
+  aaabbbb_cccc_dddd_ee_ff_gg_hh_ii_jjjjjj_k
+  EQUCOM_ASUS_551C_PC_LP_05_16_007661_0_000
+  */
+
+  /**
+    * @name: buildLabel()
+    * @description: Construye la etiqueta del producto escaneado.
+    * @return: La etiqueta construida.
+    */
+  public buildLabel(attributes : any){
+    console.log("buildLabel");
+    console.log(attributes);
+    let subfamilia : string = "", categoria = "", marca = "", modelo = "", tipo = "", subtipo = "", caracteristica = "", fecha_produccion_mm = "", fecha_produccion_yy = "", numero_serie = "", label = "";
+
+    for(let current of attributes){
+      if(current.name == "SubFamilia")
+        subfamilia = current.value.substring(0,3);
+      if(current.name == "Categoria")
+        categoria  = current.value.substring(0,4);
+      if(current.name == "Marca")
+        marca = current.value.substring(0,4);
+      if(current.name == "Modelo")
+        modelo = current.value.substring(0,2);
+      if(current.name == "Tipo")
+        tipo = current.value.substring(0,2);
+      if(current.name == "SubTipo")
+        subtipo = current.value.substring(0,2);
+      if(current.name == "Caracteristica")
+        caracteristica = current.value.substring(0,2);
+      if(current.name == "Fecha Produccion")
+        fecha_produccion_mm = current.value.substring(0,2);
+      if(current.name == "Número de serie")
+        numero_serie = current.value.substring(0,6);
+
+      label = subfamilia + categoria + "_" + marca + "_" + modelo + "_" + tipo + "_" + subtipo + "_" + caracteristica + "_" + fecha_produccion_mm + "_" +
+      fecha_produccion_yy + "_" + numero_serie;
+    }
+    return label;
+  }
 }

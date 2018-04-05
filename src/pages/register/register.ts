@@ -3,7 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { FormBuilder, NgForm } from '@angular/forms';
 import { LoadingController } from 'ionic-angular';
 
-import { IniRegisterPage, AppGlobals, LoginAsPage } from "../index.paginas";
+import { IniRegisterPage, AppGlobals, LoginAsPage, IniSuperuserPage } from "../index.paginas";
 
 import { DatabaseProvider } from '../../providers/database/database';
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
@@ -109,12 +109,10 @@ export class RegisterPage {
           attributes.push({
             name: key,
             value: data.value[key],
-            category: "",
-            // subcategory: "",
-            control: "",
-            pattern: "",
-            comments: "" });
+          });
         }
+
+      let label = this.genericFunction.buildLabel(this.general_info.registers[0].attributes);
 
       AppGlobals.REGISTER_SHEET =
         {
@@ -125,7 +123,8 @@ export class RegisterPage {
         {
         idSchema: this.general_info.registers[0].idSchema,
         type: this.general_info.registers[0].type,
-        label: AppGlobals.PRODUCT_LABEL,
+        id: AppGlobals.PRODUCT_LABEL,
+        label: label,
         dateTime: this.genericFunction.timeStamp,//this.general_info.registers[0].dateTime,
         countAttributes: attributes.length.toString(),
         attributes: attributes
@@ -143,29 +142,40 @@ export class RegisterPage {
       AppGlobals.REGISTER_SHEET.lastModified = this.genericFunction.timeStamp;
 
       for (let key of ngForm_keys){
-          attributes.push({
-            name: key,
-            value: data.value[key],
-            category: "",
-            // subcategory: "",
-            control: "",
-            pattern: "",
-            comments: "" });
+        attributes.push({
+          name: key,
+          value: data.value[key],
+        });
       }
+
+      let label = this.genericFunction.buildLabel(this.general_info.registers[0].attributes);
+
         AppGlobals.REGISTER_SHEET.registers.push({
           idSchema: this.general_info.registers[0].idSchema,
           type: this.general_info.registers[0].type,
-          label: AppGlobals.PRODUCT_LABEL,
+          id: AppGlobals.PRODUCT_LABEL,
+          label: label,
           dateTime: this.genericFunction.timeStamp,//this.general_info.registers[0].dateTime,
           countAttributes: attributes.length.toString(),
           attributes: attributes
         });
     }
 
+
     //Guarda los datos del registro en local.
     this.database.addRegisterToLocal(AppGlobals.USER, JSON.stringify(AppGlobals.REGISTER_SHEET));
     this.genericFunction.mostrar_toast('Datos de registro guardados.');
-    this.navCtrl.push ( IniRegisterPage );
+
+    console.log("Register sheet:");
+    console.log(AppGlobals.REGISTER_SHEET);
+
+    //Añade al servidor el registro.
+    this.dataAccess.addRegisterToServer(AppGlobals.REGISTER_SHEET);
+
+    if(AppGlobals.IS_OWNER)
+      this.navCtrl.push ( IniSuperuserPage );
+    else
+      this.navCtrl.push ( IniRegisterPage );
   }
 
   /**

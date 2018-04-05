@@ -15,7 +15,7 @@ import { GenericfunctionsProvider } from "../../providers/genericfunctions/gener
   templateUrl: 'home.html'
 })
 export class HomePage {
-  /** @description: Cabecera inicial de la aplicación: */  
+  /** @description: Cabecera inicial de la aplicación: */
   texto_cabecera: string = AppGlobals.TEXTO_CABECERA;
 
   /** @description: Especifica si todo el contenido necesario está cargado. */
@@ -81,7 +81,6 @@ export class HomePage {
 
                           //Unifica los items escaneados y sus permisos:
                           local_user.accesibility = this.mergeAccesibility(local_user.accesibility, server_user.accesibility);
-
 
                         }else{
                           if(user_list_date.getMilliseconds() != user_list_local_date.getMilliseconds()){
@@ -321,9 +320,9 @@ export class HomePage {
   }
 
   // TODO: Función de pruebas (borrar:)
-  // public deleteTable(){
-  //   this.database.deleteUser();
-  //   this.database.deleteRegister();
-  //   AppGlobals.USERS_LIST_LOCAL = '';
-  // }
+  public deleteTable(){
+    this.database.deleteUser();
+    this.database.deleteRegister();
+    AppGlobals.USERS_LIST_LOCAL = '';
+  }
 }
