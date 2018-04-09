@@ -1,7 +1,7 @@
 export class AppGlobals {
 
   /** @description: Cabecera inicial de la aplicación. */
-  static TEXTO_CABECERA: string = "<p>Si-Tag</p><p>Solución integral para la trazabilidad de elementos de principio a fin.</p>";
+  static TEXTO_CABECERA: string = "<p><b>Si-Tag</b></p><p>Solución integral para la trazabilidad de elementos de principio a fin.</p>";
 
   /** @description: Estado de la conexión a internet. */
   static NETWORK_AVAILABLE: boolean = false;

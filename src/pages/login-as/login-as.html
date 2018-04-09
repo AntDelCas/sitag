@@ -15,7 +15,9 @@
   <button ion-button block
   (click)="nav_superuser()" [hidden]="isOwner">Superuser</button>
 
-  <button ion-button block color="danger"
-  (click)="logOff()">Log off</button>
+  <button ion-button icon-start block color="danger" (click)="logOff()">
+    <ion-icon name="md-power"></ion-icon>
+    Log off
+  </button>
 
 </ion-content>

@@ -19,7 +19,6 @@ export class GenericfunctionsProvider {
     public database:DatabaseProvider,
     public alertCtrl: AlertController
   ){
-    console.log('Hello GenericfunctionsProvider Provider');
   }
 
   /**
@@ -109,8 +108,10 @@ export class GenericfunctionsProvider {
     if(AppGlobals.REGISTER_SHEET === undefined || AppGlobals.REGISTER_SHEET.length == 0){
       return false;
     }else{
+      console.log("DEBUG");
+      console.log(AppGlobals.REGISTER_SHEET.registers);
       for(let reg of AppGlobals.REGISTER_SHEET.registers)
-        if(AppGlobals.PRODUCT_LABEL == reg.label)
+        if(AppGlobals.PRODUCT_LABEL == reg.id)
           return true;
     }
     return false;

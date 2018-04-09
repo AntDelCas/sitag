@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>Register Directory</ion-title>
     <ion-buttons end>
       <button ion-button icon-only (click)="backHome()">
@@ -19,16 +19,24 @@
   <p>Register Directory</p>
 
 
-  <button ion-button block
-  (click)="open_register_sheet()">Open Register Sheet</button>
+  <button ion-button icon-start block (click)="open_register_sheet()">
+    <ion-icon name="md-clipboard"></ion-icon>
+    Open Register Sheet
+  </button>
 
-  <button ion-button block
-  (click)="send_register_sheet()">Send Register Sheet</button>
+  <button ion-button icon-start block (click)="send_register_sheet()">
+    <ion-icon name="md-send"></ion-icon>
+    Send Register Sheet
+  </button>
 
-  <button ion-button block
-  (click)="open_register_report()">Open Register Report</button>
+  <button ion-button icon-start block (click)="open_register_report()">
+    <ion-icon name="md-folder-open"></ion-icon>
+    Open Register Report
+  </button>
 
-  <button ion-button block
-  (click)="send_register_report()">Send Register Report</button>
+  <button ion-button icon-start block (click)="send_register_report()">
+    <ion-icon name="md-cloud-upload"></ion-icon>
+    Send Register Report
+  </button>
 
 </ion-content>

@@ -138,18 +138,6 @@ export class DataaccessProvider {
     * @description: Añade un nuevo registro de producto a la plataforma.
     * @param: Datos de registro de producto.
     */
-  // addRegisterToServer(data) {
-  // return new Promise((resolve, reject) => {
-  //   // this.http.post(this.apiUrl+'register', JSON.stringify(data))
-  //   this.http.post('https://jsonplaceholder.typicode.com/posts', JSON.stringify(data))
-  //     .subscribe(res => {
-  //       resolve(res);
-  //     }, (err) => {
-  //       reject(err);
-  //     });
-  // });
-  // }
-
   addRegisterToServer(data) {
     console.log("addRegisterToServer()");
 
