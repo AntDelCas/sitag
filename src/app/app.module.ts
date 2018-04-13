@@ -8,16 +8,16 @@ import { HttpClientModule } from "@angular/common/http";
 
 import { HomePage, LoginPage, LoginAsPage, CreateuserPage, IniRegisterPage, IniVisualizerPage, IniSuperuserPage, GeneralinfoPage, RegisterdirectoryPage, RegistersheetPage, RegisterreportPage, CustomizePage, ConfigPage, RegisterPage } from "../pages/index.paginas";
 
-
 import { MyApp } from './app.component';
 
 import { DataaccessProvider } from '../providers/dataaccess/dataaccess';
 import { DatabaseProvider } from '../providers/database/database';
+import { GenericfunctionsProvider } from '../providers/genericfunctions/genericfunctions';
 
 //plugins
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 import { SQLite } from '@ionic-native/sqlite';
-import { GenericfunctionsProvider } from '../providers/genericfunctions/genericfunctions';
+
 
 
 @NgModule({

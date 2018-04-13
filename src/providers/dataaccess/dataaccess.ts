@@ -106,16 +106,27 @@ export class DataaccessProvider {
     * @param: La etiqueta identificadora del producto.
     */
 
-  // 5ab8adac2c00004b001860cc
-  getProductInfo(label : string){
-    return new Promise(resolve => {
-      this.http.get(this.apiUrl+'5ac60c234a00005b007e05f8').subscribe(data => {
-        resolve(data);
-      }, err => {
-        console.log(err);
+    getProductInfo(label : string){
+      const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
+      return new Promise(resolve => {
+        this.http.get(this.url + "registers/" + label, { headers : headers }).subscribe(data => {
+          resolve(data);
+        }, err => {
+          console.log(err);
+        });
       });
-    });
-  }
+    }
+
+  // 5ab8adac2c00004b001860cc
+  // getProductInfo(label : string){
+  //   return new Promise(resolve => {
+  //     this.http.get(this.apiUrl+'5ac60c234a00005b007e05f8').subscribe(data => {
+  //       resolve(data);
+  //     }, err => {
+  //       console.log(err);
+  //     });
+  //   });
+  // }
 
   /**
     * @name: addUserToServer(data)

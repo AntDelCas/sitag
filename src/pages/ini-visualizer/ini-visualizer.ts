@@ -31,7 +31,6 @@ export class IniVisualizerPage {
     */
   start_scanning() {
     this.barcodeScanner.scan().then((barcodeData) => {
-      console.log("Datos del scan: ", barcodeData.text);
       AppGlobals.PRODUCT_LABEL = barcodeData.text;
 
       if(this.genericFunction.check_isVisualizer(AppGlobals.PRODUCT_LABEL))
