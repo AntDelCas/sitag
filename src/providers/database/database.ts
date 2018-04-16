@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, AlertController } from 'ionic-angular';
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { AppGlobals } from "../../pages/index.paginas";
@@ -18,7 +18,8 @@ export class DatabaseProvider {
 
   constructor(
     private platform:Platform,
-    private sqlite:SQLite)
+    private sqlite:SQLite,
+    public alertCtrl: AlertController)
     {
     this.platform.ready().then(()=>{
       console.log("Constructor Database");
@@ -96,8 +97,14 @@ export class DatabaseProvider {
     console.log("addUser");
     return this.isReady()
     .then(()=>{
-      return this.database.executeSql('INSERT INTO users(date, user) VALUES (?,?);', [date, user]).then((result)=>{
+      return this.database.executeSql('INSERT INTO users(date, user) VALUES (?,?);', [date, user])
+      .then((result)=>{
+
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     });
   }
 
@@ -124,7 +131,11 @@ export class DatabaseProvider {
         AppGlobals.USERS_LIST_LOCAL = JSON.parse(usersJSON[0].user);
 
         return true;
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message);
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
   }
 
@@ -137,7 +148,11 @@ export class DatabaseProvider {
     return this.isReady()
     .then(()=>{
       return this.database.executeSql("DELETE FROM users", []).then((data)=>{
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       });
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
   }
 
@@ -167,7 +182,11 @@ export class DatabaseProvider {
         AppGlobals.DEFAULT_SCHEMA = JSON.parse(default_schema[0].schema);
 
         return true;
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
   }
 
@@ -182,7 +201,11 @@ export class DatabaseProvider {
     return this.isReady()
     .then(()=>{
       return this.database.executeSql('INSERT INTO default_schema(schema) VALUES (?);', [schema]).then((result)=>{
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     });
   }
 
@@ -195,7 +218,11 @@ export class DatabaseProvider {
     return this.isReady()
     .then(()=>{
       return this.database.executeSql("DELETE FROM default_schema", []).then((data)=>{
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       });
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
   }
 
@@ -223,7 +250,11 @@ export class DatabaseProvider {
 
         AppGlobals.REGISTER_SHEET = JSON.parse(register_sheet[0].register);
         return true;
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
   }
 
@@ -239,7 +270,11 @@ export class DatabaseProvider {
     .then(()=>{
       return this.database.executeSql('INSERT INTO register_sheet(user,register) VALUES (?,?);', [user,register]).then((result)=>{
         console.log(result);
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       })
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     });
   }
 
@@ -252,7 +287,25 @@ export class DatabaseProvider {
     return this.isReady()
     .then(()=>{
       return this.database.executeSql("DELETE FROM register_sheet", []).then((data)=>{
+      }, (err) => {
+        this.launchError("Error de acceso a base de datos: " + err.message)
       });
+    }, (err) => {
+      this.launchError("Error de acceso a base de datos: " + err.message)
     })
+  }
+
+  /**
+    * @name: launchError(message : string)
+    * @description: Muestra un mensaje de alerta al usuario.
+    * @param: message - mensaje de error que se mostrará en el mensaje de alerta al usuario.
+    */
+  launchError(message : string){
+    let alert = this.alertCtrl.create({
+      title: 'Error',
+      subTitle: message,
+      buttons: ['OK']
+    });
+    alert.present();
   }
 }

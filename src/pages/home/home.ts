@@ -55,6 +55,9 @@ export class HomePage {
             //Llama al provider que descarga el JSON del servidor y los carga en memoria:
             dataAccess.getUsersFromServer().then(data => {
               AppGlobals.USERS_LIST = data;
+            }, (err) => {
+              //Lanza un error para que se propague por la cadena de promises:
+              throw new Error(err.message);
             }).then(data => {
 
               //Comprueba si hay coincidencias entre los datos descargados del servidor y los guardados en local (si existen):
@@ -119,6 +122,9 @@ export class HomePage {
               });
 
             //Si no existe el modelo por defecto del esquema lo carga en memoria y guarda en local:
+            }, (err) => {
+              //Lanza un error para que se propague por la cadena de promises:
+              throw new Error(err.message);
             }).then(data =>{
               database.getSchemaFromLocal().then(data => {
                 if(!data){
@@ -131,7 +137,13 @@ export class HomePage {
               });
               loader.dismiss();
               this.everything_loaded = true;
+            }, (err) => {
+              loader.dismiss();
+              this.genericFunction.mostrar_toast("Error de acceso a base de datos: " + err.message);
             });
+          }, (err) => {
+            loader.dismiss();
+            this.genericFunction.mostrar_toast("Error recuperando el token: " + err.message);
           });
         });
       }else{

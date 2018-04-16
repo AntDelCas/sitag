@@ -44,11 +44,11 @@ export class DataaccessProvider {
     * @description: Descarga la lista de usuarios dados de alta en la aplicación y la guarda en memoria.
     */
   getUsersFromServer() {
-  return new Promise(resolve => {
+  return new Promise((resolve, reject) => {
     this.http.get(this.apiUrl+'5ac5e3384a000011007e0513').subscribe(data => {
       resolve(data);
     }, err => {
-      console.log(err);
+      reject(err);
     });
   });
   }
@@ -91,11 +91,11 @@ export class DataaccessProvider {
   console.log("getAllSchemas()");
 
   const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
-    return new Promise(resolve => {
+    return new Promise((resolve, reject) => {
       this.http.get(this.url+'schema/', { headers : headers }).subscribe(data => {
         resolve(data);
       }, err => {
-        console.log(err);
+        reject(err);
       });
     });
   }
@@ -108,11 +108,11 @@ export class DataaccessProvider {
 
     getProductInfo(label : string){
       const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         this.http.get(this.url + "registers/" + label, { headers : headers }).subscribe(data => {
           resolve(data);
         }, err => {
-          console.log(err);
+          reject(err);
         });
       });
     }
@@ -153,11 +153,11 @@ export class DataaccessProvider {
     console.log("addRegisterToServer()");
 
     const headers = new HttpHeaders({ 'Authorization' : 'Token ' + AppGlobals.HEADER_TOKEN });
-      return new Promise(resolve => {
+      return new Promise((resolve, reject) => {
         this.http.post(this.url+'registers/', data, { headers : headers }).subscribe(data => {
           resolve(data);
         }, err => {
-          console.log(err);
+          reject(err);
         });
       });
   }

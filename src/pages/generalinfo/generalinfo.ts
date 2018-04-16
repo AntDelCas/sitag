@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
-import { AppGlobals, LoginAsPage, IniVisualizerPage } from "../index.paginas";
+import { AppGlobals, LoginAsPage, IniVisualizerPage, IniRegisterPage, IniSuperuserPage } from "../index.paginas";
 import { DataaccessProvider } from '../../providers/dataaccess/dataaccess';
 import { GenericfunctionsProvider } from "../../providers/genericfunctions/genericfunctions";
 
@@ -45,6 +45,9 @@ export class GeneralinfoPage {
         dataAccess.getProductInfo(AppGlobals.PRODUCT_LABEL).then(data => {
           this.general_info = data;
           this.schema_identifier = this.general_info.registers[0].idSchema;
+        }, (err) => {
+          //Lanza un error para que se propague por la cadena de promises:
+          throw new Error(err.message);
         }).then(data => {
           //Descarga los esquemas de producto:
           dataAccess.getAllSchemas().then(data => {
@@ -57,8 +60,6 @@ export class GeneralinfoPage {
                 this.schema = current_schema;
               }
             }
-
-            console.log(this.schema);
 
           if(has_valid_schema){
             //Comprueba el ID del esquema que coincide con los datos de productos descargados.
@@ -131,7 +132,7 @@ export class GeneralinfoPage {
           }else{
             loader.dismiss();
             this.genericFunction.mostrar_toast('No existe ningún esquema de datos para este producto.');
-            this.navCtrl.push ( IniVisualizerPage );
+            this.backMenu();
           }
           loader.dismiss();
 
@@ -145,6 +146,10 @@ export class GeneralinfoPage {
             alert.present();
           }
         });
+      }, (err) => {
+        loader.dismiss();
+        this.genericFunction.mostrar_toast("Error del scan: " + err);
+        this.backMenu();
       });
      });
    }else{
@@ -167,6 +172,20 @@ export class GeneralinfoPage {
     */
   get getProductLabel() {
    return AppGlobals.PRODUCT_LABEL;
+  }
+
+  /**
+    * @name: backMenu()
+    * @description: Navega hacia la interfaz correspondiente según usuario.
+    */
+  backMenu(){
+    if(AppGlobals.IS_OWNER)
+      this.navCtrl.push ( IniSuperuserPage );
+    else
+      if(AppGlobals.IS_REGISTER)
+        this.navCtrl.push ( IniRegisterPage );
+      else
+        this.navCtrl.push ( IniVisualizerPage );
   }
 
   /**

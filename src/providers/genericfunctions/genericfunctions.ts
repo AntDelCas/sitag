@@ -12,7 +12,6 @@ import { DatabaseProvider } from "../database/database";
 */
 @Injectable()
 export class GenericfunctionsProvider {
-
   constructor(
     public http: HttpClient,
     public toastCtrl: ToastController,
